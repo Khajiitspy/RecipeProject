@@ -1,6 +1,8 @@
 # RecipeProject
 
-## Inspirations ✨: Meal Planner & Recipe Keeper || StashCook
+## Inspirations ✨: 
+Meal Planner & Recipe Keeper || StashCook
+https://www.plantoeat.com/#howitworks
 
 ### Database Connection: 
 {
