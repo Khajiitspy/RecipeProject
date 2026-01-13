@@ -1,10 +1,11 @@
-using Core.Interfaces;
-using Core.Model.Category;
+﻿using Core.Interfaces;
+using Core.Model.Recipe.Category;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    [Route("api/[controller]/[action]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class CategoriesController(ICategoryService categoryService) : ControllerBase
     {
@@ -15,64 +16,37 @@ namespace API.Controllers
 
             return Ok(model);
         }
-        [HttpPost]
+        [HttpPost("create")]
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> Create([FromForm] CategoryCreateModel model)
         {
-            var entity = await categoryService.CreateAsync(model);
-            return Ok(entity);
+            var category = await categoryService.CreateAsync(model);
+            return Ok(category);
         }
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(long id)
-        {
-            var entity = await categoryService.DeleteAsync(id);
-            return NoContent();
-        }
-
-        //[Authorize(Roles = $"{Roles.Admin}")]
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetItemById(int id)
+        [HttpGet("{id:long}")]
+        public async Task<IActionResult> GetItemById(long id)
         {
             var model = await categoryService.GetItemByIdAsync(id);
+
             if (model == null)
             {
                 return NotFound();
             }
             return Ok(model);
         }
-
-        [HttpPut("{id}")]
+        [HttpPut("edit")]
         [Consumes("multipart/form-data")]
-        public async Task<IActionResult> Edit([FromForm] CategoryUpdateModel model)
+        public async Task<IActionResult> Update([FromForm] CategoryUpdateModel model)
         {
-            var entity = await categoryService.UpdateAsync(model);
+            var category = await categoryService.UpdateAsync(model);
 
-            return Ok(entity);
+            return Ok(category);
         }
-
-        [HttpGet]
-        public async Task<IActionResult> Search([FromQuery] CategorySearchModel searchModel)
+        [HttpDelete("{id:long}")]
+        public async Task<IActionResult> Delete(long id)
         {
-            try
-            {
-                var model = await categoryService.ListAsync(searchModel);
-                return Ok(model);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new
-                {
-                    invalid = ex.Message
-                });
-            }
-        }
-
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetCategoryNameById(int id)
-        {
-            var categoryName = await categoryService.GetCategoryNameById(id);
-            return Ok(categoryName);
+            await categoryService.DeleteAsync(id);
+            return Ok();
         }
     }
 }

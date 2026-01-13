@@ -5,6 +5,7 @@ using Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Emit;
 
 namespace Domain.Data
 {
@@ -17,11 +18,9 @@ namespace Domain.Data
         }
         public DbSet<CategoryEntity> Categories { get; set; }
         public DbSet<IngredientEntity> Ingredients { get; set; }
-        public DbSet<ProductSizeEntity> ProductSizes { get; set; }
-        public DbSet<ProductEntity> Products { get; set; }
-        public DbSet<ProductIngredientEntity> ProductIngredients { get; set; }
-        public DbSet<ProductImageEntity> ProductImages { get; set; }
-        public DbSet<CartEntity> Carts { get; set; }
+        public DbSet<RecipeEntity> Recipes { get; set; }
+        public DbSet<RecipeIngredientEntity> RecipeIngredients { get; set; }
+        public DbSet<IngredientUnitEntity> IngredientUnits { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -46,11 +45,30 @@ namespace Domain.Data
                     .IsRequired();
             });
 
-            builder.Entity<ProductIngredientEntity>()
-                .HasKey(pi => new { pi.ProductId, pi.IngredientId });
+            builder.Entity<RecipeIngredientEntity>()
+                .HasKey(ri => new { ri.RecipeId, ri.IngredientId });
 
-            builder.Entity<CartEntity>()
-                .HasKey(pi => new { pi.ProductId, pi.UserId });
+            builder.Entity<RecipeIngredientEntity>()
+                .HasOne(ri => ri.Recipe)
+                .WithMany(r => r.RecipeIngredients)
+                .HasForeignKey(ri => ri.RecipeId);
+
+            builder.Entity<RecipeIngredientEntity>()
+                .HasOne(ri => ri.Ingredient)
+                .WithMany(i => i.RecipeIngredients)
+                .HasForeignKey(ri => ri.IngredientId);
+
+            builder.Entity<RecipeIngredientEntity>()
+                .HasOne(ri => ri.Unit)
+                .WithMany()
+                .HasForeignKey(ri => ri.IngredientUnitId);
+
+            builder.Entity<RecipeEntity>(entity =>
+            {
+                entity.HasOne(r => r.User)
+                    .WithMany(u => u.Recipes)
+                    .HasForeignKey(r => r.UserId);
+            });
         }
     }
 }

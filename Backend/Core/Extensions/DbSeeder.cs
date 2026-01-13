@@ -13,154 +13,71 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Text.Json;
 
-namespace Core.Extensions
+namespace Core.Extensions;
+
+public static class DbSeeder
 {
-    public static class DbSeeder
+    public static async Task SeedDataAsync(this WebApplication webApplication)
     {
-        public static async Task SeedDataAsync(this WebApplication webApplication)
+        using var scope = webApplication.Services.CreateScope();
+        var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        var mapper = scope.ServiceProvider.GetRequiredService<IMapper>();
+        var imageService = scope.ServiceProvider.GetRequiredService<IImageService>();
+        var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<RoleEntity>>();
+        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<UserEntity>>();
+
+        context.Database.Migrate();
+
+        if (!context.Categories.Any())
         {
-            using var scope = webApplication.Services.CreateScope();
-            //Цей об'єкт буде верта посилання на конткетс, який зараєстрвоано в Progran.cs
-            var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            var jsonFile = Path.Combine(Directory.GetCurrentDirectory(), "Helpers", "JsonData", "Categories.json");
 
-            var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<RoleEntity>>();
-            var userManager = scope.ServiceProvider.GetRequiredService<UserManager<UserEntity>>();
-            var mapper = scope.ServiceProvider.GetRequiredService<IMapper>();
-            var imageService = scope.ServiceProvider.GetRequiredService<IImageService>();
-
-            context.Database.Migrate();
-
-            if (!context.Categories.Any())
+            if (File.Exists(jsonFile))
             {
-                var jsonFile = Path.Combine(Directory.GetCurrentDirectory(), "Helpers", "JsonData", "Categories.json");
-                if (File.Exists(jsonFile))
+                var jsonData = await File.ReadAllTextAsync(jsonFile);
+                try
                 {
-                    var jsonData = await File.ReadAllTextAsync(jsonFile);
-                    try
+                    var categories = JsonSerializer.Deserialize<List<SeederCategoryModel>>(jsonData);
+                    var entityItems = mapper.Map<List<CategoryEntity>>(categories);
+                    foreach (var entity in entityItems)
                     {
-                        var categories = JsonSerializer.Deserialize<List<SeederCategoryModel>>(jsonData);
-                        var entityItems = mapper.Map<List<CategoryEntity>>(categories);
-                        foreach (var entity in entityItems)
+                        try
                         {
-                            entity.Image =
-                                await imageService.SaveImageFromUrlAsync(entity.Image);
+                            entity.Image = await imageService.SaveImageFromUrlAsync(entity.Image);
                         }
-
-                        await context.Categories.AddRangeAsync(entityItems);
-                        await context.SaveChangesAsync();
-
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine("Error Json Parse Data {0}", ex.Message);
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("Not Found File Categories.json");
-                }
-            }
-
-            if (!context.Ingredients.Any())
-            {
-                var jsonFile = Path.Combine(Directory.GetCurrentDirectory(), "Helpers", "JsonData", "Ingredients.json");
-                if (File.Exists(jsonFile))
-                {
-                    var jsonData = await File.ReadAllTextAsync(jsonFile);
-                    try
-                    {
-                        var ingredients = JsonSerializer.Deserialize<List<SeederIngredientModel>>(jsonData);
-                        var entityItems = mapper.Map<List<IngredientEntity>>(ingredients);
-                        foreach (var entity in entityItems)
+                        catch(Exception ex)
                         {
-                            entity.Image =
-                                await imageService.SaveImageFromUrlAsync(entity.Image);
+                            Console.WriteLine("Bad url", ex.Message);
                         }
-
-                        await context.Ingredients.AddRangeAsync(entityItems);
-                        await context.SaveChangesAsync();
-
+                        
                     }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine("Error Json Parse Data {0}", ex.Message);
-                    }
+                    await context.Categories.AddRangeAsync(entityItems);
+                    await context.SaveChangesAsync();
                 }
-                else
+                catch (Exception ex)
                 {
-                    Console.WriteLine("Not Found File Categories.json");
+                    Console.WriteLine("Error Json Parse Data", ex.Message);
                 }
             }
-
-            if (!context.ProductSizes.Any())
+            else
             {
-                var jsonFile = Path.Combine(Directory.GetCurrentDirectory(), "Helpers", "JsonData", "ProductSizes.json");
-                if (File.Exists(jsonFile))
-                {
-                    var jsonData = await File.ReadAllTextAsync(jsonFile);
-                    try
-                    {
-                        var productSizes = JsonSerializer.Deserialize<List<SeederProductSizeModel>>(jsonData);
-                        var entityItems = mapper.Map<List<ProductSizeEntity>>(productSizes);
-
-                        await context.ProductSizes.AddRangeAsync(entityItems);
-                        await context.SaveChangesAsync();
-
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine("Error Json Parse Data {0}", ex.Message);
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("Not Found File Categories.json");
-                }
+                Console.WriteLine("Not found file Categories.json");
             }
-
-            if (!context.Roles.Any())
-            {
-                foreach (var role in Roles.AllRoles)
-                {
-                    var result = await roleManager.CreateAsync(new(role));
-                    if (!result.Succeeded)
-                    {
-                        Console.WriteLine("Error Create Role {0}", role);
-                    }
-                }
-            }
-
-            await SeedUsers(context, mapper, userManager, imageService);
         }
 
-        private async static Task<IFormFile> LoadImageAsFormFileAsync(string imagePath, string imageName)
+        if (!context.Roles.Any())
         {
-            var fileInfo = new FileInfo(imagePath);
-
-            if (!File.Exists(imagePath))
+            foreach (var roleName in Roles.AllRoles)
             {
-                return null;
-            }
-
-            var memoryStream = new MemoryStream(await File.ReadAllBytesAsync(imagePath));
-
-            return new FormFile(memoryStream, 0, memoryStream.Length, "ImageFile", imageName)
-            {
-                Headers = new HeaderDictionary(),
-                ContentType = "image/" + fileInfo.Extension.Trim('.')
-            };
-        }
-
-        private async static Task SeedUsers(AppDbContext context, IMapper mapper, UserManager<UserEntity> userManager, IImageService imageService)
-        {
-            if (!context.Users.Any())
-            {
-                await SeedAmin(context, userManager);
-                await SeedUsersFromJson(context, mapper, userManager, imageService);
+                var result = await roleManager.CreateAsync(new(roleName));
+                if (!result.Succeeded)
+                {
+                    Console.WriteLine("Error Create Role {0}", roleName);
+                }
             }
         }
 
-        private async static Task SeedUsersFromJson(AppDbContext context, IMapper mapper, UserManager<UserEntity> userManager, IImageService imageService)
+        if (!context.Users.Any())
         {
             var jsonFile = Path.Combine(Directory.GetCurrentDirectory(), "Helpers", "JsonData", "Users.json");
             if (File.Exists(jsonFile))
@@ -169,36 +86,30 @@ namespace Core.Extensions
                 try
                 {
                     var users = JsonSerializer.Deserialize<List<SeederUserModel>>(jsonData);
-                    foreach (var model in users)
+                    foreach (var user in users)
                     {
-                        var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "Helpers", "SeedImages", "Users", model.Image);
-                        var formFile = await LoadImageAsFormFileAsync(imagePath, model.Image);
-
-                        if (formFile == null)
+                        var entity = mapper.Map<UserEntity>(user);
+                        entity.UserName = user.Email;
+                        entity.Image = await imageService.SaveImageFromUrlAsync(user.Image);
+                        var result = await userManager.CreateAsync(entity, user.Password);
+                        if (!result.Succeeded)
                         {
-                            Console.WriteLine($"Image file not found: {model.Image}");
+                            Console.WriteLine("Error Create User {0}", user.Email);
                             continue;
                         }
-
-                        var entity = mapper.Map<UserEntity>(model);
-                        entity.Image = await imageService.SaveImageAsync(formFile);
-                        var result = await userManager.CreateAsync(entity, model.Password);
-
-                        if (result.Succeeded)
+                        foreach (var role in user.Roles)
                         {
-                            Console.WriteLine($"Користувача успішно створено {entity.LastName} {entity.FirstName}!");
-                            await userManager.AddToRoleAsync(entity, Roles.User);
-                        }
-                        else
-                        {
-                            Console.WriteLine($"Помилка створення користувача:");
-                            foreach (var error in result.Errors)
+                            if (await roleManager.RoleExistsAsync(role))
                             {
-                                Console.WriteLine($"- {error.Code}: {error.Description}");
+                                await userManager.AddToRoleAsync(entity, role);
+                            }
+                            else
+                            {
+                                Console.WriteLine("Not Found Role {0}", role);
                             }
                         }
                     }
-                    await context.SaveChangesAsync();
+
                 }
                 catch (Exception ex)
                 {
@@ -210,31 +121,8 @@ namespace Core.Extensions
                 Console.WriteLine("Not Found File Users.json");
             }
         }
-        private async static Task SeedAmin(AppDbContext context, UserManager<UserEntity> userManager)
-        {
-            string email = "admin@gmail.com";
-            var user = new UserEntity
-            {
-                UserName = email,
-                Email = email,
-                FirstName = "Адмін",
-                LastName = "Батькович"
-            };
 
-            var result = await userManager.CreateAsync(user, "123456");
-            if (result.Succeeded)
-            {
-                Console.WriteLine($"Користувача успішно створено {user.LastName} {user.FirstName}!");
-                await userManager.AddToRoleAsync(user, Roles.Admin);
-            }
-            else
-            {
-                Console.WriteLine($"Помилка створення користувача:");
-                foreach (var error in result.Errors)
-                {
-                    Console.WriteLine($"- {error.Code}: {error.Description}");
-                }
-            }
-        }
     }
 }
+
+

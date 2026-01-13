@@ -1,16 +1,12 @@
-﻿using Core.Model.Category;
-using Core.Model.Pagination;
+﻿using Core.Model.Recipe.Category;
 
-namespace Core.Interfaces
+namespace Core.Interfaces;
+
+public interface ICategoryService
 {
-    public interface ICategoryService
-    {
-        Task<List<CategoryItemModel>> ListAsync();
-        Task<CategoryItemModel?> GetItemByIdAsync(int id);
-        Task<string> GetCategoryNameById(int id);
-        Task<CategoryItemModel> CreateAsync(CategoryCreateModel model);
-        Task<CategoryItemModel> UpdateAsync(CategoryUpdateModel model);
-        Task<CategoryItemModel> DeleteAsync(long id);
-        Task<PaginationModel<CategoryItemModel>> ListAsync(CategorySearchModel searchModel);
-    }
+    Task<List<CategoryItemModel>> ListAsync();
+    Task<CategoryItemModel?> GetItemByIdAsync(long id);
+    Task<CategoryItemModel> CreateAsync(CategoryCreateModel model);
+    Task<CategoryItemModel> UpdateAsync(CategoryUpdateModel model);
+    Task DeleteAsync(long id);
 }

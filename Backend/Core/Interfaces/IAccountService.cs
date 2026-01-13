@@ -1,7 +1,5 @@
 ﻿using Core.Constants;
 using Core.Model.Account;
-using Core.Model.AdminUser;
-using Core.Model.Category;
 
 namespace Core.Interfaces
 {

@@ -1,40 +1,46 @@
-﻿using FluentValidation;
-using Microsoft.EntityFrameworkCore;
+﻿using Core.Model.Recipe.Category;
 using Domain.Data;
-using Core.Model.Category;
+using FluentValidation;
+using Microsoft.EntityFrameworkCore;
 
-namespace Core.Validators.Category
+namespace Core.Validators.Category;
+
+public class CategoryCreateValidator : AbstractValidator<CategoryCreateModel>
 {
-    public class CategoryCreateValidator : AbstractValidator<CategoryCreateModel>
+    public CategoryCreateValidator(AppDbContext db)
     {
-        public CategoryCreateValidator(AppDbContext db)
-        {
-            RuleFor(x => x.Name)
-                .NotEmpty()
-                .WithMessage("Назва є обов'язковою")
-                .Must(name => !string.IsNullOrEmpty(name))
-                .WithMessage("Назва не може бути порожньою або null")
-                .DependentRules(() =>
-                {
-                    RuleFor(x => x.Name)
-                        .MustAsync(async (name, cancellation) =>
-                            !await db.Categories.AnyAsync(c => c.Name.ToLower() == name.ToLower().Trim(), cancellation))
-                        .WithMessage("Категорія з такою назвою вже існує");
-                })
-                .MaximumLength(250)
-                .WithMessage("Назва повинна містити не більше 250 символів");
+        RuleFor(x => x.Name)
+            .NotEmpty()
+            .WithMessage("Назва обов'язкова")
+            .Must(name => !string.IsNullOrEmpty(name))
+            .WithMessage("Назва не може бути empty або null")
+            .DependentRules(() =>
+            {
+                RuleFor(x => x.Name)
+                    .MustAsync(async (name, cancellation) =>
+                    !await db.Categories.AnyAsync(c => c.Name.ToLower() == name.ToLower().Trim(), cancellation))
+                .WithMessage("Категорія з такою назвою вже існує");
+            })
+            .MaximumLength(250)
+            .WithMessage("Назва має бути не довшою, ніж 250 символів");
+        RuleFor(x => x.Slug)
+            .NotEmpty()
+            .WithMessage("Слаг обов'язковий")
+            .Must(slug => !string.IsNullOrEmpty(slug))
+            .WithMessage("Назва не може бути empty або null")
+            .DependentRules(() =>
+            {
+                RuleFor(x => x.Slug)
+                    .MustAsync(async (slug, cancellation) =>
+                    !await db.Categories.AnyAsync(c => c.Slug.ToLower() == slug.ToLower().Trim(), cancellation))
+                .WithMessage("Категорія з таким слагом вже існує");
+            })
+            .MaximumLength(250)
+            .WithMessage("Слаг має бути не довшим, ніж 250 символів");
 
-            RuleFor(x => x.Slug)
-                .NotEmpty()
-                .WithMessage("Слаг є обов'язковим")
-                .MaximumLength(250)
-                .WithMessage("Слаг повинен містити не більше 250 символів");
 
-            RuleFor(x => x.ImageFile)
-                //.NotNull().WithMessage("Файл зображення є обов'язковим")
-                .NotEmpty().WithMessage("Файл зображення є обов'язковим");
-            //.Must(file => file!.Length > 0)
-            //.WithMessage("Файл не повинен бути порожнім");
-        }
+        RuleFor(x => x.ImageFile)
+            .NotEmpty()
+            .WithMessage("Image file обов'язковий");
     }
 }
