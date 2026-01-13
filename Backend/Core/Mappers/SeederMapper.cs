@@ -11,6 +11,7 @@ namespace Core.Interfaces
         {
             CreateMap<SeederUserModel, UserEntity>()
                 .ForMember(x => x.Image, opt => opt.Ignore());
+            CreateMap<SeederCategoryModel, CategoryEntity>();
         }
     }
 }

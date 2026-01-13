@@ -1,3 +1,4 @@
+
 using Core.Extensions;
 using Core.Interfaces;
 using Core.Services;
@@ -103,6 +104,7 @@ builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ISMTPService, SMTPService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 // -------------------- OpenAPI --------------------
 
@@ -175,6 +177,6 @@ app.UseAuthorization();
 app.MapControllers();
 
 // Seed
-//await app.SeedDataAsync();
+await app.SeedDataAsync();
 
 await app.RunAsync();

@@ -1,12 +1,489 @@
 [
   {
-    "Name": "Піца",
-    "Slug": "pizza",
-    "Image": "https://prontopizza.ua/ternopil/wp-content/uploads/sites/15/2024/06/photo_2024-06-06_13-17-54-170x170.webp"
+    "Name": "Сніданки",
+    "Slug": "snidanky",
+    "Image": "https://retsepty.in.ua/wp-content/uploads/2023/08/image-2023-08-28T205346.559-550x367.jpg"
   },
+  {
+    "Name": "Швидкі сніданки",
+    "Slug": "shvydki-snidanky",
+    "Image": "https://images.glavred.info/2022_10/1664879456-7824.jpg?r=936157"
+  },
+  {
+    "Name": "Корисні сніданки",
+    "Slug": "korysni-snidanky",
+    "Image": "https://images.prom.ua/2190638654_2190638654.jpg?PIMAGE_ID=2190638654"
+  },
+  {
+    "Name": "Сніданки без цукру",
+    "Slug": "snidanky-bez-tsukru",
+    "Image": "https://novyny.live/cdn-cgi/imagedelivery/4_JwVYxosZqzJ7gIDJgTLA/a6b5a2e8-8c42-44e4-d4de-30c8379fb200/postmobile"
+  },
+
+  {
+    "Name": "Обіди",
+    "Slug": "obidy",
+    "Image": "https://fommi-foods.com/images/stories/virtuemart/product/obid-standart-1.jpg"
+  },
+  {
+    "Name": "Домашні обіди",
+    "Slug": "domashni-obidy",
+    "Image": "https://fainemisto.com/media/uploads/2024/08/29/dostavka-obdv.jpg"
+  },
+  {
+    "Name": "Обіди на роботу",
+    "Slug": "obidy-na-robotu",
+    "Image": "https://donbas24.news/storage/news/vn4dmwaggixfzwmz.jpeg"
+  },
+
+  {
+    "Name": "Вечері",
+    "Slug": "vecheri",
+    "Image": "https://storage.liga.net/images/general/2025/02/18/20250218131809-5543.jpg"
+  },
+  {
+    "Name": "Легкі вечері",
+    "Slug": "legki-vecheri",
+    "Image": "https://www.kolobok-obid.lviv.ua/wp-content/uploads/2023/05/01fe3836b7.jpg"
+  },
+  {
+    "Name": "Романтичні вечері",
+    "Slug": "romantychni-vecheri",
+    "Image": "https://static.wixstatic.com/media/2e2e97_3372035f87ef44828dcbcd92f94c6847~mv2_d_7168_4784_s_4_2.jpg/v1/fill/w_640,h_714,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/2e2e97_3372035f87ef44828dcbcd92f94c6847~mv2_d_7168_4784_s_4_2.jpg"
+  },
+
+  {
+    "Name": "Закуски",
+    "Slug": "zakusky",
+    "Image": "https://www.russianfood.com/dycontent/images_upl/565/big_564477.jpg"
+  },
+  {
+    "Name": "Холодні закуски",
+    "Slug": "holodni-zakusky",
+    "Image": "https://ovosch.org.ua/wp-content/uploads/2025/08/rulety-z-lavasha-1024x576.jpg"
+  },
+  {
+    "Name": "Гарячі закуски",
+    "Slug": "garyachi-zakusky",
+    "Image": "https://images.unian.net/photos/2022_11/thumb_files/400_0_1668944500-7775.jpg?r=758857"
+  },
+  {
+    "Name": "Закуски до пива",
+    "Slug": "zakusky-do-pyva",
+    "Image": "https://static.espreso.tv/uploads/photobank/330000_331000/330481_17595639.jpg"
+  },
+
   {
     "Name": "Салати",
     "Slug": "salaty",
-    "Image": "https://prontopizza.ua/ternopil/wp-content/uploads/sites/15/2024/06/photo_2024-06-07_15-41-17-170x170.webp"
+    "Image": "https://images.unian.net/photos/2022_11/thumb_files/400_0_1669036584-8046.jpg?r=958948"
+  },
+  {
+    "Name": "Овочеві салати",
+    "Slug": "ovochevi-salaty",
+    "Image": "https://www.smakolyky.com/wp-content/uploads/2018/03/IMG_8304.jpg"
+  },
+  {
+    "Name": "Салати з мʼясом",
+    "Slug": "salaty-z-myasom",
+    "Image": "https://img.tsn.ua/cached/777/tsn-ef193642135c1378f91261f26d18fb96/thumbs/1200x630/e6/c2/1a4e555a22dc8acc0f6b417d3fe5c2e6.jpeg"
+  },
+  {
+    "Name": "Салати з куркою",
+    "Slug": "salaty-z-kurkoyu",
+    "Image": "https://images.unian.net/photos/2019_12/thumb_files/1200_0_1577279740-1134.jpg"
+  },
+  {
+    "Name": "Салати з рибою",
+    "Slug": "salaty-z-ryboyu",
+    "Image": "https://i.obozrevatel.com/food/recipemain/2019/4/3/smoked-salmon-orange-and-avocado-salad4.jpg?size=636x424"
+  },
+  {
+    "Name": "Салати з морепродуктами",
+    "Slug": "salaty-z-moreproduktamy",
+    "Image": "https://klopotenko.com/wp-content/uploads/2019/08/salat-z-moreprodyktamy_sitewebukr_new-1000x600.jpg"
+  },
+
+  {
+    "Name": "Супи",
+    "Slug": "supy",
+    "Image": "https://landlord.ua/wp-content/uploads/2024/08/rvhgyv-c1905x1016x50px50p-up-4138421b76768f6365bd424a0ee77541.jpg"
+  },
+  {
+    "Name": "Бульйони",
+    "Slug": "buliony",
+    "Image": "https://img.tsn.ua/cached/836/tsn-6e978378ae92c65695fd0f636310ff71/thumbs/1200x630/b8/91/064a7cc90580222f9b4ad0dd8da291b8.jpeg"
+  },
+  {
+    "Name": "Крем-супи",
+    "Slug": "krem-supy",
+    "Image": "https://www.russianfood.com/dycontent/images_upl/646/big_645582.jpg"
+  },
+  {
+    "Name": "Овочеві супи",
+    "Slug": "ovochevi-supy",
+    "Image": "https://c.files.bbci.co.uk/15DA8/production/_117821598_gettyimages-183366960.jpg"
+  },
+  {
+    "Name": "Мʼясні супи",
+    "Slug": "myasni-supy",
+    "Image": "https://picantecooking.com/media/cache/content_list_preview/pictures/2024-11/beef-soup-with-miso-06-67307585ac766224238782.jpg"
+  },
+  {
+    "Name": "Рибні супи",
+    "Slug": "rybni-supy",
+    "Image": "https://i.obozrevatel.com/food/recipemain/2018/11/28/po.jpg?size=636x424"
+  },
+
+  {
+    "Name": "Основні страви",
+    "Slug": "osnovni-stravy",
+    "Image": "https://sp-ao.shortpixel.ai/client/to_auto,q_glossy,ret_img,w_1400,h_600/https://allrecipes.space/wp-content/uploads/2022/10/%D0%93%D1%80%D1%83%D0%B7%D0%B8%D0%BD%D1%81%D1%8C%D0%BA%D0%B0-%D0%BA%D1%83%D1%85%D0%BD%D1%8F.jpeg"
+  },
+  {
+    "Name": "Мʼясні страви",
+    "Slug": "myasni-stravy",
+    "Image": "https://papigutto.com.ua/wp-content/uploads/2016/07/Screenshot_405.jpg"
+  },
+  {
+    "Name": "Яловичина",
+    "Slug": "yalovychyna",
+    "Image": "https://myastoriya.com.ua/upload/resize_cache/iblock/940/1000_800_1/k0g46rqgf8mepu1b58e2cas2r7fwoadb.jpg"
+  },
+  {
+    "Name": "Свинина",
+    "Slug": "svynyna",
+    "Image": "https://kramar-shop.com/wp-content/uploads/2020/05/391243_1.jpg"
+  },
+  {
+    "Name": "Баранина",
+    "Slug": "baranyna",
+    "Image": "https://baibolsyn.kz/media/original_images/baranina-2.jpeg"
+  },
+
+  {
+    "Name": "Страви з курки",
+    "Slug": "stravy-z-kurky",
+    "Image": "https://papigutto.com.ua/image/catalog/recipes/blyuda-iz-kuricy-1.png"
+  },
+  {
+    "Name": "Страви з індички",
+    "Slug": "stravy-z-indychky",
+    "Image": "https://ukr.media/static/ba/aimg/3/6/6/366901_1.jpg"
+  },
+
+  {
+    "Name": "Рибні страви",
+    "Slug": "rybni-stravy",
+    "Image": "https://www.volynpost.com/img/modules/news/a/76/b0ad2bf97779d0856a422f557833a76a/rss-photo.jpg"
+  },
+  {
+    "Name": "Запечена риба",
+    "Slug": "zapechena-ryba",
+    "Image": "https://shuba.life/static/content/thumbs/1824x912/3/f0/jnuetl---c2x1x50px50p-up--6658da646a9d8c1778fd8a8cce6d0f03.jpg"
+  },
+  {
+    "Name": "Смажена риба",
+    "Slug": "smazhena-ryba",
+    "Image": "https://shuba.life/static/content/thumbs/1824x912/b/e5/4wracz---c2x1x50px50p-up--bf0923ad0366ba58fa45c8655d76ce5b.jpg"
+  },
+
+  {
+    "Name": "Морепродукти",
+    "Slug": "moreprodukty",
+    "Image": "https://static.tildacdn.com/tild3663-3131-4633-b339-356334343362/image.png"
+  },
+  {
+    "Name": "Креветки",
+    "Slug": "krevetky",
+    "Image": "https://dishmagazine.com/wp-content/uploads/2024/04/Pan-fried-shrimp-1247x1300.jpg"
+  },
+  {
+    "Name": "Мідії",
+    "Slug": "midii",
+    "Image": "https://klopotenko.com/wp-content/uploads/2024/05/smajeni-midiji-img.jpg?v=1720540595"
+  },
+  {
+    "Name": "Кальмари",
+    "Slug": "kalmary",
+    "Image": "https://img3.zakaz.ua/upload.version_1.0.c9a6bd2b466e7842adbb10a0d577969d.350x350.jpeg"
+  },
+
+  {
+    "Name": "Вегетаріанські страви",
+    "Slug": "vegetarianski-stravy",
+    "Image": "https://fact-news.com.ua/wp-content/uploads/tfifiajlgfjie51u.jpg"
+  },
+  {
+    "Name": "Веганські страви",
+    "Slug": "veganski-stravy",
+    "Image": "https://static.wixstatic.com/media/0449c1_aee91d256c0145b68110e9ea420ced65~mv2.jpg/v1/fill/w_1000,h_668,al_c,q_85/0449c1_aee91d256c0145b68110e9ea420ced65~mv2.jpg"
+  },
+  {
+    "Name": "Пісні страви",
+    "Slug": "pisni-stravy",
+    "Image": "https://joy-pup.com/wp-content/uploads/2020/02/kartofelnay_zapekanka.jpg"
+  },
+
+  {
+    "Name": "Паста",
+    "Slug": "pasta",
+    "Image": "https://lifehacker.ru/wp-content/uploads/2018/04/Pasta_1523360590.jpg"
+  },
+  {
+    "Name": "Лазанья",
+    "Slug": "lazanya",
+    "Image": "https://ferma-m2.ru/images/shop/recipe_image/crop__2_2.jpg"
+  },
+  {
+    "Name": "Різотто",
+    "Slug": "rizotto",
+    "Image": "https://lifehacker.ru/wp-content/uploads/2018/09/2493243275_1731920877.jpg"
+  },
+
+  {
+    "Name": "Піца",
+    "Slug": "pizza",
+    "Image": "https://prontopizza.ua/wp-content/uploads/2024/09/yak-pryhotuvaty-pitsu.jpg"
+  },
+  {
+    "Name": "Класична піца",
+    "Slug": "klasychna-pizza",
+    "Image": "https://i.ytimg.com/vi/yj-lkkUL9ls/maxresdefault.jpg"
+  },
+  {
+    "Name": "Піца без мʼяса",
+    "Slug": "pizza-bez-myasa",
+    "Image": "https://lux.fm/uploads/media_news/2025/03/67dce27cbc123348786890.png"
+  },
+
+  {
+    "Name": "Бургери",
+    "Slug": "burgery",
+    "Image": "https://myastoriya.com.ua/upload/resize_cache/iblock/552/1000_800_1/552d0e310590a7cffd92e8228c91f180.jpg"
+  },
+  {
+    "Name": "Хот-доги",
+    "Slug": "hot-dogy",
+    "Image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzuNZvUvAu4tlKBESPfVvi_Zh1Ig0efQpPAw&s"
+  },
+  {
+    "Name": "Сендвічі",
+    "Slug": "sendvichi",
+    "Image": "https://www.russianfood.com/dycontent/images_upl/667/big_666373.jpg"
+  },
+  {
+    "Name": "Шаурма",
+    "Slug": "shaurma",
+    "Image": "https://www.russianfood.com/dycontent/images_upl/303/big_302085.jpg"
+  },
+
+  {
+    "Name": "Гарніри",
+    "Slug": "garniry",
+    "Image": "https://upst.fwdcdn.com/?a3BmZXdvOmh0dHA6Ly96ZG9yb3ZpYS5jb20udWEvdXBsb2Fkcy9kc24vNmYvYTMvMDAxL2F1emhsaXZzLmpwZw%3D%3D"
+  },
+  {
+    "Name": "Картопляні страви",
+    "Slug": "kartoplyani-stravy",
+    "Image": "https://img.cookorama.net/uploads/images/02/46/22/2020/08/01/437797_size.jpg"
+  },
+  {
+    "Name": "Рис",
+    "Slug": "rys",
+    "Image": "https://img.iamcook.ru/howto/preview/ec75c939ff5b6a4ec4667033a0abcec4.jpg"
+  },
+  {
+    "Name": "Кускус",
+    "Slug": "kuskus",
+    "Image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVNAK2EM3dwQSfdT7AI94-r2GGHZQMCLafHA&s"
+  },
+  {
+    "Name": "Булгур",
+    "Slug": "bulgur",
+    "Image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9ScjdlAb3u5bgMfUw4iknjb0qciOr4xekUA&s"
+  },
+
+  {
+    "Name": "Випічка",
+    "Slug": "vypichka",
+    "Image": "https://img.tsn.ua/cached/576/tsn-0b4bc102/thumbs/1200x630/70/cf/cff4e817d63ac01ce395f20db589cf70.jpg"
+  },
+  {
+    "Name": "Домашня випічка",
+    "Slug": "domashnya-vypichka",
+    "Image": "https://viddana.com/wp-content/uploads/2021/03/pechyvo.jpg"
+  },
+  {
+    "Name": "Солона випічка",
+    "Slug": "solona-vypichka",
+    "Image": "https://kanaldim.tv/wp-content/uploads/2024/01/maxresdefault-7-1.jpg"
+  },
+  {
+    "Name": "Солодка випічка",
+    "Slug": "solodka-vypichka",
+    "Image": "https://ye.ua/images/news/_Pisna_vipichka__naysmachnishi_recepti_do_chayi_1_2020_03_29_08_37_02.jpeg"
+  },
+  {
+    "Name": "Хліб",
+    "Slug": "hlib",
+    "Image": "https://nashkraj.ua/bitrix/uploads/2024/08/Na-novyny-sajtu-28.png"
+  },
+
+  {
+    "Name": "Десерти",
+    "Slug": "deserty",
+    "Image": "https://home-tort.com/wp-content/uploads/2020/10/tiramisu.jpg"
+  },
+  {
+    "Name": "Шоколадні десерти",
+    "Slug": "shokoladni-deserty",
+    "Image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRG5r4KCaUDFRp9Vc7HCpKd-YEzrQHYnaCEtQ&s"
+  },
+  {
+    "Name": "Фруктові десерти",
+    "Slug": "fruktovi-deserty",
+    "Image": "https://kaffa.ua/wp-content/uploads/2019/07/SHtrudel-vishnenviy_small.jpg"
+  },
+  {
+    "Name": "Десерти без випікання",
+    "Slug": "deserty-bez-vypikannya",
+    "Image": "https://www.home-recipes.com.ua/wp-content/uploads/2021/03/desert-bez-vipichki.jpg"
+  },
+  {
+    "Name": "Торти",
+    "Slug": "torty",
+    "Image": "https://eastern-sweets.com.ua/backend/wp-content/uploads/2023/04/krtinka-nosu1-1.jpg"
+  },
+  {
+    "Name": "Печиво",
+    "Slug": "pechyvo",
+    "Image": "https://klymovska.com/wp-content/uploads/2022/11/cookies-with-chocolate-and-nuts.jpg"
+  },
+
+  {
+    "Name": "Напої",
+    "Slug": "napoi",
+    "Image": "https://imglife.pravda.com.ua/images/doc/9/7/97c0c2a-napoi.jpg"
+  },
+  {
+    "Name": "Гарячі напої",
+    "Slug": "garyachi-napoi",
+    "Image": "https://ukr.media/static/ba/aimg/3/3/9/339760_1.jpg"
+  },
+  {
+    "Name": "Холодні напої",
+    "Slug": "holodni-napoi",
+    "Image": "https://www.rbc.ua/static/img/_/l/_lito__freepik_com_327542f85e2d480b4d1072b32309e834_1300x820.jpg"
+  },
+  {
+    "Name": "Коктейлі",
+    "Slug": "kokteyli",
+    "Image": "https://alcomag.ua/upload/medialibrary/5a9/k5eeu3krumnweqn2idk3sty7mn23k6lv.jpg"
+  },
+  {
+    "Name": "Смузі",
+    "Slug": "smuzi",
+    "Image": "https://img.tsn.ua/cached/462/tsn-ef193642135c1378f91261f26d18fb96/thumbs/1200x630/ae/99/752bfb69e8a9ddf601d6593adcd999ae.jpeg"
+  },
+
+  {
+    "Name": "Соуси",
+    "Slug": "sousy",
+    "Image": "https://www.visnyk.poltava.ua/wp-content/uploads/2020/12/aea9edd96e5dc36127b6503a6378be79bb2a88a8.jpg"
+  },
+  {
+    "Name": "Маринади",
+    "Slug": "marynady",
+    "Image": "https://klopotenko.com/wp-content/uploads/2018/05/Try-marinady-dlya-ryby_siteWeb-Ukr.jpg?v=1583870848"
+  },
+  {
+    "Name": "Заправки для салатів",
+    "Slug": "zapravky-dlya-salativ",
+    "Image": "https://img.tsn.ua/cached/763/tsn-0b4bc102/thumbs/1200x630/ba/13/3575e0d72846e8436d7a5dcb2e7d13ba.jpg"
+  },
+
+  {
+    "Name": "Дієтичні страви",
+    "Slug": "dietichni-stravy",
+    "Image": "https://vkusnocafe.com.ua/wp-content/uploads/2025/01/image-155.png"
+  },
+  {
+    "Name": "Кето",
+    "Slug": "keto",
+    "Image": "https://raceexpert.com.ua/image/catalog/uploads/2021/02/keto-diet-min.jpg"
+  },
+  {
+    "Name": "Без глютену",
+    "Slug": "bez-glyutenu",
+    "Image": "https://vikna.tv/wp-content/uploads/2024/06/05/pexels-the-castlebar-3902897-5893887-640x800.jpg"
+  },
+  {
+    "Name": "Без лактози",
+    "Slug": "bez-laktozy",
+    "Image": "https://shuba.life/static/content/thumbs/544x544/9/f3/auln7x---c1x1x50px50p-up--01ba7f23e4d02572d73a2d3eb3e15f39.jpg"
+  },
+
+  {
+    "Name": "Дитячі страви",
+    "Slug": "dytyachi-stravy",
+    "Image": "https://rud.ua/uploads/recipe/619e08ad465f8.jpg"
+  },
+
+  {
+    "Name": "Святкові страви",
+    "Slug": "svyatkovi-stravy",
+    "Image": "https://gospodynka.com.ua/wp-content/uploads/2023/12/svyatkovyj-stil-za-2-godyny-gotuyu-bagato-prostyh-i-shvydkyh-reczeptiv-bez-klopotiv-vsi-syti-i-ya-ne-vtomylas.jpg"
+  },
+  {
+    "Name": "Страви на Новий рік",
+    "Slug": "stravy-na-novyi-rik",
+    "Image": "https://fact-news.com.ua/wp-content/uploads/2-413.jpg"
+  },
+  {
+    "Name": "Страви на Великдень",
+    "Slug": "stravy-na-velykden",
+    "Image": "https://itvmg.com/img/1000/20240502_9918.jpg"
+  },
+  {
+    "Name": "Страви на Різдво",
+    "Slug": "stravy-na-rizdvo",
+    "Image": "https://img.tsn.ua/cached/286/tsn-7d69491ed57b2e0aebe0922b41d97a86/thumbs/1200x630/1b/89/dc6f561f01aa78961cf214001a17891b.jpeg"
+  },
+
+  {
+    "Name": "Українська кухня",
+    "Slug": "ukrainska-kuhnya",
+    "Image": "https://media.dyvys.info/2023/05/Untitled-13.jpg"
+  },
+  {
+    "Name": "Італійська кухня",
+    "Slug": "italijska-kuhnya",
+    "Image": "https://trend-rest.com/wp-content/uploads/2019/03/%D0%9E%D1%81%D0%BE%D0%B1%D0%BB%D0%B8%D0%B2%D0%BE%D1%81%D1%82%D1%96-%D1%96%D1%82%D0%B0%D0%BB%D1%96%D0%B9%D1%81%D1%8C%D0%BA%D0%BE%D1%97-%D0%BA%D1%83%D1%85%D0%BD%D1%96.jpg"
+  },
+  {
+    "Name": "Французька кухня",
+    "Slug": "frantsuzka-kuhnya",
+    "Image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTuEoSM4G8h7BisRCukVx6spvdhlQ4nERSF8Q&s"
+  },
+  {
+    "Name": "Азійська кухня",
+    "Slug": "aziyska-kuhnya",
+    "Image": "https://images.prom.ua/1857916373_w600_h600_tsikavi-fakti-pro.jpg"
+  },
+  {
+    "Name": "Японська кухня",
+    "Slug": "yaponska-kuhnya",
+    "Image": "https://turpoisk.ua/images/blog/japonskaja-kuhnia/japon-kuhnia-1.jpg"
+  },
+  {
+    "Name": "Китайська кухня",
+    "Slug": "kytayska-kuhnya",
+    "Image": "https://tykyiv.com/media/GettyImages-1148155611_1.jpg"
+  },
+  {
+    "Name": "Грузинська кухня",
+    "Slug": "gruzynska-kuhnya",
+    "Image": "https://media.istockphoto.com/id/1164983166/uk/%D1%84%D0%BE%D1%82%D0%BE/%D1%82%D1%80%D0%B0%D0%B4%D0%B8%D1%86%D1%96%D0%B9%D0%BD%D0%B0-%D0%B3%D1%80%D1%83%D0%B7%D0%B8%D0%BD%D1%81%D1%8C%D0%BA%D0%B0-%D0%BA%D1%83%D1%85%D0%BD%D1%8F-%D1%85%D1%96%D0%BD%D0%BA%D0%B0%D0%BB%D1%96-%D1%84%D0%B0%D0%BB%D1%96-%D1%87%D0%B0%D1%85%D0%BE%D1%85%D0%B1%D1%96%D0%BB%D1%96-%D0%BB%D0%BE%D0%B1%D1%96%D0%BE-%D1%81%D0%B8%D1%80-%D1%80%D1%83%D0%BB%D0%B5%D1%82%D0%B8-%D0%B7-%D0%B1%D0%B0%D0%BA%D0%BB%D0%B0%D0%B6%D0%B0%D0%BD%D1%96%D0%B2-%D1%82%D0%B5%D0%BC%D0%BD%D0%B8%D0%B9-%D1%84%D0%BE%D0%BD.jpg?s=612x612&w=0&k=20&c=4PIKZkRsukivPG-1rTnTAQWdhlkusN2Mb3qdkE9xm5A="
   }
 ]
