@@ -1,6 +1,7 @@
-﻿using FluentValidation;
-using Microsoft.AspNetCore.Mvc.Filters;
+using Core.Model.Errors;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace Domain.Filters
 {
@@ -39,11 +40,11 @@ namespace Domain.Filters
                                     g => g.Select(e => e.ErrorMessage).ToArray()
                                 );
 
-                            context.Result = new BadRequestObjectResult(new
+                            context.Result = new BadRequestObjectResult(
+                            new ApiErrorResponse
                             {
-                                status = 400,
-                                isValid = false,
-                                errors = errorDict,
+                                Status = StatusCodes.Status400BadRequest,
+                                Errors = errorDict
                             });
 
                             return;

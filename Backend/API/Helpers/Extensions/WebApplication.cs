@@ -9,10 +9,11 @@ namespace API.Helpers.Extensions
         {
             var config = app.Configuration;
 
-            // -------------------- CORS --------------------
+            #region CORS
             app.UseCors("AllowAll");
+            #endregion
 
-            // -------------------- Static files (Images) --------------------
+            #region Static files (Images)
             var dir = config["ImagesDir"];
             var path = Path.Combine(Directory.GetCurrentDirectory(), dir!);
             Directory.CreateDirectory(path);
@@ -22,8 +23,9 @@ namespace API.Helpers.Extensions
                 FileProvider = new PhysicalFileProvider(path),
                 RequestPath = $"/{dir}"
             });
+            #endregion
 
-            // -------------------- OpenAPI + Swagger --------------------
+            #region OpenAPI + Swagger
             app.MapOpenApi();
 
             app.UseSwaggerUI(options =>
@@ -31,19 +33,23 @@ namespace API.Helpers.Extensions
                 options.SwaggerEndpoint("/openapi/v1.json", "v1");
                 options.OAuthUsePkce();
             });
+            #endregion
 
-            // -------------------- Middleware --------------------
+            #region Middleware
+            app.UseRateLimiter();
+
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllers();
+            #endregion
 
-            // -------------------- Seed --------------------
+            #region Seed
             app.SeedDataAsync().GetAwaiter().GetResult();
+            #endregion
 
             return app;
         }
     }
-
 }

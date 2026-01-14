@@ -5,26 +5,26 @@ namespace Core.Services
 {
     public class CacheService : ICacheService
     {
-        private readonly IMemoryCache _cache;
+        private readonly IMemoryCache cache;
 
         public CacheService(IMemoryCache cache)
         {
-            _cache = cache;
+            this.cache = cache;
         }
 
         public async Task<T> GetOrCreateAsync<T>(string key, Func<Task<T>> factory, TimeSpan ttl)
         {
-            if (_cache.TryGetValue(key, out T value))
+            if (cache.TryGetValue(key, out T value))
                 return value!;
 
             value = await factory();
-            _cache.Set(key, value, ttl);
+            cache.Set(key, value, ttl);
             return value;
         }
 
         public void Remove(string key)
         {
-            _cache.Remove(key);
+            cache.Remove(key);
         }
     }
 }

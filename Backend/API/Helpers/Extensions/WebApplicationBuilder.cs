@@ -1,4 +1,5 @@
 using Core.Interfaces;
+using Core.Model.Errors;
 using Core.Services;
 using Domain.Data;
 using Domain.Data.Entities.Identity;
@@ -11,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
 using System.Text;
+using System.Threading.RateLimiting;
 
 namespace API.Helpers.Extensions
 {
@@ -21,15 +23,17 @@ namespace API.Helpers.Extensions
             var services = builder.Services;
             var config = builder.Configuration;
 
-            // -------------------- Caching --------------------
+            #region Caching
             services.AddMemoryCache();
+            #endregion
 
-            // -------------------- DbContext --------------------
+            #region DbContext
             services.AddDbContext<AppDbContext>(options =>
                 options.UseNpgsql(config.GetConnectionString("DefaultConnection"))
             );
+            #endregion
 
-            // -------------------- Identity --------------------
+            #region Identity
             services.AddIdentity<UserEntity, RoleEntity>(options =>
             {
                 options.Password.RequiredLength = 6;
@@ -40,8 +44,9 @@ namespace API.Helpers.Extensions
             })
             .AddEntityFrameworkStores<AppDbContext>()
             .AddDefaultTokenProviders();
+            #endregion
 
-            // -------------------- JWT --------------------
+            #region JWT
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -63,13 +68,15 @@ namespace API.Helpers.Extensions
                     )
                 };
             });
+            #endregion
 
-            // -------------------- Infrastructure --------------------
+            #region Infrastructure
             services.AddHttpClient();
             services.AddHttpContextAccessor();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            #endregion
 
-            // -------------------- Validation --------------------
+            #region Validation
             services.Configure<ApiBehaviorOptions>(options =>
             {
                 options.SuppressModelStateInvalidFilter = true;
@@ -81,8 +88,9 @@ namespace API.Helpers.Extensions
             {
                 options.Filters.Add<ValidationFilter>();
             });
+            #endregion
 
-            // -------------------- CORS --------------------
+            #region CORS
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowAll", policy =>
@@ -92,8 +100,9 @@ namespace API.Helpers.Extensions
                           .AllowAnyMethod();
                 });
             });
+            #endregion
 
-            // -------------------- Application services --------------------
+            #region Application services
             services.AddScoped<IImageService, ImageService>();
             services.AddScoped<IJwtTokenService, JwtTokenService>();
             services.AddScoped<IAccountService, AccountService>();
@@ -101,8 +110,9 @@ namespace API.Helpers.Extensions
             services.AddScoped<ISMTPService, SMTPService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ICacheService, CacheService>();
+            #endregion
 
-            // -------------------- OpenAPI --------------------
+            #region OpenAPI
             services.AddOpenApi(options =>
             {
                 options.AddDocumentTransformer((document, context, _) =>
@@ -131,6 +141,61 @@ namespace API.Helpers.Extensions
                     return Task.CompletedTask;
                 });
             });
+            #endregion
+
+            #region Rate Limiting
+            services.AddRateLimiter(options =>
+            {
+                options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(httpContext =>
+                {
+                    var ip = httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown";
+                    return RateLimitPartition.GetFixedWindowLimiter(
+                        partitionKey: ip,
+                        factory: _ => new FixedWindowRateLimiterOptions
+                        {
+                            PermitLimit = 100,
+                            Window = TimeSpan.FromMinutes(1),
+                            QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
+                            QueueLimit = 0
+                        });
+                });
+
+                options.OnRejected = async (context, token) =>
+                {
+                    context.HttpContext.Response.StatusCode = StatusCodes.Status429TooManyRequests;
+                    context.HttpContext.Response.ContentType = "application/json";
+
+                    var error = new ApiErrorResponse
+                    {
+                        Status = StatusCodes.Status429TooManyRequests,
+                        Errors = new Dictionary<string, string[]>
+                        {
+                            { "", new[] { "Too many requests. Please try again later." } }
+                        }
+                    };
+
+                    await context.HttpContext.Response.WriteAsJsonAsync(error, cancellationToken: token);
+                };
+
+                string[] rateLimitedEndpoints = new[] { "login", "register", "forgot-password", "google-login" };
+
+                foreach (var endpoint in rateLimitedEndpoints)
+                {
+                    options.AddPolicy(endpoint, httpContext =>
+                        RateLimitPartition.GetFixedWindowLimiter(
+                            partitionKey: httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown",
+                            factory: _ => new FixedWindowRateLimiterOptions
+                            {
+                                PermitLimit = 5,
+                                Window = TimeSpan.FromMinutes(1),
+                                QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
+                                QueueLimit = 0
+                            }
+                        )
+                    );
+                }
+            });
+            #endregion
 
             return builder;
         }
