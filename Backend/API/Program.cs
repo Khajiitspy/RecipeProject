@@ -105,6 +105,7 @@ builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ISMTPService, SMTPService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IIngredientService, IngredientService>();
 
 // -------------------- OpenAPI --------------------
 

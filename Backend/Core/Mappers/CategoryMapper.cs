@@ -10,7 +10,6 @@ public class CategoryMapper : Profile
 {
     public CategoryMapper()
     {
-        CreateMap<SeederCategoryModel, CategoryEntity>();
         CreateMap<CategoryEntity, CategoryItemModel>();
         CreateMap<CategoryCreateModel, CategoryEntity>()
             .ForMember(x => x.Image, opt => opt.Ignore())

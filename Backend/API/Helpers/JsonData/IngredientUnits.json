@@ -1,0 +1,98 @@
+[
+  {
+    "Name": "г",
+    "Slug": "g"
+  },
+  {
+    "Name": "кг",
+    "Slug": "kg"
+  },
+  {
+    "Name": "мг",
+    "Slug": "mg"
+  },
+
+  {
+    "Name": "мл",
+    "Slug": "ml"
+  },
+  {
+    "Name": "л",
+    "Slug": "l"
+  },
+
+  {
+    "Name": "ч. л.",
+    "Slug": "tsp"
+  },
+  {
+    "Name": "ст. л.",
+    "Slug": "tbsp"
+  },
+  {
+    "Name": "½ ч. л.",
+    "Slug": "half-tsp"
+  },
+  {
+    "Name": "¼ ч. л.",
+    "Slug": "quarter-tsp"
+  },
+
+  {
+    "Name": "скл.",
+    "Slug": "cup"
+  },
+
+  {
+    "Name": "щіпка",
+    "Slug": "pinch"
+  },
+  {
+    "Name": "дрібка",
+    "Slug": "dash"
+  },
+
+  {
+    "Name": "шт.",
+    "Slug": "piece"
+  },
+  {
+    "Name": "порц.",
+    "Slug": "portion"
+  },
+  {
+    "Name": "зубч.",
+    "Slug": "clove"
+  },
+  {
+    "Name": "пуч.",
+    "Slug": "bunch"
+  },
+
+  {
+    "Name": "скиб.",
+    "Slug": "slice"
+  },
+  {
+    "Name": "шмат.",
+    "Slug": "chunk"
+  },
+
+  {
+    "Name": "пак.",
+    "Slug": "pack"
+  },
+  {
+    "Name": "бан.",
+    "Slug": "jar"
+  },
+  {
+    "Name": "пляш.",
+    "Slug": "bottle"
+  },
+
+  {
+    "Name": "—",
+    "Slug": "to-taste"
+  }
+]

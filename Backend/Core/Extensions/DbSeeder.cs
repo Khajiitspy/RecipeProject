@@ -122,6 +122,67 @@ public static class DbSeeder
             }
         }
 
+        if (!context.Ingredients.Any())
+        {
+            var jsonFile = Path.Combine(Directory.GetCurrentDirectory(), "Helpers", "JsonData", "Ingredients.json");
+
+            if (File.Exists(jsonFile))
+            {
+                var jsonData = await File.ReadAllTextAsync(jsonFile);
+                try
+                {
+                    var items = JsonSerializer.Deserialize<List<SeederIngredientModel>>(jsonData);
+                    var entityItems = mapper.Map<List<IngredientEntity>>(items);
+                    foreach (var entity in entityItems)
+                    {
+                        try
+                        {
+                            entity.Image = await imageService.SaveImageFromUrlAsync(entity.Image);
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine("Error Json Parse Data", ex.Message);
+                        }
+                    }
+                    await context.Ingredients.AddRangeAsync(entityItems);
+                    await context.SaveChangesAsync();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error Json Parse Data", ex.Message);
+                }
+            }
+            else
+            {
+                Console.WriteLine("Not found file Ingredients.json");
+            }
+        }
+
+        if (!context.IngredientUnits.Any())
+        {
+            var jsonFile = Path.Combine(Directory.GetCurrentDirectory(), "Helpers", "JsonData", "IngredientUnits.json");
+
+            if (File.Exists(jsonFile))
+            {
+                var jsonData = await File.ReadAllTextAsync(jsonFile);
+                try
+                {
+                    var items = JsonSerializer.Deserialize<List<SeederIngredientUnitModel>>(jsonData);
+                    var entityItems = mapper.Map<List<IngredientUnitEntity>>(items);
+                    
+                    await context.IngredientUnits.AddRangeAsync(entityItems);
+                    await context.SaveChangesAsync();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error Json Parse Data", ex.Message);
+                }
+            }
+            else
+            {
+                Console.WriteLine("Not found file IngredientUnits.json");
+            }
+        }
     }
 }
 
