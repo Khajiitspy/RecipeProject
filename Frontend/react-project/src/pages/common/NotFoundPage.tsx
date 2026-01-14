@@ -8,7 +8,7 @@ const NotFoundPage: React.FC = () => {
 
             <div className="relative w-full max-w-lg">
                 <img
-                    src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExMzRvbXpwbmhuN2M2d3Fuem92MXFxNXp4dWtwMHZ5am9vcHQ0aXliNyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/ule4vhcY1xEKQ/giphy.gif"
+                    src="https://media1.tenor.com/m/04Cbc1xMK68AAAAd/cooking-flavours.gif"
                     alt="Coding cat"
                     className="w-64 mx-auto mb-4 animate-bounce"
                 />

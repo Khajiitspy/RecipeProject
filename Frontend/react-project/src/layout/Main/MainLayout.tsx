@@ -1,13 +1,13 @@
 import { Outlet } from "react-router";
-import MainHeader from "./MainHeader.tsx";
-import MainFooter from "./MainFooter.tsx";
+import MainHeader from "./MainHeader";
+import MainFooter from "./MainFooter";
 
 export const MainLayout = () => {
     return (
-        <div className="mx-auto">
+        <div className="min-h-screen flex flex-col bg-neutral-secondary-soft">
             <MainHeader />
 
-            <main className="py-5 transition-colors">
+            <main className="flex-1">
                 <Outlet />
             </main>
 
