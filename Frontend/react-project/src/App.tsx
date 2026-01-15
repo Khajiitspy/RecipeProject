@@ -4,6 +4,7 @@ import MainLayout from "./layout/Main/MainLayout.tsx";
 import NotFoundPage from "./pages/common/NotFoundPage.tsx";
 import UserHomePage from "./pages/user/UserHomePage";
 import RegisterPage from "./pages/account/RegisterPage.tsx";
+import LoginPage from "./pages/account/LoginPage.tsx";
 // import CreateRecipePage from './pages/recipe/CreateRecipePage.tsx';
 // import RecipePage from './pages/recipe/RecipesPage/index.tsx';
 
@@ -15,7 +16,7 @@ function App() {
                 <Route path="/" element={<MainLayout />}>
                     <Route index element={<UserHomePage/>} />
                     <Route path="/register" element={<RegisterPage />} />
-
+                    <Route path="/login" element={<LoginPage />} />
                 </Route>
 
                 <Route path="*" element={<NotFoundPage/>} />
