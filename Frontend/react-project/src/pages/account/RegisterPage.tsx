@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useRegisterMutation } from "../../api/userService";
+// @ts-ignore
 import type { IRegisterUser } from "../../types/account/IRegisterUser";
 import { useNavigate } from "react-router";
 
@@ -18,6 +19,7 @@ const RegisterPage = () => {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value, files } = e.target;
 
+        // @ts-ignore
         setForm((prev) => ({
             ...prev,
             [name]: files ? files[0] : value,

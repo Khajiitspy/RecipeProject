@@ -2,43 +2,32 @@ import { Link } from "react-router";
 
 export const MainHeader = () => {
     return (
-        <header className="sticky top-0 z-50 bg-neutral-primary border-b border-default shadow-sm">
-            <nav className="max-w-screen-xl mx-auto flex items-center justify-between h-16 px-4">
-                {/* Navigation */}
-                <ul className="hidden md:flex items-center gap-8 font-medium">
-                    <li>
-                        <Link
-                            to="/recipe/create"
-                            className="text-heading hover:text-fg-brand transition"
-                        >
-                            Add Recipe
-                        </Link>
-                    </li>
+        <header className="w-full py-2 px-6 bg-yellow-100  shadow-md flex justify-between items-center border-b border-gray-200 dark:border-gray-800">
+            <div className="hidden items-center gap-1 lg:flex">
+                <Link to="/" className="text-2xl font-semibold font-['Comic_Sans_MS'] text-gray-800 ">
+                    EatLog
+                </Link>
+            </div>
 
-                    <li>
-                        <Link
-                            to="/register"
-                            className="
-                                px-4 py-2 rounded-lg
-                                bg-brand text-white
-                                hover:bg-brand/90 transition
-                            "
-                        >
-                            Register
-                        </Link>
-                        <Link
-                            to="/login"
-                            className="
-                                px-4 py-2 rounded-lg
-                                bg-brand text-white
-                                hover:bg-brand/90 transition
-                            "
-                        >
-                            Login
-                        </Link>
-                    </li>
-                </ul>
-            </nav>
+            <div className="flex items-center">
+                <Link
+                    to="/login"
+                    className="text-gray-700 hover:text-gray-500  font-semibold py-2 px-2 rounded-full transition-all duration-300"
+                >
+                    Вхід
+                </Link>
+
+                <span className="text-gray-700">/</span>
+
+                <Link
+                    to="/register"
+                    className="text-gray-700 hover:text-gray-500 font-semibold py-2 px-2 rounded-full transition-all duration-300"
+                >
+                    Реєстрація
+                </Link>
+            </div>
+
+
         </header>
     );
 };
