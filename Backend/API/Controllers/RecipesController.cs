@@ -46,5 +46,11 @@ namespace API.Controllers
             var recipe = await recipeService.UpdateAsync(model);
             return Ok(recipe);
         }
+        [HttpGet("units")]
+        public async Task<IActionResult> GetUnits()
+        {
+            var units = await recipeService.GetUnitsAsync();
+            return Ok(units);
+        }
     }
 }
