@@ -11,7 +11,7 @@ export const MainHeader = () => {
 
             <div className="flex items-center">
                 <Link
-                    to="/login"
+                    to="/account/login"
                     className="text-gray-700 hover:text-gray-500  font-semibold py-2 px-2 rounded-full transition-all duration-300"
                 >
                     Вхід
@@ -20,7 +20,7 @@ export const MainHeader = () => {
                 <span className="text-gray-700">/</span>
 
                 <Link
-                    to="/register"
+                    to="/account/register"
                     className="text-gray-700 hover:text-gray-500 font-semibold py-2 px-2 rounded-full transition-all duration-300"
                 >
                     Реєстрація

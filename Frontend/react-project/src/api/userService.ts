@@ -1,9 +1,10 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { createBaseQuery } from "../utils/createBaseQuery";
-import type { ITokenResponse } from "../types/account/ITokenResponse";
-import type { IRegisterUser } from "../types/account/IRegisterUser";
-import type { ILoginUser } from "../types/account/ILoginUser";
+
 import { serialize } from "object-to-formdata";
+import type {ITokenResponse} from "../types/user/ITokenResponse.ts";
+import type {IRegisterUser} from "../types/user/IRegisterUser.ts";
+import type {ILoginUser} from "../types/user/ILoginUser.ts";
 
 export const userService = createApi({
   reducerPath: "userService",
@@ -13,7 +14,7 @@ export const userService = createApi({
       query: (body) => {
         const formData = serialize(body, { indices: false });
         return {
-          url: "/register",
+          url: "/account/register",
           method: "POST",
           body: formData,
         };
@@ -22,7 +23,7 @@ export const userService = createApi({
 
     login: builder.mutation<ITokenResponse, ILoginUser>({
       query: (body) => ({
-        url: "/login",
+        url: "/account/login",
         method: "POST",
         body,
       }),

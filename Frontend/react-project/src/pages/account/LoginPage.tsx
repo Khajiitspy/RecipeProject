@@ -4,6 +4,7 @@ import {Link} from "react-router";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEyeSlash} from "@fortawesome/free-solid-svg-icons";
 import foodImage from "../../assets/food.jpg";
+import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -55,6 +56,7 @@ const LoginPage = () => {
     </form>*/
 
 
+
       <div className="flex min-h-screen bg-white">
           {/* ЛІВА ЧАСТИНА: Привітання (ховається на мобільних) */}
           <div className="hidden lg:flex lg:w-1/2 flex-col justify-center px-20 relative overflow-hidden min-h-screen">
@@ -75,10 +77,10 @@ const LoginPage = () => {
               {/* relative та z-10 піднімають текст над зображенням */}
               <div className="relative z-10 max-w-md">
                   <h1 className="text-5xl font-bold text-gray-800 mb-6 leading-tight">
-                      Вітаємо в <span className="text-amber-300">EatLog</span>!
+                      Welcome to <span className="text-amber-300">EatLog</span>!
                   </h1>
                   <p className="text-xl text-gray-800 mb-10 leading-relaxed">
-                      Увійдіть, щоб створювати власні рецепти та персоналізувати свою кулінарну пригоду.
+                      Sign in to create your own recipes and personalize your cooking adventure.
                   </p>
               </div>
 
@@ -88,56 +90,69 @@ const LoginPage = () => {
           <div className="w-full lg:w-1/2 flex flex-col justify-center px-8 md:px-24 lg:px-32">
               <div className="max-w-md w-full mx-auto">
                   <div className="mb-10 text-center lg:text-left">
-                      <h2 className="text-3xl font-bold text-slate-900">Вхід</h2>
+                      <h2 className="text-3xl font-bold text-slate-900">Login</h2>
                       <p className="text-slate-500 mt-2">
-                          Немає аккаунту? {" "}
+                          Don't have an account? {" "}
                           <Link to="/register" className="text-amber-300 font-semibold hover:underline">
-                              Зареєструватися
+                              Sign up
                           </Link>
                       </p>
                   </div>
 
                   {/* Соціальні кнопки */}
                   <div className="flex gap-4 mb-8">
-                      <button className="flex-1 flex items-center justify-center gap-2 py-3 border border-slate-200 rounded-xl hover:bg-slate-50 transition">
-                          <span className="font-medium">Google</span>
-                      </button>
-                      <button className="flex-1 flex items-center justify-center gap-2 py-3 border border-slate-200 rounded-xl hover:bg-slate-50 transition">
-                          <span className="font-medium">Facebook</span>
+                      <button
+                          onClick={(event) => {
+                              event.preventDefault();
+                              //loginUseGoogle();
+                          }}
+                          className="flex items-center justify-center gap-2 bg-white
+                         text-gray-700 border border-gray-300 hover:shadow-md
+                         transition px-4 py-2 rounded-xl w-full mt-4 font-medium"
+                      >
+                          <FontAwesomeIcon icon={faGoogle} className="text-amber-300" />
+                          Log in with Google
                       </button>
                   </div>
 
                   <div className="relative flex items-center mb-8">
                       <div className="flex-grow border-t border-slate-200"></div>
-                      <span className="flex-shrink mx-4 text-slate-400 text-sm">або</span>
+                      <span className="flex-shrink mx-4 text-slate-400 text-sm">or</span>
                       <div className="flex-grow border-t border-slate-200"></div>
                   </div>
 
+
                   {/* Форма */}
-                  <form className="space-y-6">
+                  <form className="space-y-6" onSubmit={handleSubmit}>
                       <div>
                           <label className="block text-sm font-bold text-slate-700 mb-2 uppercase tracking-tight">
-                              Електронна пошта *
+                              Email *
                           </label>
                           <input
                               type="email"
-                              className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition"
+                              className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-300/20  transition"
                               placeholder="email@example.com"
+                              value={email}
+                              onChange={(e) => setEmail(e.target.value)}
+                              required
                           />
                       </div>
 
                       <div>
                           <div className="flex justify-between mb-2">
                               <label className="text-sm font-bold text-slate-700 uppercase tracking-tight">
-                                  Пароль *
+                                  Password *
                               </label>
-                              <a href="#" className="text-sm text-slate-400 hover:text-purple-600 transition">Забули пароль?</a>
+                              <a href="#" className="text-sm text-slate-400 hover:text-amber-300 transition">Forgot password?</a>
                           </div>
                           <div className="relative">
                               <input
                                   type="password"
-                                  className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition"
-                                  placeholder="Ваш пароль"
+                                  className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-300/20 transition"
+                                  placeholder="Your password"
+                                  value={password}
+                                  onChange={(e) => setPassword(e.target.value)}
+                                  required
                               />
                               <button type="button" className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
                                   <FontAwesomeIcon icon={faEyeSlash} />
@@ -146,11 +161,15 @@ const LoginPage = () => {
                       </div>
 
                       <button
-                          type="submit"
-                          className="w-full bg-slate-900 text-white py-4 rounded-xl font-bold text-lg hover:bg-slate-800 transition shadow-lg shadow-slate-200"
+                          type="submit" disabled={isLoading}
+                          className="w-full bg-gray-800 text-white py-4 rounded-xl font-bold text-lg hover:bg-slate-800 transition shadow-lg shadow-slate-200"
                       >
-                          Увійти
+                          {isLoading ? "Logging in..." : "Login"}
                       </button>
+
+
+
+                      {error && <p style={{ color: "red" }}>Invalid email or password</p>}
                   </form>
               </div>
           </div>
