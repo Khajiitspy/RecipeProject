@@ -1,10 +1,11 @@
 ﻿
+using Domain.Data.Entities;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Entities;
 
 [Table("tblRecipeIngredients")]
-public class RecipeIngredientEntity
+public class RecipeIngredientEntity : BaseEntity<long>
 {
     public decimal Amount { get; set; }
     [ForeignKey("Recipe")]

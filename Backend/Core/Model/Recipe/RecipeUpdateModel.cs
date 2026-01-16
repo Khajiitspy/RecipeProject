@@ -12,5 +12,6 @@ public class RecipeUpdateModel
     public string? Slug { get; set; }
     public IFormFile? Image { get; set; }
     public long? CategoryId { get; set; }
-    public List<RecipeIngredientUpdateModel>? Ingredients { get; set; }
+    public string IngredientsJson { get; set; } = string.Empty;
+    //public List<RecipeIngredientUpdateModel>? Ingredients { get; set; }
 }
