@@ -301,23 +301,38 @@ namespace Domain.Migrations
 
             modelBuilder.Entity("Domain.Entities.RecipeIngredientEntity", b =>
                 {
-                    b.Property<long>("RecipeId")
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    b.Property<long>("IngredientId")
-                        .HasColumnType("bigint");
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("numeric");
 
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<long>("IngredientId")
+                        .HasColumnType("bigint");
+
                     b.Property<long>("IngredientUnitId")
                         .HasColumnType("bigint");
 
-                    b.HasKey("RecipeId", "IngredientId");
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<long>("RecipeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("IngredientId");
 
                     b.HasIndex("IngredientUnitId");
+
+                    b.HasIndex("RecipeId", "IngredientId")
+                        .IsUnique();
 
                     b.ToTable("tblRecipeIngredients");
                 });

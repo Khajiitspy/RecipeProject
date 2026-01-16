@@ -5,6 +5,8 @@ Meal Planner & Recipe Keeper || StashCook
 
 https://www.plantoeat.com/#howitworks
 
+https://www.kitchenstories.com/en
+
 ### Database Connection: 
 {
   ...
