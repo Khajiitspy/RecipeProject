@@ -1,4 +1,4 @@
-# RecipeProject
+# Recipe Project
 
 ## Inspirations ✨: 
 Meal Planner & Recipe Keeper || StashCook

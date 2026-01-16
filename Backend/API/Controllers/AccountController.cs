@@ -1,7 +1,9 @@
-using Microsoft.AspNetCore.Mvc;
 using Core.Interfaces;
 using Core.Model.Account;
+using Core.Model.Errors;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace API.Controllers
 {
@@ -10,69 +12,89 @@ namespace API.Controllers
     public class AccountController(IAccountService accountService) : ControllerBase
     {
         [HttpPost]
+        [EnableRateLimiting("login")]
         public async Task<IActionResult> Login([FromBody] LoginModel model)
         {
             var result = await accountService.LoginAsync(model);
+
             if (result.Success)
                 return Ok(new { Token = result.Token });
 
-            return Unauthorized(result.ErrorMessage);
+            return Unauthorized(new ApiErrorResponse
+            {
+                Status = StatusCodes.Status401Unauthorized,
+                Errors = new Dictionary<string, string[]>
+                {
+                    { "", new[] { result.ErrorMessage } }
+                }
+            });
         }
 
         [HttpPost]
+        [EnableRateLimiting("register")]
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> Register([FromForm] RegisterModel model)
         {
             var result = await accountService.RegisterAsync(model);
+
             if (result.Success)
                 return Ok(new { Token = result.Token });
 
-            return BadRequest(new
+            return BadRequest(new ApiErrorResponse
             {
-                status = 400,
-                isValid = false,
-                errors = result.ErrorMessage
+                Status = StatusCodes.Status400BadRequest,
+                Errors = new Dictionary<string, string[]>
+                {
+                    { "", new[] { result.ErrorMessage } }
+                }
             });
         }
 
         [HttpPost]
+        [EnableRateLimiting("google-login")]
         public async Task<IActionResult> GoogleLogin([FromBody] GoogleLoginRequestModel model)
         {
-            string result = await accountService.LoginByGoogle(model.Token);
-            if (string.IsNullOrEmpty(result))
+            var token = await accountService.LoginByGoogle(model.Token);
+
+            if (string.IsNullOrEmpty(token))
             {
-                return BadRequest(new
+                return BadRequest(new ApiErrorResponse
                 {
-                    Status = 400,
-                    IsValid = false,
-                    Errors = new { Email = "Помилка реєстрації" }
+                    Status = StatusCodes.Status400BadRequest,
+                    Errors = new Dictionary<string, string[]>
+                    {
+                        { "Email", new[] { "Помилка реєстрації" } }
+                    }
                 });
             }
-            return Ok(new
-            {
-                Token = result
-            });
+
+            return Ok(new { Token = token });
         }
+
         [HttpPost]
+        [EnableRateLimiting("forgot-password")]
         public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordModel model)
         {
-            bool res = await accountService.ForgotPasswordAsync(model);
-            if (res)
+            var result = await accountService.ForgotPasswordAsync(model);
+
+            if (result)
                 return Ok();
-            else
-                return BadRequest(new
+
+            return BadRequest(new ApiErrorResponse
+            {
+                Status = StatusCodes.Status400BadRequest,
+                Errors = new Dictionary<string, string[]>
                 {
-                    Status = 400,
-                    IsValid = false,
-                    Errors = new { Email = "Користувача з такою поштою не існує" }
-                });
+                    { "Email", new[] { "Користувача з такою поштою не існує" } }
+                }
+            });
         }
 
         [HttpGet]
         public async Task<IActionResult> ValidateResetToken([FromQuery] ValidateResetTokenModel model)
         {
-            bool res = await accountService.ValidateResetTokenAsync(model);
-            return Ok(new { IsValid = res });
+            var isValid = await accountService.ValidateResetTokenAsync(model);
+            return Ok(new { IsValid = isValid });
         }
 
         [HttpPost]
@@ -88,13 +110,17 @@ namespace API.Controllers
         public async Task<IActionResult> Update([FromForm] AccountUpdateModel model)
         {
             var result = await accountService.UpdateAsync(model);
+
             if (result.Success)
                 return Ok(new { Token = result.Token });
-            return BadRequest(new
+
+            return BadRequest(new ApiErrorResponse
             {
-                status = 400,
-                isValid = false,
-                errors = result.ErrorMessage
+                Status = StatusCodes.Status400BadRequest,
+                Errors = new Dictionary<string, string[]>
+                {
+                    { "", new[] { result.ErrorMessage } }
+                }
             });
         }
     }
