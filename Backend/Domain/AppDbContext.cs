@@ -46,7 +46,7 @@ namespace Domain.Data
             });
 
             builder.Entity<RecipeIngredientEntity>()
-                .HasKey(ri => new { ri.RecipeId, ri.IngredientId });
+                .HasKey(x => x.Id);
 
             builder.Entity<RecipeIngredientEntity>()
                 .HasOne(ri => ri.Recipe)
@@ -69,6 +69,9 @@ namespace Domain.Data
                     .WithMany(u => u.Recipes)
                     .HasForeignKey(r => r.UserId);
             });
+            builder.Entity<RecipeIngredientEntity>()
+               .HasIndex(x => new { x.RecipeId, x.IngredientId })
+               .IsUnique();
         }
     }
 }
