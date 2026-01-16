@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useCreateRecipeMutation } from "../../api/recipeService";
+import { useGetCategoriesQuery } from "../../api/categoryService";
 import type { IRecipeIngredientCreate } from "../../types/recipe/IRecipeCreate";
 import IngredientInputs from "../../Components/Recipe/IngredientInputs";
 
@@ -10,22 +11,40 @@ export default function RecipeCreatePage() {
   const [instruction, setInstruction] = useState("");
   const [categoryId, setCategoryId] = useState<number>(0);
   const [image, setImage] = useState<File | null>(null);
+  const { data: categories = [] } = useGetCategoriesQuery();
 
   const [ingredients, setIngredients] = useState<IRecipeIngredientCreate[]>([]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    await createRecipe({
-      name,
-      slug,
-      instruction,
-      categoryId,
-      image,
-      ingredientsJson: JSON.stringify(ingredients),
-    }).unwrap();
+    const isValid =
+      name &&
+      slug &&
+      instruction &&
+      categoryId &&
+      ingredients.length > 0 &&
+      ingredients.every(
+        (i) => i.ingredientId && i.amount > 0 && i.ingredientUnitId
+      );
 
-    alert("Recipe created!");
+    if(isValid){
+      await createRecipe({
+        name,
+        slug,
+        instruction,
+        categoryId,
+        image,
+        ingredientsJson: JSON.stringify(ingredients),
+      }).unwrap();
+
+      alert("Recipe created!");
+
+    }
+    else {
+        alert("Recipe invalid!");
+    }
+
   };
 
   return (
@@ -53,13 +72,18 @@ export default function RecipeCreatePage() {
         required
       />
 
-      <input
-        type="number"
-        placeholder="Category Id"
-        value={categoryId}
-        onChange={(e) => setCategoryId(Number(e.target.value))}
-        required
-      />
+    <select
+      value={categoryId || ""}
+      onChange={(e) => setCategoryId(Number(e.target.value))}
+      required
+    >
+      <option value="">Select category</option>
+      {categories.map((c) => (
+        <option key={c.id} value={c.id}>
+          {c.name}
+        </option>
+      ))}
+    </select>
 
       <IngredientInputs ingredients={ingredients} setIngredients={setIngredients} />
 
