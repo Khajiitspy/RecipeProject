@@ -4,6 +4,7 @@ using AutoMapper.QueryableExtensions;
 using Bogus.DataSets;
 using Core.Interfaces;
 using Core.Model.Recipe;
+using Core.Model.Recipe.Unit;
 using Domain.Data;
 using Domain.Data.Entities;
 using Domain.Entities;
@@ -125,4 +126,8 @@ public class RecipeService(AppDbContext context, IImageService imageService,
             .FirstOrDefaultAsync();
     }
 
+    public async Task<List<UnitItemModel>> GetUnitsAsync()
+    {
+        return await context.IngredientUnits.Where(x => !x.IsDeleted).ProjectTo<UnitItemModel>(mapper.ConfigurationProvider).ToListAsync();
+    }
 }
