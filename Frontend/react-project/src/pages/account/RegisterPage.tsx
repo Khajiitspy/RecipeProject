@@ -75,9 +75,9 @@ const RegisterPage = () => {
         </div>
 
         {/* ПРАВА ЧАСТИНА: Форма входу */}
-        <div className="w-full lg:w-1/2 flex flex-col  justify-center px-8 md:px-24 lg:px-32">
+        <div className="w-full lg:w-1/2 flex flex-col mb-10  justify-center px-8 md:px-24 lg:px-32">
             <div className="max-w-md w-full mx-auto">
-                <div className="mb-6 text-center lg:text-left">
+                <div className="mb-2 text-center lg:text-left">
                     <h2 className="text-3xl font-bold text-slate-900">Sign up</h2>
                     <p className="text-slate-500 mt-2">
                         Already have an account? {" "}
@@ -111,7 +111,7 @@ const RegisterPage = () => {
 
 
                 {/* Форма */}
-                <form className="space-y-6 flex-col" onSubmit={handleSubmit}>
+                <form className="space-y-3 flex-col" onSubmit={handleSubmit}>
 
                     <div className="flex  gap-4">
                         <input
@@ -174,7 +174,7 @@ const RegisterPage = () => {
                     <button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full bg-gray-800 text-white py-4 rounded-xl font-bold text-lg hover:bg-slate-800 transition shadow-lg shadow-slate-200"
+                    className="w-full bg-gray-800 text-white py-4 rounded-xl font-bold text-lg hover:ring-2 hover:ring-amber-300 hover:ring-offset-2 transition-all shadow-lg shadow-slate-200"
                     >
                     {isLoading ? "Creating account..." : "Register"}
                     </button>

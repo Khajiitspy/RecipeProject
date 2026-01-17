@@ -24,6 +24,14 @@ export const MainHeader = () => {
         navigate("/profile");
     }
 
+    const handleLoginRedirect = () => {
+        navigate('/account/login');
+    };
+
+    const handleSignUpRedirect = () => {
+        navigate('/account/register');
+    };
+
 
     return (
         <header className="w-full py-2 px-6 bg-amber-300  shadow-md flex justify-between items-center border-b border-gray-200 dark:border-gray-800">
@@ -144,22 +152,17 @@ export const MainHeader = () => {
                         </DropdownMenu.Root>
                     )
                 ) : (
-                    <div className="flex items-center">
-                        <Link
-                            to="/account/login"
-                            className="text-gray-700 hover:text-gray-500  font-semibold py-2 px-2 rounded-full transition-all duration-300"
-                        >
+                    <div className="flex items-center gap-4">
+                        <button onClick={handleLoginRedirect} className="bg-gray-800 text-white px-6 py-3 rounded-xl font-bold
+                        hover:ring-2 hover:ring-amber-300 hover:ring-offset-2 transition-all">
                             Login
-                        </Link>
+                        </button>
 
-                        <span className="text-gray-700">/</span>
 
-                        <Link
-                            to="/account/register"
-                            className="text-gray-700 hover:text-gray-500 font-semibold py-2 px-2 rounded-full transition-all duration-300"
-                        >
+                        <button onClick={handleSignUpRedirect} className="bg-gray-800 text-white px-6 py-3 rounded-xl font-bold
+                        hover:ring-2 hover:ring-amber-300 hover:ring-offset-2 transition-all">
                             Sign up
-                        </Link>
+                        </button>
                     </div>
                 )}
             </nav>
