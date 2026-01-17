@@ -1,18 +1,23 @@
 import { useState } from "react";
-import { useLoginMutation } from "../../api/userService";
-import {Link} from "react-router";
+import {useLoginByGoogleMutation, useLoginMutation} from "../../api/userService";
+import {Link, useNavigate} from "react-router";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
+import {faEye, faEyeSlash, faSpinner} from "@fortawesome/free-solid-svg-icons";
 import foodImage from "../../assets/food.jpg";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
+import {useGoogleLogin} from "@react-oauth/google";
 
 const LoginPage = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
-  const [showPassword, setShowPassword] = useState(false);
+    const navigate = useNavigate();
 
-  const [login, { isLoading, error }] = useLoginMutation();
+
+    const [showPassword, setShowPassword] = useState(false);
+
+    const [login, {isLoading, error}] = useLoginMutation();
+    const [loginByGoogle, {isLoading: isGoogleLoading}] = useLoginByGoogleMutation();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -30,6 +35,27 @@ const LoginPage = () => {
     }
   };
 
+    const loginUseGoogle = useGoogleLogin({
+        onSuccess: async (tokenResponse) =>
+        {
+            try {
+                await loginByGoogle(tokenResponse.access_token).unwrap();
+                // dispatch(loginSuccess(result.token));
+                navigate('/');
+            } catch (error) {
+
+                console.log("User server error auth", error);
+                // const serverError = error as ServerError;
+                //
+                // if (serverError?.status === 400 && serverError?.data?.errors) {
+                //     // setServerErrors(serverError.data.errors);
+                // } else {
+                //     message.error("Сталася помилка при вході");
+                // }
+            }
+        },
+    });
+
   return (
       <div className="flex min-h-screen bg-white">
           {/* ЛІВА ЧАСТИНА: Привітання (ховається на мобільних) */}
@@ -45,7 +71,7 @@ const LoginPage = () => {
 
               {/* 2. Шар затемнення (Overlay) */}
               {/* Це важливо, щоб текст залишався читабельним на фоні фото */}
-              <div className="absolute inset-0 bg-amber-50/40 backdrop-blur-[4px]"></div>
+              <div className="absolute inset-0 bg-amber-50/40 backdrop-blur-[10px]"></div>
 
               {/* 3. Контент (Текст) */}
               {/* relative та z-10 піднімають текст над зображенням */}
@@ -78,14 +104,24 @@ const LoginPage = () => {
                       <button
                           onClick={(event) => {
                               event.preventDefault();
-                              //loginUseGoogle();
+                              loginUseGoogle();
                           }}
+                          disabled={isGoogleLoading}
                           className="flex items-center justify-center gap-2 bg-white
                          text-gray-700 border border-gray-300 hover:shadow-md
                          transition px-4 py-2 rounded-xl w-full mt-4 font-medium"
                       >
-                          <FontAwesomeIcon icon={faGoogle} className="text-amber-300" />
-                          Log in with Google
+                          {isGoogleLoading ? (
+                              <>
+                                  <FontAwesomeIcon icon={faSpinner} className="animate-spin mr-2" />
+                                  <span>Авторизація...</span>
+                              </>
+                          ) : (
+                              <>
+                                  <FontAwesomeIcon icon={faGoogle} className="text-amber-300 mr-2" />
+                                  <span>Увійти через Google</span>
+                              </>
+                          )}
                       </button>
                   </div>
 

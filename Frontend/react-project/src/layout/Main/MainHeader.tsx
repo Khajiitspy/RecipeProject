@@ -2,7 +2,7 @@ import {Link, useNavigate} from "react-router";
 import {useAppDispatch, useAppSelector} from "../../store";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import {logout} from "../../store/authSlice.ts";
-import {faLock, faRightFromBracket, faUser} from "@fortawesome/free-solid-svg-icons";
+import {faChevronDown, faLock, faRightFromBracket, faUser} from "@fortawesome/free-solid-svg-icons";
 import {APP_ENV} from "../../env";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
@@ -108,10 +108,32 @@ export const MainHeader = () => {
                         <DropdownMenu.Root>
                             <DropdownMenu.Trigger asChild>
                                 <button className="flex items-center gap-2 focus:outline-none">
-                                    <img
-                                        src={`${APP_ENV.IMAGES_50_URL}${user?.image}`}
-                                        alt="Avatar"
-                                        className="w-10 h-10 rounded-full border-2 border-white shadow-sm"
+
+                                    <div className="relative">
+                                        <img
+                                            src={`${APP_ENV.IMAGES_50_URL}${user?.image}`}
+                                            alt="Avatar"
+                                            className="w-10 h-10 rounded-full border-2 border-white shadow-sm object-cover"
+                                        />
+                                        {/* Маленька крапка "онлайн", якщо захочете */}
+                                        <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></span>
+                                    </div>
+
+                                    <div className="hidden md:flex flex-col items-start leading-tight">
+                                    <span
+                                        className="text-sm font-bold text-slate-800 group-hover:text-amber-600 transition-colors">
+                                        {user?.name}
+                                    </span>
+                                        <span
+                                            className="text-[11px] text-slate-500 font-medium uppercase tracking-wider">
+                                        Мій профіль
+                                       </span>
+                                    </div>
+
+                                    {/* Іконка шеврона (стрілочка) */}
+                                    <FontAwesomeIcon
+                                        icon={faChevronDown}
+                                        className="text-[10px] text-gray-800 group-hover:text-amber-500 transition-colors ml-1"
                                     />
                                 </button>
                             </DropdownMenu.Trigger>

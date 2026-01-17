@@ -3,7 +3,6 @@ import { useRegisterMutation } from "../../api/userService";
 import {Link, useNavigate} from "react-router";
 import foodImage from "../../assets/food.jpg";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faGoogle} from "@fortawesome/free-brands-svg-icons";
 import ImageUploadFormItem from "../../Components/UI/ImageUploadFormItem.tsx";
 import {useAppDispatch} from "../../store";
 import {loginSuccess} from "../../store/authSlice.ts";
@@ -59,7 +58,7 @@ const RegisterPage = () => {
 
             {/* 2. Шар затемнення (Overlay) */}
             {/* Це важливо, щоб текст залишався читабельним на фоні фото */}
-            <div className="absolute inset-0 bg-amber-50/40 backdrop-blur-[4px]"></div>
+            <div className="absolute inset-0 bg-amber-50/40 backdrop-blur-[10px]"></div>
 
             {/* 3. Контент (Текст) */}
             {/* relative та z-10 піднімають текст над зображенням */}
@@ -77,7 +76,7 @@ const RegisterPage = () => {
         {/* ПРАВА ЧАСТИНА: Форма входу */}
         <div className="w-full lg:w-1/2 flex flex-col mb-10  justify-center px-8 md:px-24 lg:px-32">
             <div className="max-w-md w-full mx-auto">
-                <div className="mb-2 text-center lg:text-left">
+                <div className="mb-8 text-center lg:text-left">
                     <h2 className="text-3xl font-bold text-slate-900">Sign up</h2>
                     <p className="text-slate-500 mt-2">
                         Already have an account? {" "}
@@ -86,29 +85,6 @@ const RegisterPage = () => {
                         </Link>
                     </p>
                 </div>
-
-                {/* Соціальні кнопки */}
-                <div className="flex gap-4 mb-4">
-                    <button
-                        onClick={(event) => {
-                            event.preventDefault();
-                            //loginUseGoogle();
-                        }}
-                        className="flex items-center justify-center gap-2 bg-white
-                         text-gray-700 border border-gray-300 hover:shadow-md
-                         transition px-4 py-2 rounded-xl w-full mt-4 font-medium"
-                    >
-                        <FontAwesomeIcon icon={faGoogle} className="text-amber-300"/>
-                        Log in with Google
-                    </button>
-                </div>
-
-                <div className="relative flex items-center mb-2">
-                    <div className="flex-grow border-t border-slate-200"></div>
-                    <span className="flex-shrink mx-4 text-slate-400 text-sm">or</span>
-                    <div className="flex-grow border-t border-slate-200"></div>
-                </div>
-
 
                 {/* Форма */}
                 <form className="space-y-3 flex-col" onSubmit={handleSubmit}>
