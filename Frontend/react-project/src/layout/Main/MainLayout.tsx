@@ -5,17 +5,17 @@ import SideBar from "./MainSideBar.tsx";
 
 export const MainLayout = () => {
     return (
-        <div className="min-h-screen flex flex-col bg-neutral-secondary-soft">
-            <MainHeader />
+        <div className="flex h-screen overflow-hidden bg-gray-50">
+            <SideBar />
 
-            <main className="flex flex-1  bg-gray-50">
-                <SideBar />
-                <div className="flex-1">
+            <div className="flex-1 flex flex-col overflow-hidden">
+                <MainHeader />
+
+                <main className="flex-1 overflow-y-auto ">
                     <Outlet />
-                </div>
-            </main>
-
-            <MainFooter />
+                    <MainFooter />
+                </main>
+            </div>
         </div>
     );
 };
