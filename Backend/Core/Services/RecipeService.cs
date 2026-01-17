@@ -21,11 +21,6 @@ public class RecipeService(
     IAuthService authService,
     ICacheService cache) : IRecipeService
 {
-
-    private const int ListCacheTtlMinutes = 10;
-    private const int ItemCacheTtlMinutes = 5;
-    private const int UnitsCacheTtlMinutes = 60;
-
     public async Task<RecipeItemModel> CreateAsync(RecipeCreateModel model)
     {
         var entity = mapper.Map<RecipeEntity>(model);
@@ -87,7 +82,7 @@ public class RecipeService(
                 .Where(x => !x.IsDeleted && x.UserId == userId)
                 .ProjectTo<RecipeItemModel>(mapper.ConfigurationProvider)
                 .ToListAsync(),
-            TimeSpan.FromMinutes(ListCacheTtlMinutes)
+            TimeSpan.FromMinutes(CacheKeys.ListCacheTtlMinutes)
         );
     }
     public async Task<PagedResult<RecipeItemModel>> ListAsync(RecipeSearchRequest request)
@@ -198,7 +193,7 @@ public class RecipeService(
                 .Where(x => x.Id == id)
                 .ProjectTo<RecipeItemModel>(mapper.ConfigurationProvider)
                 .FirstOrDefaultAsync(),
-            TimeSpan.FromMinutes(ItemCacheTtlMinutes)
+            TimeSpan.FromMinutes(CacheKeys.ItemCacheTtlMinutes)
         );
     }
 
@@ -210,7 +205,7 @@ public class RecipeService(
                 .Where(x => !x.IsDeleted)
                 .ProjectTo<UnitItemModel>(mapper.ConfigurationProvider)
                 .ToListAsync(),
-            TimeSpan.FromMinutes(UnitsCacheTtlMinutes)
+            TimeSpan.FromMinutes(CacheKeys.ListCacheTtlMinutes)
         );
     }
 }
