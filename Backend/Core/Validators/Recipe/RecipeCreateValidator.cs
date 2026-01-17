@@ -40,7 +40,7 @@ public class RecipeCreateValidator : AbstractValidator<RecipeCreateModel>
                 RuleFor(x => x.Slug)
                     .MustAsync(async (slug, cancellation) =>
                     !await context.Recipes.AnyAsync(c => c.Slug.ToLower() == slug.ToLower().Trim(), cancellation))
-                .WithMessage("Категорія з таким слагом вже існує");
+                .WithMessage("Рецепт з таким слагом вже існує");
             })
             .MaximumLength(350)
             .WithMessage("Слаг має бути не довшим, ніж 250 символів");
