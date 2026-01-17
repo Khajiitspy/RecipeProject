@@ -14,7 +14,7 @@ export const userService = createApi({
       query: (body) => {
         const formData = serialize(body, { indices: false });
         return {
-          url: "/account/register",
+          url: "/register",
           method: "POST",
           body: formData,
         };
@@ -23,7 +23,7 @@ export const userService = createApi({
 
     login: builder.mutation<ITokenResponse, ILoginUser>({
       query: (body) => ({
-        url: "/account/login",
+        url: "/login",
         method: "POST",
         body,
       }),

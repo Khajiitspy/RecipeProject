@@ -1,7 +1,7 @@
 export interface IRegisterUser {
-    firstName: string;
-    lastName: string;
-    email: string;
-    password: string;
-    imageFile?: File | null;
+    FirstName: string;
+    LastName: string;
+    Email: string;
+    Password: string;
+    ImageFile?: File | null;
 }

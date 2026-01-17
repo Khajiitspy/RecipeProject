@@ -14,7 +14,7 @@ export const MainHeader = () => {
                     to="/account/login"
                     className="text-gray-700 hover:text-gray-500  font-semibold py-2 px-2 rounded-full transition-all duration-300"
                 >
-                    Вхід
+                    Login
                 </Link>
 
                 <span className="text-gray-700">/</span>
@@ -23,7 +23,7 @@ export const MainHeader = () => {
                     to="/account/register"
                     className="text-gray-700 hover:text-gray-500 font-semibold py-2 px-2 rounded-full transition-all duration-300"
                 >
-                    Реєстрація
+                    Sign up
                 </Link>
             </div>
 

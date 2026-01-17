@@ -2,13 +2,15 @@ import { useState } from "react";
 import { useLoginMutation } from "../../api/userService";
 import {Link} from "react-router";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faEyeSlash} from "@fortawesome/free-solid-svg-icons";
+import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
 import foodImage from "../../assets/food.jpg";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const [showPassword, setShowPassword] = useState(false);
 
   const [login, { isLoading, error }] = useLoginMutation();
 
@@ -29,34 +31,6 @@ const LoginPage = () => {
   };
 
   return (
-    /*<form onSubmit={handleSubmit}>
-      <h2>Login</h2>
-
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        required
-      />
-
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        required
-      />
-
-      <button type="submit" disabled={isLoading}>
-        {isLoading ? "Logging in..." : "Login"}
-      </button>
-
-      {error && <p style={{ color: "red" }}>Invalid email or password</p>}
-    </form>*/
-
-
-
       <div className="flex min-h-screen bg-white">
           {/* ЛІВА ЧАСТИНА: Привітання (ховається на мобільних) */}
           <div className="hidden lg:flex lg:w-1/2 flex-col justify-center px-20 relative overflow-hidden min-h-screen">
@@ -93,14 +67,14 @@ const LoginPage = () => {
                       <h2 className="text-3xl font-bold text-slate-900">Login</h2>
                       <p className="text-slate-500 mt-2">
                           Don't have an account? {" "}
-                          <Link to="/register" className="text-amber-300 font-semibold hover:underline">
+                          <Link to="/account/register" className="text-amber-300 font-semibold hover:underline">
                               Sign up
                           </Link>
                       </p>
                   </div>
 
                   {/* Соціальні кнопки */}
-                  <div className="flex gap-4 mb-8">
+                  <div className="flex gap-4 mb-4">
                       <button
                           onClick={(event) => {
                               event.preventDefault();
@@ -147,15 +121,22 @@ const LoginPage = () => {
                           </div>
                           <div className="relative">
                               <input
-                                  type="password"
+                                  type={showPassword ? "text" : "password"}
                                   className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-300/20 transition"
                                   placeholder="Your password"
                                   value={password}
                                   onChange={(e) => setPassword(e.target.value)}
                                   required
                               />
-                              <button type="button" className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
-                                  <FontAwesomeIcon icon={faEyeSlash} />
+
+                              <button
+                                  type="button"
+                                  // При натисканні змінюємо true на false і навпаки
+                                  onClick={() => setShowPassword(!showPassword)}
+                                  className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors"
+                              >
+                                  {/* Змінюємо іконку залежно від стану */}
+                                  <FontAwesomeIcon icon={showPassword ? faEye : faEyeSlash} />
                               </button>
                           </div>
                       </div>
@@ -174,9 +155,6 @@ const LoginPage = () => {
               </div>
           </div>
       </div>
-
-
-
   );
 };
 
