@@ -90,7 +90,7 @@ namespace Core.Services
             return userModel;
         }
 
-        public async Task<List<PagedResult<AdminUserItemModel>>> SearchUsersAsync(UserSearchRequest request)
+        public async Task<PagedResult<AdminUserItemModel>> SearchUsersAsync(UserSearchRequest request)
         {
             var result = await new AdminUserBuilder(
                     context.Users
@@ -129,15 +129,12 @@ namespace Core.Services
                 }
             }
 
-            return new List<PagedResult<AdminUserItemModel>>
+            return new PagedResult<AdminUserItemModel>
             {
-                new PagedResult<AdminUserItemModel>
-                {
-                    Items = items,
-                    TotalItems = result.TotalItems,
-                    PageNumber = result.PageNumber,
-                    PageSize = result.PageSize
-                }
+                Items = items,
+                TotalItems = result.TotalItems,
+                PageNumber = result.PageNumber,
+                PageSize = result.PageSize
             };
         }
 

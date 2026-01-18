@@ -9,7 +9,7 @@ namespace Core.Interfaces
     public interface IUserService
     {
         Task<List<AdminUserItemModel>> GetAllUsersAsync();
-        Task<List<PagedResult<AdminUserItemModel>>> SearchUsersAsync(UserSearchRequest request);
+        Task<PagedResult<AdminUserItemModel>> SearchUsersAsync(UserSearchRequest request);
         Task<string> SeedUsersAsync(SeedItemsModel model);
         Task<AdminUserItemModel> GetUserByIdAsync(long id);
         Task<AdminUserItemModel> UpdateAsync(AdminUserUpdateModel model);

@@ -27,6 +27,23 @@ namespace API.Controllers
             var recipes = await recipeService.ListAsync(request);
             return Ok(recipes);
         }
+
+        [HttpGet("myRecipes")]
+        [Authorize]
+        public async Task<IActionResult> MyRecipes()
+        {
+            var recipes = await recipeService.ListByUserAsync();
+            return Ok(recipes);
+        }
+
+        [HttpPut("publish/{id:long}")]
+        [Authorize]
+        public async Task<IActionResult> Publish(long id)
+        {
+            await recipeService.PublishRecipe(id);
+            return Ok();
+        }
+
         [HttpGet]
         public async Task<IActionResult> List()
         {

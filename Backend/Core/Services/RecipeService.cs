@@ -79,7 +79,7 @@ public class RecipeService(
         return await cache.GetOrCreateAsync(
             key,
             async () => await context.Recipes
-                .Where(x => !x.IsDeleted && x.UserId == userId)
+                .Where(x => !x.IsDeleted && x.UserId == userId && x.IsPublished)
                 .ProjectTo<RecipeItemModel>(mapper.ConfigurationProvider)
                 .ToListAsync(),
             TimeSpan.FromMinutes(CacheKeys.ListCacheTtlMinutes)
@@ -87,10 +87,21 @@ public class RecipeService(
     }
     public async Task<PagedResult<RecipeItemModel>> ListAsync(RecipeSearchRequest request)
     {
+        var isAdmin = await authService.IsAdminAsync();
+
+        if (!isAdmin)
+        {
+            request.IsDeleted = false;
+
+            request.IsPublished = true;
+        }
+
         var query = context.Recipes.AsQueryable();
 
         var result = await new RecipeBuilder(query)
             .Include(r => r.Category!, r => r.User!)
+            .TakeDeleted(request.IsDeleted)
+            .TakePublished(request.IsPublished)
             .ApplyRequest(request)
             .OrderBy(r => r.Id, descending: true)
             .BuildAsync();
@@ -207,5 +218,28 @@ public class RecipeService(
                 .ToListAsync(),
             TimeSpan.FromMinutes(CacheKeys.ListCacheTtlMinutes)
         );
+    }
+
+    public async Task<List<RecipeItemModel>> ListByUserAsync()
+    {
+        long userId = await authService.GetUserId();
+
+        return await context.Recipes
+            .Where(x => !x.IsDeleted && x.UserId == userId)
+            .ProjectTo<RecipeItemModel>(mapper.ConfigurationProvider)
+            .ToListAsync();
+    }
+
+    public async Task PublishRecipe(long id)
+    {
+        long userId = await authService.GetUserId();
+
+        var recipe = await context.Recipes.FirstOrDefaultAsync(r => r.Id == id && r.UserId == userId);
+        if (recipe == null)
+            return;
+
+        recipe.IsPublished = true;
+
+        await context.SaveChangesAsync();
     }
 }

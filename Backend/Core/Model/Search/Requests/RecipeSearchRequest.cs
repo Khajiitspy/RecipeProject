@@ -8,5 +8,7 @@ namespace Core.Model.Search.Requests
         public string? CategoryName { get; set; }
         public long? IngredientId { get; set; }
         public string? IngredientName { get; set; }
+        public bool? IsDeleted { get; set; }
+        public bool? IsPublished { get; set; }
     }
 }

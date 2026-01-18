@@ -15,6 +15,7 @@ public class IngredientService(
     AppDbContext context,
     IMapper mapper,
     IImageService imageService,
+    IAuthService authService,
     ICacheService cache) : IIngredientService
 {
     public async Task<IngredientItemModel> CreateAsync(IngredientCreateModel model)
@@ -75,9 +76,15 @@ public class IngredientService(
 
     public async Task<PagedResult<IngredientItemModel>> ListAsync(IngredientSearchRequest request)
     {
+        var isAdmin = await authService.IsAdminAsync();
+
+        if (!isAdmin)
+            request.IsDeleted = false;
+
         var query = context.Ingredients.AsQueryable();
 
         var result = await new IngredientBuilder(query)
+            .TakeDeleted(request.IsDeleted)
             .ApplyRequest(request)
             .OrderBy(r => r.Id, descending: true)
             .BuildAsync();
