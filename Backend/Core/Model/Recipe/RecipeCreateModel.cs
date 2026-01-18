@@ -9,6 +9,7 @@ public class RecipeCreateModel
     public string Slug { get; set; } = string.Empty;
     public string Instruction { get; set; } = string.Empty;
     public IFormFile? Image { get; set; }
+    public bool IsPublished { get; set; } = false;
     public long CategoryId { get; set; }
     public string IngredientsJson { get; set; } = string.Empty;
     //public List<RecipeIngredientCreateModel>? RecipeIngredients { get; set; }

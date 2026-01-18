@@ -18,5 +18,21 @@ namespace Core.Builders
 
             return this;
         }
+
+        public IngredientBuilder TakeDeleted(bool? isDeleted = true)
+        {
+            Query = isDeleted.HasValue && isDeleted.Value
+                ? Query.Where(i => i.IsDeleted)
+                : Query.Where(i => !i.IsDeleted);
+            return this;
+        }
+
+        public IngredientBuilder TakeApproved(bool? isApproved = true)
+        {
+            Query = isApproved.HasValue && isApproved.Value
+                ? Query.Where(i => i.IsApproved)
+                : Query.Where(i => !i.IsApproved);
+            return this;
+        }
     }
 }

@@ -20,5 +20,13 @@ namespace Core.Builders
 
             return this;
         }
+
+        public CategoryBuilder TakeDeleted(bool? isDeleted = true)
+        {
+            Query = isDeleted.HasValue && isDeleted.Value
+                ? Query.Where(c => c.IsDeleted)
+                : Query.Where(c => !c.IsDeleted);
+            return this;
+        }
     }
 }

@@ -12,6 +12,7 @@ public class RecipeEntity : BaseEntity<long>
     public string Instruction { get; set; } = string.Empty;
     public string Slug { get; set; } = string.Empty;
     public string Image { get; set; } = string.Empty;
+    public bool IsPublished { get; set; } = false;
 
     [ForeignKey("Category")]
     public long CategoryId { get; set; }

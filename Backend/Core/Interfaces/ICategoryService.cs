@@ -7,7 +7,7 @@ namespace Core.Interfaces;
 public interface ICategoryService
 {
     Task<List<CategoryItemModel>> ListAsync();
-    Task<List<PagedResult<CategoryItemModel>>> ListAsync(CategorySearchRequest request);
+    Task<PagedResult<CategoryItemModel>> ListAsync(CategorySearchRequest request);
     Task<CategoryItemModel?> GetItemByIdAsync(long id);
     Task<CategoryItemModel> CreateAsync(CategoryCreateModel model);
     Task<CategoryItemModel> UpdateAsync(CategoryUpdateModel model);
