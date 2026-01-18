@@ -15,6 +15,7 @@ public class CategoryService(
         AppDbContext context,
         IMapper mapper,
         IImageService imageService,
+        IAuthService authService,
         ICacheService cache) : ICategoryService
 {
     
@@ -88,24 +89,29 @@ public class CategoryService(
             TimeSpan.FromMinutes(CacheKeys.ListCacheTtlMinutes)
         );
     }
-    public async Task<List<PagedResult<CategoryItemModel>>> ListAsync(CategorySearchRequest request)
+    public async Task<PagedResult<CategoryItemModel>> ListAsync(CategorySearchRequest request)
     {
-        var result = await new CategoryBuilder(context.Categories.AsQueryable())
-        .ApplyRequest(request)
-        .OrderBy(c => c.Name)
-        .BuildAsync();
+        var isAdmin = await authService.IsAdminAsync();
+
+        if (!isAdmin)
+            request.IsDeleted = false;
+
+        var query = context.Categories.AsQueryable();
+
+        var result = await new CategoryBuilder(query)
+            .TakeDeleted(request.IsDeleted)
+            .ApplyRequest(request)
+            .OrderBy(c => c.Name)
+            .BuildAsync();
 
         var items = mapper.Map<List<CategoryItemModel>>(result.Items);
 
-        return new List<PagedResult<CategoryItemModel>>
+        return new PagedResult<CategoryItemModel>
         {
-            new PagedResult<CategoryItemModel>
-            {
-                Items = items,
-                TotalItems = result.TotalItems,
-                PageNumber = result.PageNumber,
-                PageSize = result.PageSize
-            }
+            Items = items,
+            TotalItems = result.TotalItems,
+            PageNumber = result.PageNumber,
+            PageSize = result.PageSize
         };
     }
 }

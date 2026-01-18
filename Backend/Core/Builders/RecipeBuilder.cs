@@ -52,6 +52,22 @@ namespace Core.Builders
             return this;
         }
 
+        public RecipeBuilder TakeDeleted(bool? isDeleted = true)
+        {
+            Query = isDeleted.HasValue && isDeleted.Value
+                ? Query.Where(r => r.IsDeleted)
+                : Query.Where(r => !r.IsDeleted);
+            return this;
+        }
+
+        public RecipeBuilder TakePublished (bool? isPublish = true)
+        {
+            Query = isPublish.HasValue && isPublish.Value
+                ? Query.Where(r => r.IsPublished)
+                : Query.Where(r => !r.IsPublished);
+            return this;
+        }
+
         public RecipeBuilder IncludeIngredients()
         {
             Query = Query
