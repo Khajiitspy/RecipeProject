@@ -3,12 +3,16 @@ import { useRegisterMutation } from "../../api/userService";
 import {Link, useNavigate} from "react-router";
 import foodImage from "../../assets/food.jpg";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faGoogle} from "@fortawesome/free-brands-svg-icons";
 import ImageUploadFormItem from "../../Components/UI/ImageUploadFormItem.tsx";
+import {useAppDispatch} from "../../store";
+import {loginSuccess} from "../../store/authSlice.ts";
+import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
 
 const RegisterPage = () => {
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const [register, { isLoading, error }] = useRegisterMutation();
+    const [showPassword, setShowPassword] = useState(false);
 
     const [form, setForm] = useState({
         FirstName: "",
@@ -30,13 +34,9 @@ const RegisterPage = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-
         try {
-            // 2. Оскільки ваш userService використовує serialize(body),
-            // вам НЕ потрібно створювати FormData вручну. Просто передайте об'єкт.
             const result = await register(form).unwrap();
-
-            localStorage.setItem("token", result.token);
+            dispatch(loginSuccess(result.token));
             navigate("/");
         } catch (err) {
             console.error("Register error:", err);
@@ -58,7 +58,7 @@ const RegisterPage = () => {
 
             {/* 2. Шар затемнення (Overlay) */}
             {/* Це важливо, щоб текст залишався читабельним на фоні фото */}
-            <div className="absolute inset-0 bg-amber-50/40 backdrop-blur-[4px]"></div>
+            <div className="absolute inset-0 bg-amber-50/40 backdrop-blur-[10px]"></div>
 
             {/* 3. Контент (Текст) */}
             {/* relative та z-10 піднімають текст над зображенням */}
@@ -74,9 +74,9 @@ const RegisterPage = () => {
         </div>
 
         {/* ПРАВА ЧАСТИНА: Форма входу */}
-        <div className="w-full lg:w-1/2 flex flex-col  justify-center px-8 md:px-24 lg:px-32">
+        <div className="w-full lg:w-1/2 flex flex-col mb-10  justify-center px-8 md:px-24 lg:px-32">
             <div className="max-w-md w-full mx-auto">
-                <div className="mb-6 text-center lg:text-left">
+                <div className="mb-8 text-center lg:text-left">
                     <h2 className="text-3xl font-bold text-slate-900">Sign up</h2>
                     <p className="text-slate-500 mt-2">
                         Already have an account? {" "}
@@ -86,31 +86,8 @@ const RegisterPage = () => {
                     </p>
                 </div>
 
-                {/* Соціальні кнопки */}
-                <div className="flex gap-4 mb-4">
-                    <button
-                        onClick={(event) => {
-                            event.preventDefault();
-                            //loginUseGoogle();
-                        }}
-                        className="flex items-center justify-center gap-2 bg-white
-                         text-gray-700 border border-gray-300 hover:shadow-md
-                         transition px-4 py-2 rounded-xl w-full mt-4 font-medium"
-                    >
-                        <FontAwesomeIcon icon={faGoogle} className="text-amber-300"/>
-                        Log in with Google
-                    </button>
-                </div>
-
-                <div className="relative flex items-center mb-2">
-                    <div className="flex-grow border-t border-slate-200"></div>
-                    <span className="flex-shrink mx-4 text-slate-400 text-sm">or</span>
-                    <div className="flex-grow border-t border-slate-200"></div>
-                </div>
-
-
                 {/* Форма */}
-                <form className="space-y-6 flex-col" onSubmit={handleSubmit}>
+                <form className="space-y-3 flex-col" onSubmit={handleSubmit}>
 
                     <div className="flex  gap-4">
                         <input
@@ -143,15 +120,28 @@ const RegisterPage = () => {
                         className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-300/20  transition"
                     />
 
-                    <input
-                        type="password"
-                        name="Password"
-                        placeholder="Password"
-                        value={form.Password}
-                        onChange={handleChange}
-                        required
-                        className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-300/20  transition"
-                    />
+
+                    <div className="relative">
+                        <input
+                            name="Password"
+                            type={showPassword ? "text" : "password"}
+                            className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-300/20 transition"
+                            placeholder="Password"
+                            value={form.Password}
+                            onChange={handleChange}
+                            required
+                        />
+
+                        <button
+                            type="button"
+                            // При натисканні змінюємо true на false і навпаки
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors"
+                        >
+                            {/* Змінюємо іконку залежно від стану */}
+                            <FontAwesomeIcon icon={showPassword ? faEye : faEyeSlash} />
+                        </button>
+                    </div>
 
                     <div>
                         <ImageUploadFormItem name="ImageFile" onFileSelect={(file) => setForm(prev => ({ ...prev, ImageFile: file }))} />
@@ -160,7 +150,7 @@ const RegisterPage = () => {
                     <button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full bg-gray-800 text-white py-4 rounded-xl font-bold text-lg hover:bg-slate-800 transition shadow-lg shadow-slate-200"
+                    className="w-full bg-gray-800 text-white py-4 rounded-xl font-bold text-lg hover:ring-2 hover:ring-amber-300 hover:ring-offset-2 transition-all shadow-lg shadow-slate-200"
                     >
                     {isLoading ? "Creating account..." : "Register"}
                     </button>
