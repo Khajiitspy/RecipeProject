@@ -10,12 +10,23 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^7.1.0",
+    "@fortawesome/free-brands-svg-icons": "^7.1.0",
+    "@fortawesome/free-solid-svg-icons": "^7.1.0",
+    "@fortawesome/react-fontawesome": "^3.1.1",
+    "@radix-ui/react-dropdown-menu": "^2.1.16",
+    "@react-oauth/google": "^0.13.4",
     "@reduxjs/toolkit": "^2.11.2",
+    "@tailwindcss/vite": "^4.1.18",
+    "antd": "^6.2.0",
+    "fontawesome": "^5.6.3",
+    "jwt-decode": "^4.0.0",
     "object-to-formdata": "^4.5.1",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-redux": "^9.2.0",
-    "react-router": "^7.12.0"
+    "react-router": "^7.12.0",
+    "tailwindcss": "^4.1.18"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
