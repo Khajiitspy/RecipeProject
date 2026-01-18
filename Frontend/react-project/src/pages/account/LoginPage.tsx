@@ -1,18 +1,23 @@
 import { useState } from "react";
-import { useLoginMutation } from "../../api/userService";
-import {Link} from "react-router";
+import {useLoginByGoogleMutation, useLoginMutation} from "../../api/userService";
+import {Link, useNavigate} from "react-router";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
+import {faEye, faEyeSlash, faSpinner} from "@fortawesome/free-solid-svg-icons";
 import foodImage from "../../assets/food.jpg";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
+import {useGoogleLogin} from "@react-oauth/google";
 
 const LoginPage = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
-  const [showPassword, setShowPassword] = useState(false);
+    const navigate = useNavigate();
 
-  const [login, { isLoading, error }] = useLoginMutation();
+
+    const [showPassword, setShowPassword] = useState(false);
+
+    const [login, {isLoading, error}] = useLoginMutation();
+    const [loginByGoogle, {isLoading: isGoogleLoading}] = useLoginByGoogleMutation();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -30,6 +35,27 @@ const LoginPage = () => {
     }
   };
 
+    const loginUseGoogle = useGoogleLogin({
+        onSuccess: async (tokenResponse) =>
+        {
+            try {
+                await loginByGoogle(tokenResponse.access_token).unwrap();
+                // dispatch(loginSuccess(result.token));
+                navigate('/');
+            } catch (error) {
+
+                console.log("User server error auth", error);
+                // const serverError = error as ServerError;
+                //
+                // if (serverError?.status === 400 && serverError?.data?.errors) {
+                //     // setServerErrors(serverError.data.errors);
+                // } else {
+                //     message.error("Сталася помилка при вході");
+                // }
+            }
+        },
+    });
+
   return (
       <div className="flex min-h-screen bg-white">
           {/* ЛІВА ЧАСТИНА: Привітання (ховається на мобільних) */}
@@ -45,7 +71,7 @@ const LoginPage = () => {
 
               {/* 2. Шар затемнення (Overlay) */}
               {/* Це важливо, щоб текст залишався читабельним на фоні фото */}
-              <div className="absolute inset-0 bg-amber-50/40 backdrop-blur-[4px]"></div>
+              <div className="absolute inset-0 bg-amber-50/40 backdrop-blur-[10px]"></div>
 
               {/* 3. Контент (Текст) */}
               {/* relative та z-10 піднімають текст над зображенням */}
@@ -63,7 +89,7 @@ const LoginPage = () => {
           {/* ПРАВА ЧАСТИНА: Форма входу */}
           <div className="w-full lg:w-1/2 flex flex-col justify-center px-8 md:px-24 lg:px-32">
               <div className="max-w-md w-full mx-auto">
-                  <div className="mb-10 text-center lg:text-left">
+                  <div className="mb-2 text-center lg:text-left">
                       <h2 className="text-3xl font-bold text-slate-900">Login</h2>
                       <p className="text-slate-500 mt-2">
                           Don't have an account? {" "}
@@ -78,18 +104,28 @@ const LoginPage = () => {
                       <button
                           onClick={(event) => {
                               event.preventDefault();
-                              //loginUseGoogle();
+                              loginUseGoogle();
                           }}
+                          disabled={isGoogleLoading}
                           className="flex items-center justify-center gap-2 bg-white
                          text-gray-700 border border-gray-300 hover:shadow-md
                          transition px-4 py-2 rounded-xl w-full mt-4 font-medium"
                       >
-                          <FontAwesomeIcon icon={faGoogle} className="text-amber-300" />
-                          Log in with Google
+                          {isGoogleLoading ? (
+                              <>
+                                  <FontAwesomeIcon icon={faSpinner} className="animate-spin mr-2" />
+                                  <span>Авторизація...</span>
+                              </>
+                          ) : (
+                              <>
+                                  <FontAwesomeIcon icon={faGoogle} className="text-amber-300 mr-2" />
+                                  <span>Увійти через Google</span>
+                              </>
+                          )}
                       </button>
                   </div>
 
-                  <div className="relative flex items-center mb-8">
+                  <div className="relative flex items-center">
                       <div className="flex-grow border-t border-slate-200"></div>
                       <span className="flex-shrink mx-4 text-slate-400 text-sm">or</span>
                       <div className="flex-grow border-t border-slate-200"></div>
@@ -97,7 +133,7 @@ const LoginPage = () => {
 
 
                   {/* Форма */}
-                  <form className="space-y-6" onSubmit={handleSubmit}>
+                  <form className="space-y-3" onSubmit={handleSubmit}>
                       <div>
                           <label className="block text-sm font-bold text-slate-700 mb-2 uppercase tracking-tight">
                               Email *
@@ -143,7 +179,7 @@ const LoginPage = () => {
 
                       <button
                           type="submit" disabled={isLoading}
-                          className="w-full bg-gray-800 text-white py-4 rounded-xl font-bold text-lg hover:bg-slate-800 transition shadow-lg shadow-slate-200"
+                          className="w-full bg-gray-800 text-white py-4 rounded-xl font-bold text-lg hover:ring-2 hover:ring-amber-300 hover:ring-offset-2 transition-all shadow-lg shadow-slate-200"
                       >
                           {isLoading ? "Logging in..." : "Login"}
                       </button>
