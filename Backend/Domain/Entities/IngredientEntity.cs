@@ -9,6 +9,7 @@ public class IngredientEntity : BaseEntity<long>
 {
     public string Name { get; set; } = String.Empty;
     public string Image { get; set; } = String.Empty;
+    public bool IsApproved { get; set; } = false;
     public ICollection<RecipeIngredientEntity>? RecipeIngredients { get; set; }
 
 }

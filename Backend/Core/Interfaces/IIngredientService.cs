@@ -12,4 +12,5 @@ public interface IIngredientService
     Task<IngredientItemModel> CreateAsync(IngredientCreateModel model);
     Task<IngredientItemModel> UpdateAsync(IngredientUpdateModel model);
     Task DeleteAsync(long id);
+    Task ApproveIngredient(long id);
 }
