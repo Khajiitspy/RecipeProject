@@ -89,9 +89,10 @@ const MainSideBar = ({ isMobileOpen,closeMobileMenu }: SideBarProps) => {
                         <span>Реєстрація</span>
                     </button>
 
-                    <div className="border-t border-gray-200 dark:border-gray-800 mt-4"></div>
                 </div>
             )}
+
+            <div className="border-t border-gray-200 dark:border-gray-800 mb-4"></div>
 
 
             <nav className="space-y-2 mb-6">

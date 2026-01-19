@@ -57,9 +57,9 @@ const LoginPage = () => {
     });
 
   return (
-      <div className="flex min-h-screen bg-white">
+      <div className="flex flex-col lg:flex-row min-h-screen bg-white">
           {/* ЛІВА ЧАСТИНА: Привітання (ховається на мобільних) */}
-          <div className="hidden lg:flex lg:w-1/2 flex-col justify-center px-20 relative overflow-hidden min-h-screen">
+          <div className="lg:w-1/2 flex flex-col h-74 lg:h-screen justify-center px-7 relative overflow-hidden">
 
               {/* 1. Зображення як фон */}
               {/* absolute inset-0 розтягує картинку на весь батьківський блок */}
@@ -80,21 +80,21 @@ const LoginPage = () => {
                       Welcome to <span className="text-amber-300">EatLog</span>!
                   </h1>
                   <p className="text-xl text-gray-800 mb-10 leading-relaxed">
-                      Sign in to create your own recipes and personalize your cooking adventure.
+                      Log In to create your own recipes and personalize your cooking adventure.
                   </p>
               </div>
 
           </div>
 
           {/* ПРАВА ЧАСТИНА: Форма входу */}
-          <div className="w-full lg:w-1/2 flex flex-col justify-center px-8 md:px-24 lg:px-32">
+          <div className="w-full lg:w-1/2 flex flex-col justify-center mt-10 px-10 md:px-24 lg:px-32">
               <div className="max-w-md w-full mx-auto">
                   <div className="mb-2 text-center lg:text-left">
-                      <h2 className="text-3xl font-bold text-slate-900">Login</h2>
+                      <h2 className="text-3xl font-bold text-slate-900">Log In</h2>
                       <p className="text-slate-500 mt-2">
                           Don't have an account? {" "}
                           <Link to="/account/register" className="text-amber-300 font-semibold hover:underline">
-                              Sign up
+                              Sign Up
                           </Link>
                       </p>
                   </div>
