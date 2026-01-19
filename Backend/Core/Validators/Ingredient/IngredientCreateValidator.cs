@@ -1,5 +1,4 @@
 ﻿
-
 using Core.Model.Recipe.Ingredient;
 using Domain.Data;
 using FluentValidation;

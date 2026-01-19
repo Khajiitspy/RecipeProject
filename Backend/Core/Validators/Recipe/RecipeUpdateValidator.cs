@@ -1,15 +1,20 @@
-﻿
-using Core.Model.Recipe;
+﻿using Core.Model.Recipe;
 using Domain.Data;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
 namespace Core.Validators.Recipe;
 
-public class RecipeCreateValidator : AbstractValidator<RecipeCreateModel>
+public class RecipeUpdateValidator : AbstractValidator<RecipeUpdateModel>
 {
-    public RecipeCreateValidator(AppDbContext context)
+    public RecipeUpdateValidator(AppDbContext context)
     {
+        RuleFor(x => x.Id)
+            .NotEmpty()
+            .WithMessage("Id обов'язкове")
+            .Must(id => id > 0)
+            .WithMessage("Id не може бути від'ємним або 0");
+
         RuleFor(x => x.Name)
             .NotEmpty()
             .WithMessage("Назва обов'язкова")
@@ -18,29 +23,18 @@ public class RecipeCreateValidator : AbstractValidator<RecipeCreateModel>
             .DependentRules(() =>
             {
                 RuleFor(x => x.Name)
-                    .MustAsync(async (name, cancellation) =>
-                    !await context.Ingredients.AnyAsync(c => c.Name.ToLower() == name.ToLower().Trim(), cancellation))
+                    .MustAsync(async (model, name, cancellation) =>
+                    !await context.Ingredients.AnyAsync(c => c.Name.ToLower() == name.ToLower().Trim() && c.Id != model.Id, cancellation))
                 .WithMessage("Рецепт з такою назвою вже існує");
             })
             .MaximumLength(300)
             .WithMessage("Назва має бути не довшою, ніж 300 символів");
-
-        RuleFor(x => x.Image)
-            .NotEmpty()
-            .WithMessage("Image file обов'язковий");
 
         RuleFor(x => x.Slug)
             .NotEmpty()
             .WithMessage("Слаг обов'язковий")
             .Must(slug => !string.IsNullOrEmpty(slug))
             .WithMessage("Слаг не може бути empty або null")
-            .DependentRules(() =>
-            {
-                RuleFor(x => x.Slug)
-                    .MustAsync(async (slug, cancellation) =>
-                    !await context.Recipes.AnyAsync(c => c.Slug.ToLower() == slug.ToLower().Trim(), cancellation))
-                .WithMessage("Рецепт з таким слагом вже існує");
-            })
             .MaximumLength(350)
             .WithMessage("Слаг має бути не довшим, ніж 350 символів");
 
