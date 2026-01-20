@@ -7,6 +7,7 @@ import ImageUploadFormItem from "../../Components/UI/ImageUploadFormItem.tsx";
 import {useAppDispatch} from "../../store";
 import {loginSuccess} from "../../store/authSlice.ts";
 import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
+import AuthBanner from "../../Components/Account/Banner.tsx";
 
 const RegisterPage = () => {
     const dispatch = useAppDispatch();
@@ -44,44 +45,24 @@ const RegisterPage = () => {
     };
 
     return (
-    <div className="flex min-h-screen bg-white">
+    <div className="flex flex-col lg:flex-row min-h-screen bg-white">
         {/* ЛІВА ЧАСТИНА: Привітання (ховається на мобільних) */}
-        <div className="hidden lg:flex lg:w-1/2 flex-col justify-center px-20 relative overflow-hidden min-h-screen">
-
-            {/* 1. Зображення як фон */}
-            {/* absolute inset-0 розтягує картинку на весь батьківський блок */}
-            <img
-                src={foodImage}
-                alt="Cooking Illustration"
-                className="absolute inset-0 w-full h-full object-cover"
-            />
-
-            {/* 2. Шар затемнення (Overlay) */}
-            {/* Це важливо, щоб текст залишався читабельним на фоні фото */}
-            <div className="absolute inset-0 bg-amber-50/40 backdrop-blur-[10px]"></div>
-
-            {/* 3. Контент (Текст) */}
-            {/* relative та z-10 піднімають текст над зображенням */}
-            <div className="relative z-10 max-w-md">
-                <h1 className="text-5xl font-bold text-gray-800 mb-6 leading-tight">
-                    Welcome to <span className="text-amber-300">EatLog</span>!
-                </h1>
-                <p className="text-xl text-gray-800 mb-10 leading-relaxed">
-                    Sign up create your own recipes and personalize your cooking adventure.
-                </p>
-            </div>
-
-        </div>
+        <AuthBanner
+            title="Приєднуйся до"
+            highlightText="Нашої родини!"
+            description="Стань частиною великої спільноти гурманів. Ділися своїми рецептами, оцінюй роботи інших та знаходь кулінарне натхнення щодня."
+            image={foodImage}
+        />
 
         {/* ПРАВА ЧАСТИНА: Форма входу */}
-        <div className="w-full lg:w-1/2 flex flex-col mb-10  justify-center px-8 md:px-24 lg:px-32">
+        <div className="w-full lg:w-1/2 flex flex-col mb-10   justify-center px-8 md:px-24 lg:px-32">
             <div className="max-w-md w-full mx-auto">
                 <div className="mb-8 text-center lg:text-left">
-                    <h2 className="text-3xl font-bold text-slate-900">Sign up</h2>
+                    <h2 className="text-3xl font-bold text-slate-900">Реєстрація</h2>
                     <p className="text-slate-500 mt-2">
-                        Already have an account? {" "}
+                        Вже маєте акаунт? {" "}
                         <Link to="/account/login" className="text-amber-300 font-semibold hover:underline">
-                            Login
+                            Вхід
                         </Link>
                     </p>
                 </div>
@@ -150,9 +131,9 @@ const RegisterPage = () => {
                     <button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full bg-gray-800 text-white py-4 rounded-xl font-bold text-lg hover:ring-2 hover:ring-amber-300 hover:ring-offset-2 transition-all shadow-lg shadow-slate-200"
+                    className="w-full bg-amber-300 hover:bg-amber-500 active:scale-[0.98] text-white font-bold py-4 rounded-xl shadow-lg shadow-red-200 transition-all duration-200 mt-6 flex justify-center items-center gap-2"
                     >
-                    {isLoading ? "Creating account..." : "Register"}
+                    {isLoading ? "Створення акаунту..." : "Зареєструватися"}
                     </button>
 
                     {error && <p style={{ color: "red" }}>Invalid email or password</p>}

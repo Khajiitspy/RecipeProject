@@ -51,7 +51,8 @@ const MainSideBar = ({ isMobileOpen,closeMobileMenu }: SideBarProps) => {
                     <Link
                         to="/"
                         onClick={closeMobileMenu}
-                        className="text-2xl font-semibold text-gray-800 ml-1   hover:bg-gray-400/20 rounded-md transition"
+                        className="text-2xl font-semibold text-gray-800 ml-1 rounded-md transition-all duration-300
+                       hover:text-amber-500 hover:scale-110 active:scale-95 inline-block"
                     >
                         EatLog
                     </Link>
@@ -89,9 +90,10 @@ const MainSideBar = ({ isMobileOpen,closeMobileMenu }: SideBarProps) => {
                         <span>Реєстрація</span>
                     </button>
 
-                    <div className="border-t border-gray-200 dark:border-gray-800 mt-4"></div>
                 </div>
             )}
+
+            <div className="border-t border-gray-200 dark:border-gray-800 mb-4"></div>
 
 
             <nav className="space-y-2 mb-6">
@@ -99,30 +101,30 @@ const MainSideBar = ({ isMobileOpen,closeMobileMenu }: SideBarProps) => {
                 <Link
                     to="/"
                     onClick={closeMobileMenu}
-                    className="flex items-center gap-3 py-2 px-3 rounded-md hover:bg-gray-400  transition"
+                    className="flex items-center gap-3 py-2 px-3 rounded-md hover:bg-amber-400  transition"
                 >
                     <FontAwesomeIcon icon={faHouse} className="w-4 h-4 text-gray-800 " />
-                    {!collapsed && <span className="text-sm font-medium">Home</span>}
+                    {!collapsed && <span className="text-sm font-medium">Головна</span>}
                 </Link>
 
                 <Link
                     to="/popular"
                     onClick={closeMobileMenu}
-                    className="flex items-center gap-3 py-2 px-3 rounded-md hover:bg-gray-400 transition"
+                    className="flex items-center gap-3 py-2 px-3 rounded-md hover:bg-amber-400 transition"
                 >
                     <FontAwesomeIcon icon={faFire} className="w-4 h-4 text-gray-800 " />
-                    {!collapsed && <span className="text-sm font-medium">Popular Resipes</span>}
+                    {!collapsed && <span className="text-sm font-medium">Популярні рецепти</span>}
                 </Link>
 
                 <Link
                     to="/answers"
                     onClick={closeMobileMenu}
-                    className="flex items-center gap-3 py-2 px-3 rounded-md hover:bg-gray-400 transition"
+                    className="flex items-center gap-3 py-2 px-3 rounded-md hover:bg-amber-400 transition"
                 >
                     <FontAwesomeIcon icon={faComments} className="w-4 h-4 text-gray-800 " />
                     {!collapsed && (
                         <span className="text-sm font-medium">
-                            Answers <span className="text-orange-500 dark:text-orange-400 text-xs ml-1">BETA</span>
+                            Запитання <span className="text-orange-500 dark:text-orange-400 text-xs ml-1">BETA</span>
                         </span>
                     )}
                 </Link>
@@ -131,10 +133,10 @@ const MainSideBar = ({ isMobileOpen,closeMobileMenu }: SideBarProps) => {
                     <Link
                         to="/recipes/create"
                         onClick={closeMobileMenu}
-                        className="flex items-center gap-3 py-2 px-3 rounded-md hover:bg-gray-400 dark:hover:bg-gray-80 transition"
+                        className="flex items-center gap-3 py-2 px-3 rounded-md hover:bg-amber-400 dark:hover:bg-gray-80 transition"
                     >
                         <FontAwesomeIcon icon={faPlus} className="w-4 h-4 text-gray-800" />
-                        {!collapsed && <span className="text-sm font-medium">Add Recipe</span>}
+                        {!collapsed && <span className="text-sm font-medium">Додати рецепт</span>}
                     </Link>
                 )}
 
@@ -145,9 +147,9 @@ const MainSideBar = ({ isMobileOpen,closeMobileMenu }: SideBarProps) => {
 
             <div className="mt-auto pt-4 border-t border-gray-400/30 space-y-2">
                 {/* Кнопка налаштувань */}
-                <Link to="/settings" onClick={closeMobileMenu} className="flex items-center gap-3 py-2 px-3 rounded-md hover:bg-gray-400/20 transition">
+                <Link to="/settings" onClick={closeMobileMenu} className="flex items-center gap-3 py-2 px-3 rounded-md hover:bg-amber-400 transition">
                     <FontAwesomeIcon icon={faGear} className="w-4 h-4 text-gray-800" />
-                    {!collapsed && <span className="text-sm font-medium text-gray-800">Settings</span>}
+                    {!collapsed && <span className="text-sm font-medium  text-gray-800">Налаштування</span>}
                 </Link>
             </div>
 

@@ -197,10 +197,10 @@ export const MainHeader = ({ toggleMobileMenu }: HeaderProps) => {
 
                         <div className="hidden md:flex items-center gap-4">
                             <button onClick={handleLoginRedirect} className="bg-gray-800 text-white px-6 py-3 rounded-xl font-bold hover:ring-2 hover:ring-amber-300 transition-all">
-                                Login
+                                Вхід
                             </button>
                             <button onClick={handleSignUpRedirect} className="bg-gray-800 text-white px-6 py-3 rounded-xl font-bold hover:ring-2 hover:ring-amber-300 transition-all">
-                                Sign up
+                                 Реєстрація
                             </button>
                         </div>
 
