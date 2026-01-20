@@ -27,21 +27,21 @@ export default function RecipesPage() {
                      font-semibold hover:bg-slate-800 transition shadow"
         >
           <FontAwesomeIcon icon={faPlus} />
-          Create recipe
+          Створити рецепт
         </Link>
       </div>
 
       {recipes?.length === 0 && (
         <Card className="text-center py-12">
           <p className="text-slate-500 mb-4">
-            You haven’t created any recipes yet
+            В вас поки що немає створених рецептів
           </p>
           <Link
             to="/recipes/create"
             className="inline-flex items-center gap-2 bg-gray-800 text-white px-6 py-3 rounded-xl"
           >
             <FontAwesomeIcon icon={faPlus} />
-            Create your first recipe
+            Створіть свій перший рецепт
           </Link>
         </Card>
       )}

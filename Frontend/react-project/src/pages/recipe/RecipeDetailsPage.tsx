@@ -45,7 +45,7 @@ export default function RecipeDetailsPage() {
           />
         )}
 
-        <h2 className="text-xl font-bold text-slate-800 mb-4">Ingredients</h2>
+        <h2 className="text-xl font-bold text-slate-800 mb-4">Інгрідієнти</h2>
 
         <ul className="space-y-3 mb-8">
           {recipe.ingredients?.map((i) => (
@@ -70,7 +70,7 @@ export default function RecipeDetailsPage() {
           ))}
         </ul>
 
-        <h2 className="text-xl font-bold text-slate-800 mb-3">Instructions</h2>
+        <h2 className="text-xl font-bold text-slate-800 mb-3">Покроково</h2>
 
         <p
           className="
@@ -90,7 +90,7 @@ export default function RecipeDetailsPage() {
                      bg-amber-300 text-gray-900 px-5 py-3 rounded-xl font-bold
                      hover:bg-amber-400 transition"
         >
-          ✏️ Edit recipe
+          ✏️ Оновити рецепт
         </Link>
         <button
           onClick={() => handleDelete(recipe.id)}
