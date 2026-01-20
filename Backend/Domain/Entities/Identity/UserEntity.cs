@@ -14,5 +14,6 @@ namespace Domain.Data.Entities.Identity
         public virtual ICollection<RecipeEntity>? Recipes { get; set; }
         public virtual ICollection<UserRoleEntity>? UserRoles { get; set; }
         public virtual ICollection<UserLoginEntity>? UserLogins { get; set; }
+        public CartEntity? Cart { get; set; }
     }
 }

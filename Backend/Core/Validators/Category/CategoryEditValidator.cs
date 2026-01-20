@@ -9,6 +9,12 @@ public class CategoryEditValidator : AbstractValidator<CategoryUpdateModel>
 {
     public CategoryEditValidator(AppDbContext db)
     {
+        RuleFor(x => x.Id)
+            .NotEmpty()
+            .WithMessage("Id обов'язкове")
+            .Must(id => id > 0)
+            .WithMessage("Id не може бути від'ємним або 0");
+
         RuleFor(x => x.Name)
             .NotEmpty()
             .WithMessage("Назва обов'язкова")
