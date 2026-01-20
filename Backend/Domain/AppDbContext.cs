@@ -21,6 +21,8 @@ namespace Domain.Data
         public DbSet<RecipeEntity> Recipes { get; set; }
         public DbSet<RecipeIngredientEntity> RecipeIngredients { get; set; }
         public DbSet<IngredientUnitEntity> IngredientUnits { get; set; }
+        public DbSet<CartEntity> Carts { get; set; }
+        public DbSet<CartRecipeEntity> CartRecipes { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -72,6 +74,26 @@ namespace Domain.Data
             builder.Entity<RecipeIngredientEntity>()
                .HasIndex(x => new { x.RecipeId, x.IngredientId })
                .IsUnique();
+            builder.Entity<CartRecipeEntity>(entity =>
+            {
+                entity.HasOne(cr => cr.Cart)
+                    .WithMany(c => c.Recipes)
+                    .HasForeignKey(cr => cr.CartId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(cr => cr.Recipe)
+                    .WithMany()
+                    .HasForeignKey(cr => cr.RecipeId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasIndex(cr => new { cr.CartId, cr.RecipeId })
+                    .IsUnique();
+            });
+            builder.Entity<CartEntity>()
+               .HasOne(c => c.User)
+               .WithOne(u => u.Cart)
+               .HasForeignKey<CartEntity>(c => c.UserId)
+               .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

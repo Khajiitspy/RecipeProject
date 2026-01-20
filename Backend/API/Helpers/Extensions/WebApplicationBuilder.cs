@@ -134,6 +134,7 @@ namespace API.Helpers.Extensions
             builder.Services.AddScoped<IRecipeService, RecipeService>();
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IDbSeederService, DbSeederService>();
+            builder.Services.AddScoped<ICartService, CartService>();
             #endregion
 
             #region OpenAPI

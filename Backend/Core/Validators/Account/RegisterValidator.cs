@@ -24,8 +24,12 @@ namespace Core.Validators.Account
 
 
             RuleFor(x => x.Password)
-                    .NotEmpty().WithMessage("Password is required")
-                    .MinimumLength(6).WithMessage("Password should contain at least 6 characters");
+                    .NotEmpty().WithMessage("Пароль є обов'язковим")
+                    .MinimumLength(6).WithMessage("Пароль повинен містити щонайменше 6 символів")
+                    .Matches("[A-Z]").WithMessage("Пароль повинен містити хоча б одну латинську велику літеру")
+                    .Matches("[a-z]").WithMessage("Пароль повинен містити хоча б одну латинську малу літеру")
+                    .Matches("[0-9]").WithMessage("Пароль повинен містити хоча б одну цифру")
+                    .Matches("[^a-zA-Z0-9]").WithMessage("Пароль повинен містити хоча б один спеціальний символ");
             RuleFor(x => x.ImageFile)
                     .NotEmpty()
                     .WithMessage("Image file is required");

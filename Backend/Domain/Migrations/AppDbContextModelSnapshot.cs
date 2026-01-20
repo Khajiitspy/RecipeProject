@@ -53,7 +53,7 @@ namespace Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("tblCategories");
+                    b.ToTable("tblCategories", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Data.Entities.Identity.RoleEntity", b =>
@@ -179,6 +179,64 @@ namespace Domain.Migrations
                     b.ToTable("AspNetUserRoles", (string)null);
                 });
 
+            modelBuilder.Entity("Domain.Entities.CartEntity", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("tblCarts", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Entities.CartRecipeEntity", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("CartId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("Portion")
+                        .HasColumnType("integer");
+
+                    b.Property<long>("RecipeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RecipeId");
+
+                    b.HasIndex("CartId", "RecipeId")
+                        .IsUnique();
+
+                    b.ToTable("tblCartRecipes", (string)null);
+                });
+
             modelBuilder.Entity("Domain.Entities.Identity.UserLoginEntity", b =>
                 {
                     b.Property<string>("LoginProvider")
@@ -227,7 +285,7 @@ namespace Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("tblIngredients");
+                    b.ToTable("tblIngredients", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.IngredientUnitEntity", b =>
@@ -254,7 +312,7 @@ namespace Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("IngredientUnits");
+                    b.ToTable("IngredientUnits", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.RecipeEntity", b =>
@@ -302,7 +360,7 @@ namespace Domain.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("tblRecipes");
+                    b.ToTable("tblRecipes", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.RecipeIngredientEntity", b =>
@@ -340,7 +398,7 @@ namespace Domain.Migrations
                     b.HasIndex("RecipeId", "IngredientId")
                         .IsUnique();
 
-                    b.ToTable("tblRecipeIngredients");
+                    b.ToTable("tblRecipeIngredients", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<long>", b =>
@@ -427,6 +485,36 @@ namespace Domain.Migrations
                     b.Navigation("Role");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Domain.Entities.CartEntity", b =>
+                {
+                    b.HasOne("Domain.Data.Entities.Identity.UserEntity", "User")
+                        .WithOne("Cart")
+                        .HasForeignKey("Domain.Entities.CartEntity", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Domain.Entities.CartRecipeEntity", b =>
+                {
+                    b.HasOne("Domain.Entities.CartEntity", "Cart")
+                        .WithMany("Recipes")
+                        .HasForeignKey("CartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.RecipeEntity", "Recipe")
+                        .WithMany()
+                        .HasForeignKey("RecipeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Cart");
+
+                    b.Navigation("Recipe");
                 });
 
             modelBuilder.Entity("Domain.Entities.Identity.UserLoginEntity", b =>
@@ -525,11 +613,18 @@ namespace Domain.Migrations
 
             modelBuilder.Entity("Domain.Data.Entities.Identity.UserEntity", b =>
                 {
+                    b.Navigation("Cart");
+
                     b.Navigation("Recipes");
 
                     b.Navigation("UserLogins");
 
                     b.Navigation("UserRoles");
+                });
+
+            modelBuilder.Entity("Domain.Entities.CartEntity", b =>
+                {
+                    b.Navigation("Recipes");
                 });
 
             modelBuilder.Entity("Domain.Entities.IngredientEntity", b =>

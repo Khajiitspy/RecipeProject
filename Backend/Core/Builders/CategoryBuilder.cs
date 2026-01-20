@@ -21,11 +21,11 @@ namespace Core.Builders
             return this;
         }
 
-        public CategoryBuilder TakeDeleted(bool? isDeleted = true)
+        public CategoryBuilder TakeDeleted(bool? isDeleted = null)
         {
-            Query = isDeleted.HasValue && isDeleted.Value
-                ? Query.Where(c => c.IsDeleted)
-                : Query.Where(c => !c.IsDeleted);
+            if (!isDeleted.HasValue)
+                return this;
+            Query = Query.Where(r => r.IsDeleted == isDeleted);
             return this;
         }
     }

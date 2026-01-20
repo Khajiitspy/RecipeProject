@@ -11,7 +11,6 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class RecipesController(IRecipeService recipeService) : ControllerBase
     {
         [HttpPost("create")]
@@ -36,11 +35,11 @@ namespace API.Controllers
             return Ok(recipes);
         }
 
-        [HttpPut("publish/{id:long}")]
+        [HttpPut("togglePublish/{id:long}")]
         [Authorize]
-        public async Task<IActionResult> Publish(long id)
+        public async Task<IActionResult> TogglePublish(long id)
         {
-            await recipeService.PublishRecipe(id);
+            await recipeService.TogglePublishRecipe(id);
             return Ok();
         }
 

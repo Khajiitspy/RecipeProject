@@ -25,7 +25,7 @@ namespace Core.Services
             }
 
             string token = await userManager.GeneratePasswordResetTokenAsync(user);
-            var resetLink = $"{configuration["ClientUrl"]}/reset-password?token={Uri.EscapeDataString(token)}&email={Uri.EscapeDataString(model.Email)}";
+            var resetLink = $"{configuration["ClientUrl"]}/account/reset-password?token={Uri.EscapeDataString(token)}&email={Uri.EscapeDataString(model.Email)}";
 
             var emailModel = new EmailMessage
             {
