@@ -52,19 +52,19 @@ namespace Core.Builders
             return this;
         }
 
-        public RecipeBuilder TakeDeleted(bool? isDeleted = true)
+        public RecipeBuilder TakeDeleted(bool? isDeleted = null)
         {
-            Query = isDeleted.HasValue && isDeleted.Value
-                ? Query.Where(r => r.IsDeleted)
-                : Query.Where(r => !r.IsDeleted);
+            if (!isDeleted.HasValue)
+                return this;
+            Query = Query.Where(r => r.IsDeleted == isDeleted);
             return this;
         }
 
-        public RecipeBuilder TakePublished (bool? isPublish = true)
+        public RecipeBuilder TakePublished (bool? isPublish = null)
         {
-            Query = isPublish.HasValue && isPublish.Value
-                ? Query.Where(r => r.IsPublished)
-                : Query.Where(r => !r.IsPublished);
+            if (!isPublish.HasValue)
+                return this;
+            Query = Query.Where(r => r.IsPublished == isPublish);
             return this;
         }
 
