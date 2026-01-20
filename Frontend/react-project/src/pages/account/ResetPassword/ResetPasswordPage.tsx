@@ -4,6 +4,8 @@ import {useLocation, useNavigate} from "react-router";
 import LoadingOverlay from "../../../Components/UI/loading/LoadingOverlay.tsx";
 import {useResetPasswordMutation} from "../../../api/userService.ts";
 import type {IResetPasswordRequest} from "../../../types/user/IReserPassword.ts";
+import AuthBanner from "../../../Components/Account/Banner.tsx";
+import foodImage from "../../../assets/food.jpg";
 
 
 
@@ -30,35 +32,50 @@ const ResetPasswordPage: React.FC = () => {
     };
 
     return (
-        <div className="min-h-[560px] flex items-center justify-center bg-gray-100">
-            <div className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md">
+        <div className="flex flex-col lg:flex-row min-h-screen bg-gray-50">
+
+            <AuthBanner
+                title="Забули"
+                highlightText="Пароль?"
+                description="Не хвилюйтеся! Просто введіть свою пошту, і ми надішлемо вам інструкції для відновлення доступу."
+                image={foodImage}
+            />
+
+            <div className="w-full lg:w-1/2 flex flex-col justify-center  py-12 px-8 md:px-20 lg:px-32 bg-white z-20 lg:mt-0">
                 {(isLoading)  && <LoadingOverlay />}
-                <h2 className="text-2xl font-semibold mb-6 text-center">Відновлення паролю</h2>
+                <h2 className="text-3xl font-bold mb-2 text-gray-800">Зміна паролю</h2>
+                <p className="text-gray-500 mb-8">
+                    Введіть новий пароль.
+                </p>
+
                 <Form<IResetPasswordRequest>
                     layout="vertical"
                     onFinish={onFinish}
                 >
                     <Form.Item<IResetPasswordRequest>
-                        name="password"
+                        name="newPassword"
                         label="Password"
                         rules={[{ required: true, message: "Enter your password" }]}
                     >
-                        <Input.Password placeholder="••••••••" />
+                        <Input.Password
+                            placeholder="••••••••"
+                            className="rounded-lg py-3
+               !border !border-gray-300
+               hover:!border-amber-400
+               focus-within:!border-amber-500
+               focus-within:!ring-2
+               focus-within:!ring-amber-500/20
+               focus-within:!shadow-none
+               transition-all duration-200"
+                        />
                     </Form.Item>
 
-                    <Form.Item<IResetPasswordRequest>
-                        name="confirmPassword"
-                        label="Confirm password"
-                        rules={[{ required: true, message: "Enter your password" }]}
-                    >
-                        <Input.Password placeholder="••••••••" />
-                    </Form.Item>
 
                     <button
                         type="submit"
-                        className="bg-red-500 hover:bg-red-700 transition text-white font-semibold px-4 py-2 rounded w-full mt-4"
+                        className="w-full bg-amber-300 hover:bg-amber-500 active:scale-[0.98] text-white font-bold py-4 rounded-xl shadow-lg shadow-red-200 transition-all duration-200 mt-6 flex justify-center items-center gap-2"
                     >
-                        Відновити пароль
+                        {isLoading ? "Зміна паролю..." : "Змінити пароль"}
                     </button>
 
                 </Form>

@@ -40,7 +40,7 @@ const ForgotPasswordPage: React.FC = () => {
 
 
             {/* ПРАВА ЧАСТИНА: Форма */}
-            <div className="w-full lg:w-1/2 flex flex-col justify-center mb-10 py-12 px-8 md:px-20 lg:px-32 bg-white shadow-2xl rounded-l-3xl z-20 lg:mt-0">
+            <div className="w-full lg:w-1/2 flex flex-col justify-center  py-12 px-8 md:px-20 lg:px-32 bg-white z-20 lg:mt-0">
                 {isLoading && <LoadingOverlay />}
 
                 <div className="max-w-md w-full mx-auto">
@@ -73,10 +73,17 @@ const ForgotPasswordPage: React.FC = () => {
                             ]}
                         >
                             <Input
-                                prefix={<HiOutlineMail className="text-gray-400 mr-2" />}
+                                prefix={<HiOutlineMail className="text-gray-400 mr-2"/>}
                                 placeholder="example@mail.com"
                                 size="large"
-                                className="rounded-lg py-3 !border-gray-200  !focus:border-amber-400 !focus:ring-amber-400"
+                                className="rounded-lg py-3
+                                !border !border-gray-300
+                                   hover:!border-amber-400
+                                   focus-within:!border-amber-500
+                                   focus-within:!ring-2
+                                   focus-within:!ring-amber-500/20
+                                   focus-within:!shadow-none
+                                   transition-all duration-200"
                             />
                         </Form.Item>
 
