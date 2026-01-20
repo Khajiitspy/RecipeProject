@@ -70,7 +70,7 @@ export default function RecipeDetailsPage() {
             className="flex items-center justify-between w-full mb-4"
           >
             <h2 className="text-xl font-bold text-slate-800">
-              Ingredients
+              Інгрідієнти
             </h2>
 
             <span className="text-slate-500 text-sm">
@@ -106,7 +106,7 @@ export default function RecipeDetailsPage() {
             </ul>
           </motion.div>
 
-          <h2 className="text-xl font-bold text-slate-800 mb-3">Instructions</h2>
+          <h2 className="text-xl font-bold text-slate-800 mb-3">Покроково</h2>
 
           <p
             className="
@@ -126,7 +126,7 @@ export default function RecipeDetailsPage() {
                        bg-amber-300 text-gray-900 px-5 py-3 rounded-xl font-bold
                        hover:bg-amber-400 transition"
           >
-            ✏️ Edit recipe
+            ✏️ Оновити рецепт
           </Link>
           <button
             onClick={() => handleDelete(recipe.id)}
