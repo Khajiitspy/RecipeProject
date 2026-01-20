@@ -7,6 +7,9 @@ import type {ILoginUser} from "../types/user/ILoginUser.ts";
 import { loginSuccess } from "../store/authSlice.ts";
 import type { Dispatch } from '@reduxjs/toolkit';
 import type {IAuthResponse} from "../types/user/IAuthResponse.ts";
+import type { IForgotPasswordRequest } from "../types/user/IForgotPasswordResponse.ts";
+import type { IValidateTokenRequest } from "../types/user/IValidateToken.ts";
+import type { IResetPasswordRequest } from "../types/user/IReserPassword.ts";
 
 
 const handleAuthSuccess = async (
@@ -58,6 +61,31 @@ export const userService = createApi({
         onQueryStarted: async (_arg, { dispatch, queryFulfilled }) =>
             handleAuthSuccess(queryFulfilled, dispatch)
       }),
+
+      forgotPassword: builder.mutation<IForgotPasswordRequest,void>({
+        query: (data) => ({
+          url: 'ForgotPassword',
+          method: 'POST',
+          body: data
+        })
+      }),
+
+      validateResetToken: builder.query<{ isValid: boolean }, IValidateTokenRequest>({
+        query: (params) => ({
+          url: 'ValidateResetToken',
+          params, // це додасть параметри як query string: ?token=abc&email=...
+        }),
+        providesTags: ['Account'],
+      }),
+
+      resetPassword: builder.mutation<IResetPasswordRequest, void>({
+        query: (password) => ({
+          url: 'ResetPassword',
+          method: 'POST',
+          body: password
+        })
+      }),
+
     }),
   });
 
@@ -66,4 +94,6 @@ export const {
   useRegisterMutation,
   useLoginMutation,
   useLoginByGoogleMutation,
+  useForgotPasswordMutation,
+  useResetPasswordMutation,
 } = userService;
