@@ -3,6 +3,7 @@ using System;
 using Domain.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Domain.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260120091424_AddCarts")]
+    partial class AddCarts
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,7 +56,7 @@ namespace Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("tblCategories", (string)null);
+                    b.ToTable("tblCategories");
                 });
 
             modelBuilder.Entity("Domain.Data.Entities.Identity.RoleEntity", b =>
@@ -201,7 +204,7 @@ namespace Domain.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("tblCarts", (string)null);
+                    b.ToTable("tblCarts");
                 });
 
             modelBuilder.Entity("Domain.Entities.CartRecipeEntity", b =>
@@ -234,7 +237,7 @@ namespace Domain.Migrations
                     b.HasIndex("CartId", "RecipeId")
                         .IsUnique();
 
-                    b.ToTable("tblCartRecipes", (string)null);
+                    b.ToTable("tblCartRecipes");
                 });
 
             modelBuilder.Entity("Domain.Entities.Identity.UserLoginEntity", b =>
@@ -285,7 +288,7 @@ namespace Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("tblIngredients", (string)null);
+                    b.ToTable("tblIngredients");
                 });
 
             modelBuilder.Entity("Domain.Entities.IngredientUnitEntity", b =>
@@ -312,7 +315,7 @@ namespace Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("IngredientUnits", (string)null);
+                    b.ToTable("IngredientUnits");
                 });
 
             modelBuilder.Entity("Domain.Entities.RecipeEntity", b =>
@@ -360,7 +363,7 @@ namespace Domain.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("tblRecipes", (string)null);
+                    b.ToTable("tblRecipes");
                 });
 
             modelBuilder.Entity("Domain.Entities.RecipeIngredientEntity", b =>
@@ -398,7 +401,7 @@ namespace Domain.Migrations
                     b.HasIndex("RecipeId", "IngredientId")
                         .IsUnique();
 
-                    b.ToTable("tblRecipeIngredients", (string)null);
+                    b.ToTable("tblRecipeIngredients");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<long>", b =>
