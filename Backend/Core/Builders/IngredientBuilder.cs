@@ -19,11 +19,11 @@ namespace Core.Builders
             return this;
         }
 
-        public IngredientBuilder TakeDeleted(bool? isDeleted = true)
+        public IngredientBuilder TakeDeleted(bool? isDeleted = null)
         {
-            Query = isDeleted.HasValue && isDeleted.Value
-                ? Query.Where(i => i.IsDeleted)
-                : Query.Where(i => !i.IsDeleted);
+            if (!isDeleted.HasValue)
+                return this;
+            Query = Query.Where(r => r.IsDeleted == isDeleted);
             return this;
         }
 
