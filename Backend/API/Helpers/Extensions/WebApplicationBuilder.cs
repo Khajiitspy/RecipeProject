@@ -15,6 +15,8 @@ using Microsoft.OpenApi;
 using System.IO.Compression;
 using System.Text;
 using System.Threading.RateLimiting;
+using Quartz;
+using API.Jobs;
 
 namespace API.Helpers.Extensions
 {
@@ -104,6 +106,22 @@ namespace API.Helpers.Extensions
             });
             #endregion
 
+            services.AddQuartz(q =>
+            {
+                var jobKey = new JobKey(nameof(DbSeedJob));
+                q.AddJob<DbSeedJob>(opts => opts.WithIdentity(jobKey));
+
+                q.AddTrigger(opts => opts
+                    .ForJob(jobKey)
+                    .WithIdentity($"{nameof(DbSeedJob)}-trigger")
+                    .StartNow());
+            });
+            builder.Services.AddQuartzHostedService(opt =>
+            {
+
+                opt.WaitForJobsToComplete = true;
+            });
+
             #region Application services
             services.AddScoped<IImageService, ImageService>();
             services.AddScoped<IJwtTokenService, JwtTokenService>();
@@ -115,6 +133,7 @@ namespace API.Helpers.Extensions
             builder.Services.AddScoped<IIngredientService, IngredientService>();
             builder.Services.AddScoped<IRecipeService, RecipeService>();
             builder.Services.AddScoped<IUserService, UserService>();
+            builder.Services.AddScoped<IDbSeederService, DbSeederService>();
             #endregion
 
             #region OpenAPI

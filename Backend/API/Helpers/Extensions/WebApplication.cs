@@ -52,7 +52,7 @@ namespace API.Helpers.Extensions
             #endregion
 
             #region Seed
-            app.SeedDataAsync().GetAwaiter().GetResult();
+            //app.SeedDataAsync().GetAwaiter().GetResult();
             #endregion
 
             return app;
