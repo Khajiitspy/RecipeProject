@@ -79,7 +79,7 @@ public class RecipeService(
         return await cache.GetOrCreateAsync(
             key,
             async () => await context.Recipes
-                .Where(x => !x.IsDeleted && x.IsPublished)
+                .Where(x => !x.IsDeleted && x.UserId == userId && x.IsPublished)
                 .ProjectTo<RecipeItemModel>(mapper.ConfigurationProvider)
                 .ToListAsync(),
             TimeSpan.FromMinutes(CacheKeys.ListCacheTtlMinutes)
