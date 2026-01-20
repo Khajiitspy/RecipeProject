@@ -1,19 +1,33 @@
 import { useParams, Link } from "react-router";
-import { useGetRecipeByIdQuery } from "../../api/recipeService";
+import { useGetRecipeByIdQuery, useDeleteRecipeMutation } from "../../api/recipeService";
 import { APP_ENV } from "../../env";
 import PageContainer from "../../Components/layout/PageContainer";
 import Card from "../../Components/UI/Card";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router";
 
 export default function RecipeDetailsPage() {
   const { id } = useParams<{ id: string }>();
   const { data: recipe, isLoading } = useGetRecipeByIdQuery(Number(id));
+  const [deleteRecipe, { isLoading: isDeleting }] = useDeleteRecipeMutation();
+  
+  const navigate = useNavigate();
+
+  const handleDelete = async (id: number) => {
+    if (!confirm("Are you sure you want to delete this recipe?")) return;
+
+    await deleteRecipe(id);
+    navigate("/recipes"); // back to list
+  };
 
   if (isLoading) return <p>Loading...</p>;
   if (!recipe) return <p>Recipe not found</p>;
 
   return (
     <PageContainer>
-      <Card>
+      <Card className="relative">
+        
         <h1 className="text-3xl font-bold text-slate-900 mb-4">
           {recipe.name}
         </h1>
@@ -47,6 +61,22 @@ export default function RecipeDetailsPage() {
         >
           ✏️ Edit recipe
         </Link>
+              <button
+          onClick={() => handleDelete(recipe.id)}
+          disabled={isDeleting}
+          title="Delete recipe"
+          className="
+            absolute bottom-4 right-4
+            p-3 rounded-full
+            bg-white/90 text-red-600
+            shadow-md border
+            hover:bg-red-50 hover:text-red-700
+            transition
+            disabled:opacity-50
+          "
+        >
+          <FontAwesomeIcon icon={faTrash} />
+        </button>
       </Card>
     </PageContainer>
   );

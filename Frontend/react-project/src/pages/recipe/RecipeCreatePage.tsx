@@ -59,21 +59,26 @@ export default function RecipeCreatePage() {
           <form onSubmit={handleSubmit} className="space-y-6">
             <h1>Create Recipe</h1>
 
-            <input className={`w-full px-4 py-3 rounded-xl border border-slate-200
+            <div className="space-y-1">
+              <input
+                className={`w-full px-4 py-3 rounded-xl border border-slate-200
                   focus:ring-2 focus:ring-amber-300/20
                   ${errors.Name ? "input-error" : ""}`}
-              placeholder="Name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-            />
-            {errors.Name && <p className="error">{errors.Name[0]}</p>}
+                placeholder="Recipe name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
 
-            <input className={"w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-amber-300/20"}
-              placeholder="Slug"
-              value={slug}
-              disabled
-            />
+              <p className="text-sm text-slate-400">
+                Slug: <span className="font-mono">{slug}</span>
+              </p>
+              <p className="text-xs text-slate-400 italic">
+                This will be used in the recipe URL
+              </p>
+            </div>
+
+            {errors.Name && <p className="error">{errors.Name[0]}</p>}
 
             <textarea className={`w-full px-4 py-3 rounded-xl border border-slate-200
                 focus:ring-2 focus:ring-amber-300/20

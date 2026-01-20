@@ -1,6 +1,11 @@
-export default function Card({ children }: { children: React.ReactNode }) {
+interface CardProps {
+  children: React.ReactNode;
+  className?: string;
+}
+
+export default function Card({ children, className = "" }: CardProps) {
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 shadow-lg shadow-slate-200 p-8">
+    <div className={`bg-white rounded-2xl shadow p-6 ${className}`}>
       {children}
     </div>
   );
