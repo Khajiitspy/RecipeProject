@@ -2,7 +2,7 @@ import {Link, useNavigate} from "react-router";
 import {useAppDispatch, useAppSelector} from "../../store";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import {logout} from "../../store/authSlice.ts";
-import {faBars, faChevronDown, faLock, faRightFromBracket, faUser} from "@fortawesome/free-solid-svg-icons";
+import {faBars, faChevronDown, faCrown, faLock, faRightFromBracket, faUser} from "@fortawesome/free-solid-svg-icons";
 import {APP_ENV} from "../../env";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
@@ -67,11 +67,27 @@ export const MainHeader = ({ toggleMobileMenu }: HeaderProps) => {
                         <DropdownMenu.Root>
                             <DropdownMenu.Trigger asChild>
                                 <button className="flex items-center gap-2 focus:outline-none">
-                                    <img
-                                        src={`${APP_ENV.IMAGES_50_URL}${user?.image}`}
-                                        alt="Avatar"
-                                        className="w-10 h-10 rounded-full border-2 border-white shadow-sm"
-                                    />
+                                    <div className="relative">
+                                        <img
+                                            src={`${APP_ENV.IMAGES_50_URL}${user?.image}`}
+                                            alt="Avatar"
+                                            className="w-10 h-10 rounded-full border-2 border-amber-400 shadow-md object-cover p-0.5"
+                                        />
+                                        <span
+                                            className="absolute bottom-0 right-0 w-3 h-3 bg-amber-500 border-2 border-white rounded-full flex items-center justify-center">
+                                         <div className="w-1 h-1 bg-white rounded-full"></div>
+                                         </span>
+                                    </div>
+
+                                    <div className="hidden md:flex flex-col items-start leading-tight">
+                                        <span className="text-sm font-bold text-slate-800 flex items-center gap-1">
+                                            {user?.name}
+                                            <FontAwesomeIcon icon={faCrown} className="text-amber-500 text-[15px] mt-1"/>
+                                        </span>
+                                        <span className="text-[11px] text-amber-600 font-bold uppercase tracking-wider">
+                                            Адміністратор
+                                        </span>
+                                    </div>
                                 </button>
                             </DropdownMenu.Trigger>
 
