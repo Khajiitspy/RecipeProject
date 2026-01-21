@@ -11,6 +11,69 @@ namespace Core.Services;
 public class CartService(IMapper mapper, IAuthService authService,
     AppDbContext context) : ICartService
 {
+    public async Task<CartRecipeModel?> AddOneRecipeAsync(CartCreateSingleItemModel model)
+    {
+        var userId = await authService.GetUserId();
+
+        var cart = await context.Carts
+            .Include(c => c.Recipes)
+            .FirstOrDefaultAsync(c => c.UserId == userId);
+
+        if (cart == null)
+        {
+            cart = new CartEntity
+            {
+                UserId = userId,
+                Recipes = new List<CartRecipeEntity>()
+            };
+
+            context.Carts.Add(cart);
+        }
+
+        var existingRecipe = cart.Recipes.FirstOrDefault(r => r.RecipeId == model.RecipeId);
+
+        if (existingRecipe != null)
+        {
+            existingRecipe.Portion += model.Portion;
+
+            if (existingRecipe.Portion <= 0)
+            {
+                cart.Recipes.Remove(existingRecipe);
+            }
+        }
+        else
+        {
+            if (model.Portion > 0)
+            {
+                cart.Recipes.Add(new CartRecipeEntity
+                {
+                    CartId = cart.Id,
+                    RecipeId = model.RecipeId,
+                    Portion = model.Portion
+                });
+            }
+        }
+
+        await context.SaveChangesAsync();
+
+        var entity = await context.CartRecipes
+            .Where(x => x.Cart!.UserId == userId && x.RecipeId == model.RecipeId)
+            .Include(x => x.Recipe)
+            .FirstOrDefaultAsync();
+
+        if (entity == null)
+            return null;
+
+        return mapper.Map<CartRecipeModel>(entity);
+    }
+
+    public async Task<bool> ClearCartAsync()
+    {
+        var userId = await authService.GetUserId();
+        await context.CartRecipes.Where(x => x.Cart.UserId == userId).ExecuteDeleteAsync();
+        return true;
+    }
+
     public async Task<CartItemModel> CreateAsync(CartCreateModel model)
     {
         var userId = await authService.GetUserId();
@@ -27,6 +90,8 @@ public class CartService(IMapper mapper, IAuthService authService,
         }
         else
             entity.Recipes?.Clear();
+
+        entity.Recipes = new List<CartRecipeEntity>();
 
         foreach (var recipe in model.Recipes!)
         {
@@ -51,6 +116,7 @@ public class CartService(IMapper mapper, IAuthService authService,
                 {
                     RecipeId = cr.RecipeId,
                     RecipeName = cr.Recipe!.Name,
+                    RecipeImage = cr.Recipe!.Image,
                     Portion = cr.Portion
                 }).ToList(),
 
@@ -89,6 +155,14 @@ public class CartService(IMapper mapper, IAuthService authService,
             await CombineUnits(cart.Ingredients);
         }
         return cart ?? new CartItemModel();
+    }
+
+    public async Task<List<CartRecipeModel>> GetRecipesFromCartAsync()
+    {
+        var userId = await authService.GetUserId();
+        var entities = await context.CartRecipes.Where(x=>x.Cart.UserId == userId).Include(x=>x.Recipe).ToListAsync();
+        var recipes = mapper.Map<List<CartRecipeModel>>(entities);
+        return recipes;
     }
 
     private async Task CombineUnits(List<CartIngredientGroupModel> ingredients)

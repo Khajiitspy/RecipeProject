@@ -15,6 +15,7 @@ import RecipeEditPage from "./pages/recipe/RecipeEditPage.tsx";
 import AdminLayout from "./layout/Admin/AdminLayout.tsx";
 import DashboardHome from "./pages/admin/Dashboard/DashboardHome.tsx";
 import UserListPage from "./admin/pages/Users/List/AdminUsersList.tsx";
+import CartPage from "./pages/cart/CartPage.tsx";
 
 function App() {
     return (
@@ -36,7 +37,11 @@ function App() {
                     <Route path="/recipes/:id" element={<RecipeDetailsPage />} />
                     <Route path="/recipes/create" element={<RecipeCreatePage />} />
                     <Route path="/recipes/edit/:id" element={<RecipeEditPage />} />
+
+                    <Route path={"/cart"} element={<CartPage/>}/>
                 </Route>
+
+
 
 
                 <Route path={"admin"} element={<AdminLayout />}>
