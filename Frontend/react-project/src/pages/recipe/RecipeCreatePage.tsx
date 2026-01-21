@@ -8,6 +8,7 @@ import {slugify} from "../../utils/slugify.ts"
 import PageContainer from "../../Components/layout/PageContainer";
 import Card from "../../Components/UI/Card";
 import PageHeader from "../../Components/layout/PageHeader";
+import AnimatedPage from "../../Components/layout/AnimatedPage.tsx"
 
 export default function RecipeCreatePage() {
   const [createRecipe, { isLoading }] = useCreateRecipeMutation();
