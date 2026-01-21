@@ -40,7 +40,7 @@ export default function PublicRecipesPage() {
                      font-semibold hover:bg-slate-800 transition shadow"
         >
           <FontAwesomeIcon icon={faPlus} />
-          Create recipe
+          Створити рецепт
         </Link>
       </div>
 

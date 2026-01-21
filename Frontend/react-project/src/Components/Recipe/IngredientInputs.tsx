@@ -4,6 +4,7 @@ import { useGetUnitsQuery } from "../../api/unitService";
 import type { IRecipeIngredientCreate } from "../../types/recipe/IRecipeCreate";
 import type { IngredientItemModel } from "../../types/recipe/IIngredientItem";
 import { APP_ENV } from "../../env";
+import {HiChevronDown, HiOutlinePlus, HiOutlineTrash} from "react-icons/hi";
 
 interface IngredientInputsProps {
   ingredients: IRecipeIngredientCreate[];
@@ -94,118 +95,118 @@ export default function IngredientInputs({
   };
 
   return (
-    <div ref={wrapperRef} className="space-y-3">
-      <h3 className="font-semibold">Ingredients</h3>
+      <div ref={wrapperRef} className="space-y-4">
+        <div className="flex items-center justify-between mb-2">
+          <h3 className="text-sm font-bold text-slate-700 uppercase tracking-wider ml-1">
+            Інгредієнти
+          </h3>
+          <span className="text-xs text-slate-400 bg-slate-100 px-2 py-0.5 rounded-full">
+          {ingredients.length} позицій
+        </span>
+        </div>
 
-      {ingredients.map((ing, idx) => {
-        const suggestions = allIngredients.filter((i) =>
-          i.name.toLowerCase().includes((inputValues[idx] || "").toLowerCase())
-        );
+        <div className="space-y-3">
+          {ingredients.map((ing, idx) => {
+            const suggestions = allIngredients.filter((i) =>
+                i.name.toLowerCase().includes((inputValues[idx] || "").toLowerCase())
+            );
+            const selected = allIngredients.find(i => i.id === ing.ingredientId);
 
-        const selectedIngredient = allIngredients.find(
-          i => i.id === ing.ingredientId
-        );
+            return (
+                <div key={idx} className="group flex flex-col sm:flex-row items-start sm:items-center gap-3 p-3 bg-white border border-slate-100 rounded-2xl shadow-sm hover:border-amber-200 transition-all">
 
-        return (
-          <div key={idx} className="flex items-center gap-2">
-            {/* Ingredient input + image */}
-            <div className="relative w-64 flex items-center gap-2">
-              {selectedIngredient?.image && (
-                <img
-                  src={`${APP_ENV.API_BASE_URL}/images/200_${selectedIngredient.image}`}
-                  alt={selectedIngredient.name}
-                  className="w-8 h-8 rounded object-cover"
-                />
-              )}
-
-              <input
-                type="text"
-                className="input w-full"
-                placeholder="Ingredient"
-                value={inputValues[idx] || ""}
-                onChange={(e) =>
-                  handleIngredientInput(idx, e.target.value)
-                }
-                onFocus={() => setOpenIndex(idx)}
-              />
-
-              {openIndex === idx && suggestions.length > 0 && (
-                <div className="absolute left-0 top-full z-20 mt-1 w-full bg-white border rounded-xl shadow-lg max-h-48 overflow-auto">
-                  {suggestions.map((i) => (
-                    <button
-                      key={i.id}
-                      type="button"
-                      onMouseDown={(e) => e.preventDefault()} // prevent blur
-                      onClick={() => selectIngredient(idx, i)}
-                      className="flex items-center gap-3 px-3 py-2 hover:bg-slate-100 w-full text-left"
-                    >
-                      <img
-                        src={
-                          i.image
-                            ? `${APP_ENV.API_BASE_URL}/images/200_${i.image}`
-                            : "/placeholder.png"
-                        }
-                        className="w-8 h-8 rounded object-cover"
-                        alt={i.name}
+                  {/* Автокомпліт інгредієнта */}
+                  <div className="relative w-full sm:flex-1">
+                    <div className="relative flex items-center">
+                      <div className="absolute left-3 z-10">
+                        {selected?.image ? (
+                            <img
+                                src={`${APP_ENV.API_BASE_URL}/images/200_${selected.image}`}
+                                className="w-7 h-7 rounded-lg object-cover shadow-sm"
+                                alt=""
+                            />
+                        ) : (
+                            <div className="w-7 h-7 rounded-lg bg-slate-100 flex items-center justify-center text-xs">🥘</div>
+                        )}
+                      </div>
+                      <input
+                          type="text"
+                          className="w-full pl-12 pr-4 py-2.5 bg-slate-50/50 border border-slate-200 rounded-xl text-sm outline-none focus:bg-white focus:border-amber-400 focus:ring-4 focus:ring-amber-400/10 transition-all"
+                          placeholder="Назва інгредієнта..."
+                          value={inputValues[idx] || ""}
+                          onChange={(e) => handleIngredientInput(idx, e.target.value)}
+                          onFocus={() => setOpenIndex(idx)}
                       />
-                      <span>{i.name}</span>
+                    </div>
+
+                    {/* Dropdown */}
+                    {openIndex === idx && suggestions.length > 0 && (
+                        <div className="absolute left-0 top-full z-50 mt-2 w-full bg-white border border-slate-100 rounded-xl shadow-xl max-h-56 overflow-auto py-1 animate-in fade-in slide-in-from-top-2">
+                          {suggestions.map((i) => (
+                              <button
+                                  key={i.id}
+                                  type="button"
+                                  onMouseDown={(e) => e.preventDefault()}
+                                  onClick={() => selectIngredient(idx, i)}
+                                  className="flex items-center gap-3 px-3 py-2.5 hover:bg-amber-50 w-full text-left transition-colors"
+                              >
+                                <img
+                                    src={i.image ? `${APP_ENV.API_BASE_URL}/images/200_${i.image}` : "/placeholder.png"}
+                                    className="w-8 h-8 rounded-lg object-cover"
+                                    alt=""
+                                />
+                                <span className="text-sm font-medium text-slate-700">{i.name}</span>
+                              </button>
+                          ))}
+                        </div>
+                    )}
+                  </div>
+
+                  {/* Кількість та Одиниці */}
+                  <div className="flex items-center gap-2 w-full sm:w-auto">
+                    <input
+                        type="number"
+                        placeholder="К-сть"
+                        value={ing.amount || ""}
+                        onChange={(e) => updateIngredientField(idx, "amount", Number(e.target.value))}
+                        className="w-20 px-3 py-2.5 bg-slate-50/50 border border-slate-200 rounded-xl text-sm text-center outline-none focus:bg-white focus:border-amber-400 transition-all"
+                    />
+
+                    <div className="relative flex-1 sm:w-28">
+                      <select
+                          value={ing.ingredientUnitId || ""}
+                          onChange={(e) => updateIngredientField(idx, "ingredientUnitId", Number(e.target.value))}
+                          className="w-full pl-3 pr-8 py-2.5 bg-slate-50/50 border border-slate-200 rounded-xl text-sm outline-none appearance-none cursor-pointer focus:bg-white focus:border-amber-400 transition-all"
+                      >
+                        <option value="">Од. вим.</option>
+                        {units.map((u) => <option key={u.id} value={u.id}>{u.name}</option>)}
+                      </select>
+                      <HiChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+                    </div>
+
+                    <button
+                        type="button"
+                        onClick={() => removeRow(idx)}
+                        className="p-2.5 text-slate-300 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all"
+                    >
+                      <HiOutlineTrash size={20} />
                     </button>
-                  ))}
+                  </div>
                 </div>
-              )}
-            </div>
+            );
+          })}
+        </div>
 
-            {/* Amount */}
-            <input
-              type="number"
-              placeholder="Amount"
-              value={ing.amount || ""}
-              onChange={(e) =>
-                updateIngredientField(idx, "amount", Number(e.target.value))
-              }
-              className="w-20 input"
-            />
-
-            {/* Unit */}
-            <select
-              value={ing.ingredientUnitId || ""}
-              onChange={(e) =>
-                updateIngredientField(idx, "ingredientUnitId", Number(e.target.value))
-              }
-              className="input"
-            >
-              <option value="">Unit</option>
-              {units.map((u) => (
-                <option key={u.id} value={u.id}>
-                  {u.name}
-                </option>
-              ))}
-            </select>
-
-            {/* Remove */}
-            <button
-              type="button"
-              onClick={() => removeRow(idx)}
-              className="text-red-500 hover:text-red-700"
-            >
-              ✕
-            </button>
-          </div>
-        );
-      })}
-
-      {/* Initial row */}
-      {ingredients.length === 0 && (
         <button
-          type="button"
-          onClick={() =>
-            setIngredients([{ ingredientId: 0, ingredientUnitId: 0, amount: 0 }])
-          }
-          className="text-sm text-amber-600 hover:underline"
+            type="button"
+            onClick={() => setIngredients([...ingredients, { ingredientId: 0, ingredientUnitId: 0, amount: 0 }])}
+            className="w-full py-3.5 border-2 border-dashed border-slate-200 rounded-2xl text-slate-500 font-semibold hover:border-amber-400 hover:text-amber-600 hover:bg-amber-50/30 transition-all flex items-center justify-center gap-2"
         >
-          + Add ingredient
+          <HiOutlinePlus size={18} />
+          Додати ще один інгредієнт
         </button>
-      )}
-    </div>
+      </div>
   );
+
+
 }

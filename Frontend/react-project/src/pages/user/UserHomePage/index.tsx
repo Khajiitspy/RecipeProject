@@ -57,10 +57,10 @@ const UserHomePage: React.FC = () => {
 
                 <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
                     <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 drop-shadow-lg">
-                        Cooking made fun
+                        Готуйте із задоволенням
                     </h1>
                     <p className="text-slate-100 text-xl md:text-2xl mb-10 drop-shadow-md">
-                        Create, organize, and discover recipes — all in one place.
+                        Створюйте, впорядковуйте та відкривайте нові рецепти — все в одному місці.
                     </p>
 
                     <div className="relative max-w-2xl mx-auto font-sans">
@@ -69,7 +69,7 @@ const UserHomePage: React.FC = () => {
                         </div>
                         <input
                             type="text"
-                            placeholder="Search recipes, ingredients..."
+                            placeholder="Пошук рецептів..."
                             className="w-full py-5 pl-14 pr-6 rounded-full text-lg bg-white/95 backdrop-blur-sm shadow-2xl focus:outline-none focus:ring-4 focus:ring-yellow-100/50 text-slate-700 placeholder:text-slate-400"
                         />
                     </div>
