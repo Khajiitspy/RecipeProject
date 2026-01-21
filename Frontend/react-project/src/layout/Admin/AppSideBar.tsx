@@ -5,7 +5,6 @@ import {
     ChevronDownIcon,
     GridIcon,
     HorizontaLDots,
-    TableIcon,
     UserIcon
 } from "../../icons";
 import { useSidebar } from "../../context/SidebarContext.tsx";
@@ -23,22 +22,6 @@ const navItems: NavItem[] = [
         icon: <GridIcon />,
         name: "Головна",
         subItems: [{ name: "Панель", path: "/admin/home", pro: false }],
-    },
-    {
-        name: "Категорії",
-        icon: <TableIcon />,
-        subItems: [
-            { name: "Список", path: "/admin/categories", pro: false },
-            { name: "Створити", path: "/admin/categories/create", pro: false }
-        ],
-    },
-    {
-        name: "Продукти",
-        icon: <TableIcon />,
-        subItems: [
-            { name: "Список", path: "/admin/products", pro: false },
-            {name: "Створити", path: "/admin/products/create", pro: false}
-        ],
     },
     {
         name: "Користувачі",
@@ -217,7 +200,7 @@ const AppSidebar: React.FC = () => {
             <aside
                 className={`fixed mt-16 flex flex-col lg:mt-0 top-0 px-5 left-0 transition-all duration-300 ease-in-out z-50 border-r 
                 bg-white text-gray-900 h-screen
-                dark:bg-gray-900 dark:text-gray-100 dark:border-gray-800 
+                dark:bg-gray-950 dark:text-gray-100 dark:border-gray-800 
                 ${isExpanded || isMobileOpen ? "w-[290px]" : isHovered ? "w-[290px]" : "w-[90px]"}
                 ${isMobileOpen ? "translate-x-0" : "-translate-x-full"}
                 lg:translate-x-0`}
@@ -225,26 +208,28 @@ const AppSidebar: React.FC = () => {
                 onMouseLeave={() => setIsHovered(false)}
             >
 
+
+
                 <div
                     className={`py-8 flex ${
                         !isExpanded && !isHovered ? "lg:justify-center" : "justify-start"
                     }`}
                 >
-                    <Link to="/Admin/home" className="flex items-center">
+                    <Link to="/Admin/home" className="flex items-center group">
                         {isExpanded || isHovered || isMobileOpen ? (
+
                             <span
                                 className="text-2xl font-black tracking-tighter text-slate-900 dark:text-white transition-all">
-                                Eat<span className="text-amber-500">Log</span>
+                                Eat<span className="text-yellow-400 group-hover:text-yellow-500 transition-colors">Log</span>
                             </span>
                         ) : (
                             <span
-                                className="text-2xl font-black text-amber-500 bg-amber-50 dark:bg-amber-500/10 w-10 h-10 flex items-center justify-center rounded-xl shadow-sm border border-amber-100 dark:border-amber-500/20">
+                                className="text-2xl font-black text-yellow-500 bg-yellow-50 dark:bg-yellow-400/10 w-11 h-11 flex items-center justify-center rounded-2xl shadow-sm border border-yellow-100 dark:border-yellow-400/20 group-hover:scale-110 transition-all duration-300">
                                 E
                             </span>
                         )}
                     </Link>
                 </div>
-
                 <div className="flex-1 flex flex-col overflow-y-auto min-h-0 duration-300 ease-linear no-scrollbar">
                     <nav className="mb-6">
                         <div className="flex flex-col gap-4">

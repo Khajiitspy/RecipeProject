@@ -17,6 +17,7 @@ export default function RecipeCreatePage() {
   const [createRecipe, { isLoading }] = useCreateRecipeMutation();
   const [name, setName] = useState("");
   const [slug, setSlug] = useState("");
+  // @ts-ignore
   const [slugTouched, setSlugTouched] = useState(false);
   const [instruction, setInstruction] = useState("");
   const [categoryId, setCategoryId] = useState<number>(0);

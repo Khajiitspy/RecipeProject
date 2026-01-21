@@ -6,7 +6,7 @@ import {
     faComments,
     faAngleLeft,
     faAngleRight,
-    faPlus, faGear, faRightToBracket, faUserPlus,
+    faPlus, faGear, faRightToBracket, faUserPlus, faBowlFood,
 } from "@fortawesome/free-solid-svg-icons";
 import {useState} from "react";
 import {useAppSelector} from "../../store";
@@ -126,6 +126,7 @@ const MainSideBar = ({ isMobileOpen,closeMobileMenu }: SideBarProps) => {
                 ))}
 
                 {user && (
+                    <>
                     <Link
                         to="/recipes/create"
                         onClick={closeMobileMenu}
@@ -134,6 +135,18 @@ const MainSideBar = ({ isMobileOpen,closeMobileMenu }: SideBarProps) => {
                         <FontAwesomeIcon icon={faPlus} className="w-5 h-5 text-yellow-500 group-hover:text-gray-900" />
                         {(!collapsed || isMobileOpen) && <span className="text-sm font-bold">Додати рецепт</span>}
                     </Link>
+
+
+                    <Link
+                    to="/recipes/"
+                    onClick={closeMobileMenu}
+                    className="flex items-center gap-4 py-3 px-3 rounded-xl transition-all hover:bg-yellow-400 hover:text-gray-900 group mt-4 bg-gray-50 dark:bg-gray-900"
+                    >
+                        <FontAwesomeIcon icon={faBowlFood} className="w-5 h-5 text-yellow-500 group-hover:text-gray-900" />
+                        {(!collapsed || isMobileOpen) && <span className="text-sm font-bold">Мої рецепти</span>}
+                    </Link>
+                    </>
+
                 )}
             </nav>
 

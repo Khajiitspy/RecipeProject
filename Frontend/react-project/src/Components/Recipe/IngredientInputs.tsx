@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { useGetIngredientsQuery } from "../../api/ingredientService";
 import { useGetUnitsQuery } from "../../api/unitService";
-import type { IRecipeIngredientCreate } from "../../types/recipe/IRecipeCreate";
+
+// @ts-ignore
 import type { IngredientItemModel } from "../../types/recipe/IIngredientItem";
 import { APP_ENV } from "../../env";
 import {HiChevronDown, HiOutlinePlus, HiOutlineTrash} from "react-icons/hi";
+import type {IRecipeIngredientCreate} from "../../types/recipe/IRecipeIngredientCreate.ts";
 
 interface IngredientInputsProps {
   ingredients: IRecipeIngredientCreate[];

@@ -6,7 +6,9 @@ import Card from "../../Components/UI/Card";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
+// @ts-ignore
 import { useGetPublicRecipesPagedQuery } from "../../api/recipeService";
+import type {IRecipeItem} from "../../types/recipe/IRecipeItem.ts";
 
 const PAGE_SIZE = 6;
 
@@ -26,7 +28,9 @@ export default function PublicRecipesPage() {
   if (isLoading) return <p className="text-center">Loading...</p>;
   if (error) return <p className="text-center text-red-500">Failed to load recipes</p>;
 
-  return (
+  // @ts-ignore
+    // @ts-ignore
+    return (
     <PageContainer>
       <div className="flex justify-between items-center mb-8">
         <PageHeader
@@ -57,7 +61,7 @@ export default function PublicRecipesPage() {
 
       {/* Grid */}
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {recipes.map((recipe) => (
+        {recipes.map((recipe: IRecipeItem) => (
           <Link key={recipe.id} to={`/recipes/${recipe.id}`}>
             <Card>
               {recipe.image && (
