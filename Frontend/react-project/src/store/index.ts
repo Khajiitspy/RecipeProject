@@ -5,6 +5,7 @@ import { unitService } from "../api/unitService";
 import { ingredientService } from "../api/ingredientService";
 import { categoryService } from "../api/categoryService.ts";
 import authReducer from './authSlice';
+import shoppingReducer from './shoppingSlice';
 import {type TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 import {cartService} from "../api/cartService.ts";
 
@@ -17,6 +18,7 @@ export const store = configureStore({
     [categoryService.reducerPath]: categoryService.reducer,
     [cartService.reducerPath]: cartService.reducer,
     auth: authReducer,
+    shopping: shoppingReducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
