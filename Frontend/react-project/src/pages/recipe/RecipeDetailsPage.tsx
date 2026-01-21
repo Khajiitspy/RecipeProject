@@ -38,19 +38,29 @@ export default function RecipeDetailsPage() {
             {recipe.name}
           </h1>
       
-          <button
-            onClick={() =>
-              togglePublish({ id: recipe.id, publish: !recipe.isPublished })
-            }
+          <motion.button
+            layout
+            onClick={() => togglePublish(recipe.id)}
             className={`
-              px-4 py-2 rounded-full text-sm font-semibold transition
-              ${recipe.isPublished
-                ? "bg-green-100 text-green-700 hover:bg-green-200"
-                : "bg-slate-100 text-slate-600 hover:bg-slate-200"}
-            `}
+                inline-flex items-center gap-2
+                px-5 py-2.5 rounded-full
+                text-sm font-bold
+                transition-all duration-200
+                shadow-sm
+                active:scale-[0.97]
+                ${
+                  recipe.isPublished
+                    ? "bg-green-100 text-green-700 hover:bg-green-200"
+                    : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                }
+              `}
           >
-            {recipe.isPublished ? "✅ Public" : "🚧 Private"}
-          </button>
+            <span className="text-base">
+              {recipe.isPublished ? "🌍" : "🔒"}
+            </span>
+
+            {recipe.isPublished ? "Опубліковано" : "Чернетка"}
+          </motion.button>
 
           {recipe.image && (
             <img

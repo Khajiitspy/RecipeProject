@@ -68,9 +68,9 @@ export const recipeService = createApi({
       }),
       providesTags: ["Recipe"],
     }),
-    togglePublish: builder.mutation<void, { id: number; publish: boolean }>({
-      query: ({ id, publish }) => ({
-        url: publish ? `publish/${id}` : `unpublish/${id}`,
+    togglePublish: builder.mutation<void, number>({
+      query: (id) => ({
+        url: `togglePublish/${id}`,
         method: "PUT",
       }),
       invalidatesTags: ["Recipe"],
