@@ -88,6 +88,11 @@ public class RecipeService(
         var isAdmin = await authService.IsAdminAsync();
         var userId = await authService.GetUserId();
 
+        if (request.CurrentUser)
+        {
+            request.UserId = userId; // override UserId with the current logged-in user
+        }
+
         if (!isAdmin && userId != request.UserId)
         {
             request.IsDeleted = false;

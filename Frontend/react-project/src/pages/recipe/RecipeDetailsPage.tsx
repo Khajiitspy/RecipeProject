@@ -1,5 +1,5 @@
 import { useParams, Link } from "react-router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useGetRecipeByIdQuery, useDeleteRecipeMutation, useTogglePublishMutation } from "../../api/recipeService";
 import { APP_ENV } from "../../env";
 import PageContainer from "../../Components/layout/PageContainer";
@@ -12,10 +12,11 @@ import { motion } from "framer-motion";
 
 export default function RecipeDetailsPage() {
   const { id } = useParams<{ id: string }>();
-  const { data: recipe, isLoading } = useGetRecipeByIdQuery(Number(id));
+  const { data: recipe, isLoading, refetch } = useGetRecipeByIdQuery(Number(id));
   const [deleteRecipe, { isLoading: isDeleting }] = useDeleteRecipeMutation();
   const [togglePublish] = useTogglePublishMutation();
   const [ingredientsOpen, setIngredientsOpen] = useState(true);
+  const [localRecipe, setLocalRecipe] = useState(recipe);
   
   const navigate = useNavigate();
 
@@ -25,6 +26,10 @@ export default function RecipeDetailsPage() {
     await deleteRecipe(id);
     navigate("/recipes"); // back to list
   };
+
+  useEffect(() => {
+    setLocalRecipe(recipe);
+  }, [recipe]);
 
   if (isLoading) return <p>Loading...</p>;
   if (!recipe) return <p>Recipe not found</p>;
@@ -40,26 +45,29 @@ export default function RecipeDetailsPage() {
       
           <motion.button
             layout
-            onClick={() => togglePublish(recipe.id)}
-            className={`
-                inline-flex items-center gap-2
-                px-5 py-2.5 rounded-full
-                text-sm font-bold
-                transition-all duration-200
-                shadow-sm
-                active:scale-[0.97]
-                ${
-                  recipe.isPublished
-                    ? "bg-green-100 text-green-700 hover:bg-green-200"
-                    : "bg-slate-100 text-slate-600 hover:bg-slate-200"
-                }
-              `}
-          >
-            <span className="text-base">
-              {recipe.isPublished ? "🌍" : "🔒"}
-            </span>
+            onClick={async () => {
+              // Toggle locally first (instant UI)
+              setLocalRecipe(prev => prev ? { ...prev, isPublished: !prev.isPublished } : prev);
 
-            {recipe.isPublished ? "Опубліковано" : "Чернетка"}
+              // Then call server
+              await togglePublish(recipe.id);
+              refetch(); // optional to sync with server
+            }}
+            className={`
+              absolute top-4 right-4
+              inline-flex items-center gap-2
+              px-4 py-2 rounded-full
+              text-sm font-bold
+              transition-all duration-200
+              shadow-sm
+              active:scale-[0.97]
+              ${localRecipe?.isPublished
+                ? "bg-green-100 text-green-700 hover:bg-green-200"
+                : "bg-slate-100 text-slate-600 hover:bg-slate-200"}
+            `}
+          >
+            <span className="text-base">{localRecipe?.isPublished ? "🌍" : "🔒"}</span>
+            {localRecipe?.isPublished ? "Опубліковано" : "Чернетка"}
           </motion.button>
 
           {recipe.image && (

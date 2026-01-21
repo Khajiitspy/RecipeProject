@@ -54,19 +54,12 @@ export const recipeService = createApi({
       }),
       invalidatesTags: ["Recipe"],
     }),
-    searchRecipesPaged: builder.query<
-      { items: IRecipeItem[]; totalItems: number },
-      { page: number; pageSize: number; search?: string }
-    >({
-      query: ({ page, pageSize, search }) => ({
+    searchRecipes: builder.query<RecipeItemModel[], RecipeSearchRequest>({
+      query: (params) => ({
         url: "search",
-        params: {
-          pageNumber: page,
-          pageSize,
-          search,
-        },
+        method: "GET",
+        params,
       }),
-      providesTags: ["Recipe"],
     }),
     togglePublish: builder.mutation<void, number>({
       query: (id) => ({
@@ -85,5 +78,5 @@ export const {
   useGetRecipeByIdQuery,
   useDeleteRecipeMutation,
   useTogglePublishMutation,
-  useGetSearchRecipesQuery,
+  useSearchRecipesQuery,
 } = recipeService;
