@@ -21,5 +21,23 @@ namespace API.Controllers
             var cart = await cartService.CreateAsync(model);
             return Ok(cart);
         }
+        [HttpGet("recipes")]
+        public async Task<IActionResult> GetRecipesFromCart()
+        {
+            var recipes = await cartService.GetRecipesFromCartAsync();
+            return Ok(recipes);
+        }
+        [HttpDelete("clear")]
+        public async Task<IActionResult> ClearCart()
+        {
+            var res = await cartService.ClearCartAsync();
+            return Ok(res);
+        }
+        [HttpPost("add-recipe")]
+        public async Task<IActionResult> AddOneRecipe(CartCreateSingleItemModel model)
+        {
+            var cart = await cartService.AddOneRecipeAsync(model);
+            return Ok(cart);
+        }
     }
 }
