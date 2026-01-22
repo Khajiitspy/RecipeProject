@@ -11,7 +11,6 @@ import { faPlus, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { message } from "antd";
 import { RecipeCard } from "../../Components/Recipe/RecipeCard.tsx";
 import type { RootState } from "../../store";
-import { APP_ENV } from "../../env";
 
 export default function RecipesPage() {
   const currentUser = useSelector((state: RootState) => state.auth.user);
@@ -174,7 +173,7 @@ export default function RecipesPage() {
           </div>
         )}
 
-        {/* Recipe grid */}
+
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {recipes?.items?.map((recipe) => {
             const cartItem = (cartData?.recipes ?? []).find((r) => r.recipeId === recipe.id);

@@ -6,7 +6,6 @@ import {
     faComments,
     faAngleLeft,
     faAngleRight,
-    faCartShopping,
     faPlus, faGear, faRightToBracket, faUserPlus, faBowlFood,
 } from "@fortawesome/free-solid-svg-icons";
 import {useState} from "react";
@@ -145,15 +144,6 @@ const MainSideBar = ({ isMobileOpen,closeMobileMenu }: SideBarProps) => {
                     >
                         <FontAwesomeIcon icon={faBowlFood} className="w-5 h-5 text-yellow-500 group-hover:text-gray-900" />
                         {(!collapsed || isMobileOpen) && <span className="text-sm font-bold">Мої рецепти</span>}
-                    </Link>
-
-                    <Link
-                        to="/cart"
-                        onClick={closeMobileMenu}
-                        className="flex items-center gap-4 py-3 px-3 rounded-xl transition-all hover:bg-yellow-400 hover:text-gray-900 group mt-4 bg-gray-50 dark:bg-gray-900"
-                    >
-                        <FontAwesomeIcon icon={faCartShopping} className="w-5 h-5 text-yellow-500 group-hover:text-gray-900" />
-                        {(!collapsed || isMobileOpen) && <span className="text-sm font-bold">Кошик</span>}
                     </Link>
 
                     </>

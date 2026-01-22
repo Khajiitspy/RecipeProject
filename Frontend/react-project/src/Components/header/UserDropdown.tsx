@@ -1,4 +1,4 @@
-import {Link, useNavigate} from "react-router";
+import {useNavigate} from "react-router";
 import {useAppDispatch, useAppSelector} from "../../store";
 import {logout} from "../../store/authSlice.ts";
 import {APP_ENV} from "../../env";
@@ -79,8 +79,6 @@ export default function UserDropdown() {
                     <FontAwesomeIcon icon={faHouse} className="w-4 h-4" />
                     Повернутися на головну
                 </DropdownMenu.Item>
-
-
 
 
 

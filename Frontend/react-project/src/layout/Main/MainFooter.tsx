@@ -22,7 +22,7 @@ export const MainFooter = () => {
                     <h3 className="text-gray-900 dark:text-white font-bold mb-6 uppercase tracking-widest text-xs">Меню</h3>
                     <ul className="space-y-3 text-sm">
                         <li><Link to="/" className="hover:text-yellow-500 transition-colors">Головна</Link></li>
-                        <li><Link to="/popular" className="hover:text-yellow-500 transition-colors">Популярне</Link></li>
+                        <li><Link to="/popular" className="hover:text-yellow-500 transition-colors">Популярне(Beta)</Link></li>
                         <li><Link to="/answers" className="hover:text-yellow-500 transition-colors">Спільнота (Beta)</Link></li>
                     </ul>
                 </div>
