@@ -42,10 +42,10 @@ const ImageUploadFormItem: React.FC<ImageUploadFormItemProps> = ({
                     <p className="ant-upload-drag-icon">
                         <InboxOutlined style={{fontSize: 30, color: 'yellow'}}/>
                     </p>
-                    <p className="ant-upload-text">
+                    <p className="dark:text-white">
                         Натисніть або перетягніть фото сюди
                     </p>
-                    <p className="ant-upload-hint">Тільки зображення (1 файл)</p>
+                    <p className="dark:text-white ">Тільки зображення (1 файл)</p>
                 </Dragger>
             ) : (
                 <div

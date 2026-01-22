@@ -14,10 +14,10 @@ export const MainLayout = () => {
     const closeMobileMenu = () => setIsMobileOpen(false);
 
     return (
-        <div className="flex h-screen overflow-hidden bg-gray-50">
+        <div className="flex h-screen overflow-hidden bg-white dark:bg-gray-950 text-gray-900 dark:text-white">
             <MainSideBar isMobileOpen={isMobileOpen} closeMobileMenu={closeMobileMenu}/>
 
-            <div className="flex-1 flex flex-col overflow-hidden">
+            <div className="flex-1 flex flex-col overflow-hidden bg-white  text-gray-900 dark:text-white">
                 <MainHeader toggleMobileMenu={toggleMobileMenu}/>
 
                 {isMobileOpen && (
@@ -27,7 +27,7 @@ export const MainLayout = () => {
                     ></div>
                 )}
 
-                <main className="flex-1 overflow-y-auto flex flex-col">
+                <main className="flex-1 overflow-y-auto flex flex-col bg-white dark:bg-gray-950 text-gray-900 dark:text-white">
                     <Outlet />
                     <MainFooter />
                 </main>

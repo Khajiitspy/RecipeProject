@@ -45,7 +45,7 @@ const RegisterPage = () => {
     };
 
     return (
-    <div className="flex flex-col lg:flex-row min-h-screen bg-white">
+    <div className="flex flex-col dark:bg-gray-950 lg:flex-row min-h-screen bg-white">
         {/* ЛІВА ЧАСТИНА: Привітання (ховається на мобільних) */}
         <AuthBanner
             title="Приєднуйся до"
@@ -55,11 +55,11 @@ const RegisterPage = () => {
         />
 
         {/* ПРАВА ЧАСТИНА: Форма входу */}
-        <div className="w-full lg:w-1/2 flex flex-col mb-10   justify-center px-8 md:px-24 lg:px-32">
+        <div className="w-full lg:w-1/2 flex flex-col mb-10 mt-10   justify-center px-8 md:px-24 lg:px-32">
             <div className="max-w-md w-full mx-auto">
                 <div className="mb-8 text-center lg:text-left">
-                    <h2 className="text-3xl font-bold text-slate-900">Реєстрація</h2>
-                    <p className="text-slate-500 mt-2">
+                    <h2 className="text-3xl font-bold dark:text-white text-slate-900">Реєстрація</h2>
+                    <p className="text-slate-500 dark:text-white mt-2">
                         Вже маєте акаунт? {" "}
                         <Link to="/account/login" className="text-amber-300 font-semibold hover:underline">
                             Вхід
@@ -78,7 +78,8 @@ const RegisterPage = () => {
                             value={form.FirstName}
                             onChange={handleChange}
                             required
-                            className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-300/20  transition"
+                            className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-900  border-gray-100 dark:border-gray-800 text-gray-900 dark:text-white  rounded-xl border border-slate-200 focus:outline-none
+                            focus:ring-2 focus:ring-amber-300/20  transition"
                         />
                         <input
                             type="text"
@@ -87,7 +88,8 @@ const RegisterPage = () => {
                             value={form.LastName}
                             onChange={handleChange}
                             required
-                            className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-300/20  transition"
+                            className="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800 text-gray-900 dark:text-white border-slate-200 focus:outline-none
+                            focus:ring-2 focus:ring-amber-300/20  transition"
                         />
                     </div>
 
@@ -98,7 +100,7 @@ const RegisterPage = () => {
                         value={form.Email}
                         onChange={handleChange}
                         required
-                        className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-300/20  transition"
+                        className="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800 text-gray-900 dark:text-white border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-300/20  transition"
                     />
 
 
@@ -106,7 +108,7 @@ const RegisterPage = () => {
                         <input
                             name="Password"
                             type={showPassword ? "text" : "password"}
-                            className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-300/20 transition"
+                            className="w-full px-4 py-3 rounded-xl  bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800 text-gray-900 dark:text-white border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-300/20 transition"
                             placeholder="Password"
                             value={form.Password}
                             onChange={handleChange}
@@ -131,7 +133,8 @@ const RegisterPage = () => {
                     <button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full bg-amber-300 hover:bg-amber-500 active:scale-[0.98] text-white font-bold py-4 rounded-xl shadow-lg shadow-red-200 transition-all duration-200 mt-6 flex justify-center items-center gap-2"
+                    className="w-full bg-yellow-400 hover:bg-yellow-500 active:scale-[0.98] text-gray-950 font-black py-4 rounded-2xl shadow-xl
+                          shadow-yellow-400/10 transition-all duration-300 mt-8 flex justify-center items-center gap-2"
                     >
                     {isLoading ? "Створення акаунту..." : "Зареєструватися"}
                     </button>
@@ -143,8 +146,7 @@ const RegisterPage = () => {
 </div>
 
 
-)
-    ;
+);
 };
 
 export default RegisterPage;

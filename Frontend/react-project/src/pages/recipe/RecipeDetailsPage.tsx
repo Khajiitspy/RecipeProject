@@ -73,12 +73,16 @@ export default function RecipeDetailsPage() {
   return (
     <AnimatedPage>
       <PageContainer>
-        <div className="mb-6">
+
+        <div className="mb-8">
           <button
-            onClick={() => navigate(-1)}
-            className="text-slate-500 hover:text-slate-800 transition flex items-center gap-2 font-medium cursor-pointer"
+              onClick={() => navigate(-1)}
+              className="group text-gray-400 hover:text-yellow-500 transition-colors flex items-center gap-3 font-bold uppercase text-xs tracking-widest cursor-pointer"
           >
-            <FontAwesomeIcon icon={faArrowLeft} /> Назад до списку
+            <div className="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center group-hover:bg-yellow-400 group-hover:text-gray-900 transition-all">
+              <FontAwesomeIcon icon={faArrowLeft} />
+            </div>
+            Назад до списку
           </button>
         </div>
 
@@ -132,45 +136,37 @@ export default function RecipeDetailsPage() {
                   <button
                     onClick={handleDelete}
                     disabled={isDeleting}
-                    className="flex items-center justify-center min-w-[3rem] h-12 rounded-2xl bg-red-50 text-red-500 border border-red-100 hover:bg-red-500 hover:text-white transition-all duration-200 disabled:opacity-50 cursor-pointer"
-                  >
-                    <FontAwesomeIcon icon={faTrash} />
-                  </button>
-                </div>
-              )}
+                    className="flex items-center justify-center min-w-[3.5rem] h-[3.5rem] rounded-2xl bg-red-50 dark:bg-red-500/10 text-red-500 border border-red-100 dark:border-red-500/20 hover:bg-red-500 hover:text-white transition-all duration-300 active:scale-90 disabled:opacity-50 cursor-pointer"
+                >
+                  <FontAwesomeIcon icon={faTrash} />
+                </button>
+              </div>
             </div>
 
-            {/* Recipe image */}
+
             {recipe.image && (
-              <div className="mb-10 group overflow-hidden rounded-3xl shadow-md border border-slate-100 max-h-[300px] md:max-h-[450px]">
-                <img
-                  src={`${APP_ENV.API_BASE_URL}/images/800_${recipe.image}`}
-                  alt={recipe.name}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-                />
-              </div>
+                <div className="mb-12 group overflow-hidden rounded-[2.5rem] shadow-2xl shadow-gray-200/50 dark:shadow-none border border-gray-100 dark:border-gray-800 max-h-[400px] md:max-h-[550px]">
+                  <img
+                      src={`${APP_ENV.API_BASE_URL}/images/800_${recipe.image}`}
+                      alt={recipe.name}
+                      className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+                  />
+                </div>
             )}
 
-            {/* Ingredients with toggle */}
-            <button
-              onClick={() => setIngredientsOpen(!ingredientsOpen)}
-              className="flex items-center justify-between w-full mb-4"
-            >
-              <h2 className="text-xl font-bold text-slate-800">Інгрідієнти</h2>
-              <span className="text-slate-500 text-sm">{ingredientsOpen ? "Hide ▲" : "Show ▼"}</span>
-            </button>
-
-            <motion.div
-              initial={false}
-              animate={{ height: ingredientsOpen ? "auto" : 0, opacity: ingredientsOpen ? 1 : 0 }}
-              transition={{ duration: 0.25 }}
-              className="overflow-hidden mb-10"
-            >
-              <RecipeIngredients ingredients={recipe.ingredients!} />
-            </motion.div>
-
-            {/* Instructions */}
-            <RecipeInstruction instruction={recipe.instruction} recipeId={recipe.id} onCopy={handleCopy} />
+            {/* КОНТЕНТ: Інгредієнти та Інструкції */}
+            <div className="grid md:grid-cols-3 gap-12 lg:gap-16">
+              <div className="md:col-span-1">
+                <RecipeIngredients ingredients={recipe.ingredients!} />
+              </div>
+              <div className="md:col-span-2">
+                <RecipeInstruction
+                    instruction={recipe.instruction}
+                    recipeId={recipe.id}
+                    onCopy={handleCopy}
+                />
+              </div>
+            </div>
           </div>
         </Card>
       </PageContainer>

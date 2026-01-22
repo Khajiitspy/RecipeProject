@@ -19,7 +19,7 @@ const testimonials = [
         id: 2,
         name: "Максим Коваль",
         role: "Фуд-блогер",
-        text: "Дуже зручний інтерфейс! Можливість додавати власні пости та ділитися ними з друзями — це саме те, що я шукав.",
+        text: "Дуже зручний інтерфейс! Можливість додавати власні пости та ділитися ними з друзями",
         image: "https://i.pravatar.cc/150?u=2",
         rating: 5
     },
@@ -42,11 +42,9 @@ const UserHomePage: React.FC = () => {
     e.preventDefault();
     if (!searchTerm.trim()) return;
 
-    // Build query parameters
     const params = new URLSearchParams();
     params.set("q", searchTerm.trim());
-
-    if (user) params.set("public", "true"); // logged-in users automatically see public recipes
+    if (user) params.set("public", "true");
 
     navigate(`/recipes?${params.toString()}`);
   };
