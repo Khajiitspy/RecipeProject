@@ -12,7 +12,7 @@ import { Select, ConfigProvider } from 'antd';
 import { HiChevronDown } from "react-icons/hi";
 import AnimatedPage from "../../Components/layout/AnimatedPage.tsx"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faCloudUploadAlt, faSpinner} from "@fortawesome/free-solid-svg-icons";
+import {faSpinner} from "@fortawesome/free-solid-svg-icons";
 
 export default function RecipeCreatePage() {
   const [createRecipe, { isLoading }] = useCreateRecipeMutation();
@@ -187,8 +187,7 @@ export default function RecipeCreatePage() {
                         <FontAwesomeIcon icon={faSpinner} className="animate-spin" />
                     ) : (
                         <>
-                          <FontAwesomeIcon icon={faCloudUploadAlt} />
-                          <span>Опублікувати рецепт</span>
+                          <span>Створити</span>
                         </>
                     )}
                   </button>
