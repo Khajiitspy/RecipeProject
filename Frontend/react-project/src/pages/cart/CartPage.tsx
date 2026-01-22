@@ -11,6 +11,9 @@ export default function CartPage() {
     const [activeTab, setActiveTab] = useState<"recipes" | "shopping-list">("recipes");
     const { data, isLoading, error } = useGetCartQuery();
 
+    const recipes = data?.recipes ?? [];      // default to empty array
+    const ingredients = data?.ingredients ?? []; // default to empty array
+
     if (isLoading) return <LoadingOverlay />;
 
     if (error) return (
@@ -21,7 +24,7 @@ export default function CartPage() {
         </PageContainer>
     );
 
-    if (!data || (data.recipes.length === 0 && data.ingredients.length === 0)) {
+    if (recipes.length === 0 && ingredients.length === 0) {
         return (
             <PageContainer>
                 <PageHeader title="Мій план харчування" />
@@ -44,9 +47,9 @@ export default function CartPage() {
             <CartTabs active={activeTab} onChange={setActiveTab} />
 
             {activeTab === "recipes" ? (
-                <CartRecipeGrid recipes={data.recipes} />
+                <CartRecipeGrid recipes={recipes} />
             ) : (
-                <CartShoppingList ingredients={data.ingredients} />
+                <CartShoppingList ingredients={ingredients} />
             )}
         </PageContainer>
     );
