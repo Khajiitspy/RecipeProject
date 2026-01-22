@@ -1,7 +1,7 @@
 import Chart from "react-apexcharts";
 import type {ApexOptions} from "apexcharts";
-import { Dropdown } from "../ui/dropdown/Dropdown";
-import { DropdownItem } from "../ui/dropdown/DropdownItem";
+import { Dropdown } from "../UI/dropdown/Dropdown";
+import { DropdownItem } from "../UI/dropdown/DropdownItem";
 
 import { useState } from "react";
 

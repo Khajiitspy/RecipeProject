@@ -1,5 +1,5 @@
-import {Dropdown} from "../ui/dropdown/Dropdown.tsx";
-import {DropdownItem} from "../ui/dropdown/DropdownItem.tsx";
+import {Dropdown} from "../UI/dropdown/Dropdown.tsx";
+import {DropdownItem} from "../UI/dropdown/DropdownItem.tsx";
 import {useNavigate} from "react-router";
 import {useState} from "react";
 import {useAppDispatch, useAppSelector} from "../../store";

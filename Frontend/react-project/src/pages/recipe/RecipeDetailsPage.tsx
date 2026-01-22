@@ -141,6 +141,7 @@ export default function RecipeDetailsPage() {
                   <FontAwesomeIcon icon={faTrash} />
                 </button>
               </div>
+              )}
             </div>
 
 
