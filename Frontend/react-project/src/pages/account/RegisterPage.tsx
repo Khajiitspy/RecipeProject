@@ -7,7 +7,7 @@ import ImageUploadFormItem from "../../Components/UI/ImageUploadFormItem.tsx";
 import {useAppDispatch} from "../../store";
 import {loginSuccess} from "../../store/authSlice.ts";
 import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
-import AuthBanner from "../../Components/Account/Banner.tsx";
+import AuthBanner from "../../Components/account/Banner.tsx";
 
 const RegisterPage = () => {
     const dispatch = useAppDispatch();

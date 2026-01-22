@@ -7,7 +7,7 @@ import type {IForgotPasswordRequest} from "../../../types/user/IForgotPasswordRe
 import foodImage from "../../../assets/food.jpg";
 import { HiOutlineMail, HiOutlineArrowLeft } from "react-icons/hi";
 import type {IResetPasswordRequest} from "../../../types/user/IReserPassword.ts";
-import AuthBanner from "../../../Components/Account/Banner.tsx";
+import AuthBanner from "../../../Components/account/Banner.tsx";
 
 
 const ForgotPasswordPage: React.FC = () => {

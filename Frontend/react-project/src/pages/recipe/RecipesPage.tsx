@@ -9,7 +9,7 @@ import PageHeader from "../../Components/layout/PageHeader";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { message } from "antd";
-import { RecipeCard } from "../../Components/Recipe/RecipeCard.tsx";
+import { RecipeCard } from "../../Components/recipe/RecipeCard.tsx";
 import type { RootState } from "../../store";
 
 export default function RecipesPage() {

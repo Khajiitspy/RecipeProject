@@ -7,7 +7,7 @@ import type { IRecipeCreate } from "../types/recipe/IRecipeCreate";
 export const recipeService = createApi({
   reducerPath: "recipeService",
   baseQuery: createBaseQuery("recipes"),
-  tagTypes: ["Recipe"],
+  tagTypes: ["recipe"],
 
   endpoints: (builder) => ({
     getRecipes: builder.query<IRecipeItem[], void>({
@@ -15,7 +15,7 @@ export const recipeService = createApi({
         url: "myRecipes",
         method: "GET",
       }),
-      providesTags: ["Recipe"],
+      providesTags: ["recipe"],
     }),
 
     createRecipe: builder.mutation<IRecipeItem, IRecipeCreate>({
@@ -31,7 +31,7 @@ export const recipeService = createApi({
           body: formData,
         };
       },
-      invalidatesTags: ["Recipe"],
+      invalidatesTags: ["recipe"],
     }),
     getRecipeById: builder.query<IRecipeItem, number>({
       query: (id) => ({
@@ -45,14 +45,14 @@ export const recipeService = createApi({
         method: "PUT",
         body,
       }),
-      invalidatesTags: ["Recipe"],
+      invalidatesTags: ["recipe"],
     }),
     deleteRecipe: builder.mutation<void, number>({
       query: (id) => ({
         url: `${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Recipe"],
+      invalidatesTags: ["recipe"],
     }),
     searchRecipes: builder.query<RecipeItemModel[], RecipeSearchRequest>({
       query: (params) => ({
@@ -66,7 +66,7 @@ export const recipeService = createApi({
         url: `togglePublish/${id}`,
         method: "PUT",
       }),
-      invalidatesTags: ["Recipe"],
+      invalidatesTags: ["recipe"],
     }),
 
     getAllRecipes: builder.query<IRecipeItem[], void>({
@@ -74,7 +74,7 @@ export const recipeService = createApi({
         url: "",
         method: "GET",
       }),
-      providesTags: ["Recipe"],
+      providesTags: ["recipe"],
     }),
 
   }),

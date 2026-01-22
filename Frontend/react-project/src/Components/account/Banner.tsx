@@ -22,7 +22,7 @@ const AuthBanner: React.FC<AuthBannerProps> = ({
                 className="absolute inset-0 w-full h-full object-cover"
             />
 
-            {/* Шар затемнення та блюр */}
+
             <div className="absolute inset-0 bg-gradient-to-br from-amber-500/40 to-black/60 backdrop-blur-[4px]"></div>
 
             {/* Контент */}

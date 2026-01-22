@@ -1,5 +1,5 @@
 import React from "react";
-import AuthBanner from "../../../Components/Account/Banner.tsx";
+import AuthBanner from "../../../Components/account/Banner.tsx";
 import foodImage from "../../../assets/food.jpg";
 import {HiOutlineArrowLeft} from "react-icons/hi";
 import {Link} from "react-router";

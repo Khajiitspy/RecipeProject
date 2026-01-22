@@ -6,7 +6,7 @@ import {faEye, faEyeSlash, faSpinner} from "@fortawesome/free-solid-svg-icons";
 import foodImage from "../../assets/food.jpg";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import {useGoogleLogin} from "@react-oauth/google";
-import AuthBanner from "../../Components/Account/Banner.tsx";
+import AuthBanner from "../../Components/account/Banner.tsx";
 
 const LoginPage = () => {
     const [email, setEmail] = useState("");

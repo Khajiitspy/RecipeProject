@@ -31,7 +31,7 @@ const handleAuthSuccess = async (
 export const userService = createApi({
   reducerPath: "userService",
   baseQuery: createBaseQuery("account"),
-  tagTypes: ['Account'],
+  tagTypes: ['account'],
   endpoints: (builder) => ({
 
 
@@ -77,7 +77,7 @@ export const userService = createApi({
           url: 'ValidateResetToken',
           params, // це додасть параметри як query string: ?token=abc&email=...
         }),
-        providesTags: ['Account'],
+        providesTags: ['account'],
       }),
 
       resetPassword: builder.mutation<IResetPasswordRequest, void>({

@@ -5,7 +5,7 @@ import {
   useUpdateRecipeMutation,
 } from "../../api/recipeService";
 import { useGetCategoriesQuery } from "../../api/categoryService";
-import IngredientInputs from "../../Components/Recipe/IngredientInputs";
+import IngredientInputs from "../../Components/recipe/IngredientInputs";
 import PageContainer from "../../Components/layout/PageContainer";
 import Card from "../../Components/UI/Card";
 import PageHeader from "../../Components/layout/PageHeader";

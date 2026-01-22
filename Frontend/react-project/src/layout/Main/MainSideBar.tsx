@@ -89,69 +89,78 @@ const MainSideBar = ({ isMobileOpen,closeMobileMenu }: SideBarProps) => {
                 </div>
             )}
 
-            {/* РОЗДІЛЬНИК */}
+
             <div className="h-px bg-gray-100 dark:bg-gray-800 mb-6 mx-2"></div>
 
-            {/* НАВІГАЦІЯ */}
-            <nav className="flex-1 space-y-1">
+            <nav className="flex-1 space-y-2">
                 {[
                     { to: "/", icon: faHouse, label: "Головна" },
                     { to: "/recipes?public=true", icon: faFire, label: "Всі рецепти" },
-                    { to: "/answers", icon: faComments, label: "Запитання", beta: true },
-                ].map((link) => (
-                    <Link
-                        key={link.to}
-                        to={link.to}
-                        onClick={closeMobileMenu}
-                        className={`flex items-center gap-4 py-3 px-3 rounded-xl transition-all group
-        ${location.pathname === link.to
-                            ? "bg-yellow-50 dark:bg-yellow-400/10 text-yellow-600 dark:text-yellow-400"
-                            : "hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"}`}
-                    >
-                        <FontAwesomeIcon
-                            icon={link.icon}
-                            className={`w-5 h-5 transition-colors ${location.pathname === link.to ? "text-yellow-500" : "group-hover:text-yellow-500"}`}
-                        />
-                        {(!collapsed || isMobileOpen) && (
-                            <span className="text-sm font-bold">
-                        {link.label}
-                                {link.beta && (
-                                    <span className="ml-2 text-[9px] px-1.5 py-0.5 bg-yellow-400 text-gray-900 rounded font-black uppercase tracking-tighter">
-                                Beta
-                            </span>
-                                )}
-                    </span>
-                        )}
-                    </Link>
-                ))}
+                    { to: "/answers", icon: faComments, label: "Запитання", soon: true },
+                ].map((link) => {
+                    const isActive = (location.pathname + location.search) === link.to;
+
+                    return (
+                        <Link
+                            key={link.to}
+                            to={link.soon ? "#" : link.to}
+                            onClick={link.soon ? (e) => e.preventDefault() : closeMobileMenu}
+                            className={`flex items-center gap-4 py-3.5 px-4 rounded-2xl transition-all group relative
+                            ${link.soon ? "opacity-50 cursor-default" : ""}
+                            ${isActive 
+                                ? "bg-yellow-400 text-gray-950 shadow-lg shadow-yellow-400/20"
+                                : "hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"}`}
+                        >
+                            <FontAwesomeIcon
+                                icon={link.icon}
+                                className={`w-5 h-5 transition-colors 
+                                ${isActive ? "text-gray-950" : "group-hover:text-yellow-500"}`}
+                            />
+                            {(!collapsed || isMobileOpen) && (
+                                <div className="flex items-center justify-between w-full">
+                                <span className="text-sm font-black tracking-tight">
+                                    {link.label}
+                                </span>
+
+                                    {link.soon && (
+                                        <span className="text-[7px] px-2 py-1 bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400 rounded-lg font-black uppercase tracking-[0.15em] border border-gray-300 dark:border-gray-600 group-hover:border-yellow-400/30 transition-colors">
+                                        Soon
+                                    </span>
+                                    )}
+                                </div>
+                            )}
+                        </Link>
+                    );
+                })}
+
 
                 {user && (
-                    <>
-                    <Link
-                        to="/recipes/create"
-                        onClick={closeMobileMenu}
-                        className="flex items-center gap-4 py-3 px-3 rounded-xl transition-all hover:bg-yellow-400 hover:text-gray-900 group mt-4 bg-gray-50 dark:bg-gray-900"
-                    >
-                        <FontAwesomeIcon icon={faPlus} className="w-5 h-5 text-yellow-500 group-hover:text-gray-900" />
-                        {(!collapsed || isMobileOpen) && <span className="text-sm font-bold">Додати рецепт</span>}
-                    </Link>
+                    <div className="pt-4 mt-4 border-t border-gray-100 dark:border-gray-800 space-y-2">
+                        <Link
+                            to="/recipes/create"
+                            onClick={closeMobileMenu}
+                            className="flex items-center gap-4 py-3.5 px-4 rounded-2xl transition-all hover:bg-yellow-400 hover:text-gray-900 group bg-gray-50 dark:bg-gray-900 shadow-sm"
+                        >
+                            <FontAwesomeIcon icon={faPlus} className="w-5 h-5 text-yellow-500 group-hover:text-gray-900" />
+                            {(!collapsed || isMobileOpen) && <span className="text-sm font-black tracking-tight">Додати рецепт</span>}
+                        </Link>
 
-
-                    <Link
-                        to="/recipes/"
-                        onClick={closeMobileMenu}
-                        className="flex items-center gap-4 py-3 px-3 rounded-xl transition-all hover:bg-yellow-400 hover:text-gray-900 group mt-4 bg-gray-50 dark:bg-gray-900"
-                    >
-                        <FontAwesomeIcon icon={faBowlFood} className="w-5 h-5 text-yellow-500 group-hover:text-gray-900" />
-                        {(!collapsed || isMobileOpen) && <span className="text-sm font-bold">Мої рецепти</span>}
-                    </Link>
-
-                    </>
-
+                        <Link
+                            to="/recipes/"
+                            onClick={closeMobileMenu}
+                            className="flex items-center gap-4 py-3.5 px-4 rounded-2xl transition-all hover:bg-yellow-400 hover:text-gray-900 group bg-gray-50 dark:bg-gray-900 shadow-sm"
+                        >
+                            <FontAwesomeIcon icon={faBowlFood} className="w-5 h-5 text-yellow-500 group-hover:text-gray-900" />
+                            {(!collapsed || isMobileOpen) && <span className="text-sm font-black tracking-tight">Мої рецепти</span>}
+                        </Link>
+                    </div>
                 )}
             </nav>
 
-            {/* ФУТЕР САЙДБАРА */}
+
+
+
+
             <div className="mt-auto pt-6 border-t border-gray-100 dark:border-gray-800">
                 <Link
                     to="/settings"

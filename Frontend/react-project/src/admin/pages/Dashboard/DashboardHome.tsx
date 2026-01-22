@@ -83,7 +83,6 @@ export default function DashboardHome() {
 
 
 
-        {/* 3. ПАНЕЛЬ ШВИДКИХ ДІЙ */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
             <div className="lg:col-span-8 bg-white dark:bg-gray-900 p-8 rounded-[2.5rem] border border-gray-100 dark:border-gray-800 shadow-sm">
                 <h3 className="text-xs font-black uppercase tracking-widest text-gray-400 mb-6">Швидкі інструменти</h3>
@@ -93,10 +92,32 @@ export default function DashboardHome() {
                         <span className="block text-[11px] font-black uppercase tracking-widest dark:text-gray-300">Керувати користувачами</span>
                     </Link>
 
-                    <Link to="/admin/recipes" className="group p-6 bg-gray-50 dark:bg-gray-800/50 rounded-3xl border border-transparent hover:border-yellow-400 transition-all text-center">
-                        <FontAwesomeIcon icon={faUtensils} className="text-2xl text-gray-400 group-hover:text-yellow-400 mb-3 transition-colors" />
-                        <span className="block text-[11px] font-black uppercase tracking-widest dark:text-gray-300">Модерація контенту</span>
+                    <Link
+                        to="/admin/recipes"
+                        className="relative group p-6 bg-gray-50 dark:bg-gray-900/40 rounded-[2rem] border border-transparent hover:border-yellow-400 transition-all text-center overflow-hidden"
+                    >
+
+                        <div className="absolute top-3 right-3 flex items-center gap-1.5 px-3 py-1 bg-yellow-400 rounded-full shadow-lg shadow-yellow-400/20 animate-pulse">
+                            <div className="w-1 h-1 bg-gray-950 rounded-full"></div>
+                            <span className="text-[8px] font-black uppercase tracking-tighter text-gray-950">
+                                WIP
+                            </span>
+                        </div>
+
+                        <div className="mt-2">
+                            <FontAwesomeIcon
+                                icon={faUtensils}
+                                className="text-2xl text-gray-400 group-hover:text-yellow-400 mb-3 transition-colors"
+                            />
+                            <span className="block text-[11px] font-black uppercase tracking-widest text-gray-600 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white transition-colors">
+                                Модерація контенту
+                            </span>
+                        </div>
+
+                        <div className="absolute inset-0 bg-gray-900/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
                     </Link>
+
+
                 </div>
             </div>
 

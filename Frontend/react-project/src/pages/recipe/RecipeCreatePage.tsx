@@ -3,7 +3,7 @@ import { useCreateRecipeMutation } from "../../api/recipeService";
 import { useGetCategoriesQuery } from "../../api/categoryService";
 // @ts-ignore
 import type { IRecipeIngredientCreate } from "../../types/recipe/IRecipeCreate";
-import IngredientInputs from "../../Components/Recipe/IngredientInputs";
+import IngredientInputs from "../../Components/recipe/IngredientInputs";
 import {slugify} from "../../utils/slugify.ts"
 import PageContainer from "../../Components/layout/PageContainer";
 import Card from "../../Components/UI/Card";
@@ -47,7 +47,7 @@ export default function RecipeCreatePage() {
         ingredientsJson: JSON.stringify(ingredients),
       }).unwrap();
 
-      alert("Recipe created!");
+      alert("recipe created!");
     } catch (err: any) {
       if (err?.data?.errors) {
         setErrors(err.data.errors);

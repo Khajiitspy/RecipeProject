@@ -4,7 +4,7 @@ import {useLocation, useNavigate} from "react-router";
 import LoadingOverlay from "../../../Components/UI/loading/LoadingOverlay.tsx";
 import {useResetPasswordMutation} from "../../../api/userService.ts";
 import type {IResetPasswordRequest} from "../../../types/user/IReserPassword.ts";
-import AuthBanner from "../../../Components/Account/Banner.tsx";
+import AuthBanner from "../../../Components/account/Banner.tsx";
 import foodImage from "../../../assets/food.jpg";
 
 

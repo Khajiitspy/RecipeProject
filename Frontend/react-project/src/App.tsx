@@ -13,9 +13,10 @@ import ResetPasswordPage from "./pages/account/ResetPassword/ResetPasswordPage.t
 import RecipeDetailsPage from "./pages/recipe/RecipeDetailsPage.tsx";
 import RecipeEditPage from "./pages/recipe/RecipeEditPage.tsx";
 import AdminLayout from "./layout/Admin/AdminLayout.tsx";
-import DashboardHome from "./pages/admin/Dashboard/DashboardHome.tsx";
+import DashboardHome from "./admin/pages/Dashboard/DashboardHome.tsx";
 import UserListPage from "./admin/pages/Users/List/AdminUsersList.tsx";
 import CartPage from "./pages/cart/CartPage.tsx";
+import SettingsPage from "./pages/settings/SettingsPage.tsx";
 
 function App() {
     return (
@@ -39,6 +40,8 @@ function App() {
                     <Route path="/recipes/edit/:id" element={<RecipeEditPage />} />
 
                     <Route path={"/cart"} element={<CartPage/>}/>
+
+                    <Route path="/settings" element={<SettingsPage />} />
                 </Route>
 
 
