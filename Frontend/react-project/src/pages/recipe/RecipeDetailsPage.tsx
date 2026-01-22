@@ -1,5 +1,6 @@
 import { useParams, useNavigate } from "react-router";
-import { useGetRecipeByIdQuery, useDeleteRecipeMutation } from "../../api/recipeService";
+import { useState, useEffect } from "react";
+import { useGetRecipeByIdQuery, useDeleteRecipeMutation, useTogglePublishMutation } from "../../api/recipeService";
 import { useGetCartQuery, useAddRecipeToCartMutation } from "../../api/cartService";
 import { APP_ENV } from "../../env";
 import PageContainer from "../../Components/layout/PageContainer";
@@ -8,25 +9,50 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { message } from "antd";
 import { PortionSelector } from "../../Components/cart/PortionSelector.tsx";
-import {RecipeIngredients} from "../../Components/Recipe/RecipeIngredients.tsx";
-import {RecipeInstruction} from "../../Components/Recipe/RecipeInstruction.tsx";
+import { RecipeIngredients } from "../../Components/Recipe/RecipeIngredients.tsx";
+import { RecipeInstruction } from "../../Components/Recipe/RecipeInstruction.tsx";
+import AnimatedPage from "../../Components/layout/AnimatedPage";
+import { motion } from "framer-motion";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../store";
 
 export default function RecipeDetailsPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-
-  const { data: recipe, isLoading: isRecipeLoading } = useGetRecipeByIdQuery(Number(id));
+  const { data: recipe, isLoading: isRecipeLoading, refetch } = useGetRecipeByIdQuery(Number(id));
   const [deleteRecipe, { isLoading: isDeleting }] = useDeleteRecipeMutation();
+  const [togglePublish] = useTogglePublishMutation();
   const { data: cartData } = useGetCartQuery();
   const [addRecipeToCart] = useAddRecipeToCartMutation();
+  const currentUser = useSelector((state: RootState) => state.auth.user);
 
-  const cartItem = cartData?.recipes?.find((r) => r.recipeId === Number(id));
+  // Local UI state
+  const [localRecipe, setLocalRecipe] = useState(recipe);
+  const [ingredientsOpen, setIngredientsOpen] = useState(true);
+
+  // Sync local recipe with query data
+  useEffect(() => {
+    setLocalRecipe(recipe);
+  }, [recipe]);
+
+  if (isRecipeLoading)
+  return (
+    <div className="text-center py-20 font-medium text-gray-500 dark:text-gray-400">
+      Завантаження...
+    </div>
+  );
+  if (!recipe) return <div className="text-center py-20 text-red-500">Рецепт не знайдено</div>;
+
+  const isOwner = Boolean(currentUser && recipe.userId && recipe.userId === currentUser.id);
+
+  const cartItem = (cartData?.recipes || []).find((r) => r.recipeId === Number(id));
+
   const currentPortions = cartItem ? cartItem.portion : 0;
 
   const handlePortionChange = async (diff: number) => {
     try {
       await addRecipeToCart({ recipeId: Number(id), portion: diff }).unwrap();
-    } catch (err) {
+    } catch {
       message.error("Не вдалося оновити кошик");
     }
   };
@@ -49,16 +75,14 @@ export default function RecipeDetailsPage() {
     }
   };
 
-  if (isRecipeLoading) return <div className="text-center py-20 font-medium text-slate-500">Завантаження...</div>;
-  if (!recipe) return <div className="text-center py-20 text-red-500">Рецепт не знайдено</div>;
-
   return (
+    <AnimatedPage>
       <PageContainer>
 
         <div className="mb-8">
           <button
               onClick={() => navigate(-1)}
-              className="group text-gray-400 hover:text-yellow-500 transition-colors flex items-center gap-3 font-bold uppercase text-xs tracking-widest cursor-pointer"
+              className="group text-gray-400 dark:text-gray-500 hover:text-yellow-500 transition-colors flex items-center gap-3 font-bold uppercase text-xs tracking-widest"
           >
             <div className="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center group-hover:bg-yellow-400 group-hover:text-gray-900 transition-all">
               <FontAwesomeIcon icon={faArrowLeft} />
@@ -67,37 +91,81 @@ export default function RecipeDetailsPage() {
           </button>
         </div>
 
-        <Card className="overflow-hidden p-0 border-none bg-white dark:bg-gray-900 rounded-[2.5rem] shadow-xl shadow-gray-200/50 dark:shadow-none transition-colors duration-300">
-          <div className="p-8 md:p-12">
-            {/* ЗАГОЛОВОК ТА ПОРЦІЇ */}
-            <div className="flex flex-col lg:flex-row justify-between items-start gap-8 mb-10">
+      <Card className="
+        overflow-hidden p-0 relative
+        bg-white dark:bg-gray-900
+        border border-gray-100 dark:border-gray-800
+        shadow-xl shadow-gray-200/50 dark:shadow-none
+      ">
+          <div className="p-6 md:p-10">
+            {/* Header */}
+            <div className="flex flex-col lg:flex-row justify-between items-start gap-6 mb-6">
               <div className="flex-1">
-                <h1 className="text-4xl md:text-5xl font-black text-gray-900 dark:text-white mb-4 tracking-tighter leading-tight">
+                <div className="flex items-center justify-between mb-3">
+                  {isOwner && (
+                    <motion.button
+                      layout
+                      onClick={async () => {
+                        setLocalRecipe(prev => prev ? { ...prev, isPublished: !prev.isPublished } : prev);
+                        await togglePublish(recipe.id);
+                        refetch();
+                      }}
+                      className={`
+                        px-3 py-1 rounded-full text-sm font-bold
+                        ${localRecipe?.isPublished
+                          ? "bg-green-100 text-green-700 dark:bg-green-500/20 dark:text-green-400"
+                          : "bg-slate-100 text-slate-600 dark:bg-gray-800 dark:text-gray-400"}
+                      `}
+                    >
+                      {localRecipe?.isPublished ? "Опубліковано 🌍" : "Чернетка 🔒"}
+                    </motion.button>
+                  )}
+                </div>
+
+                <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white">
                   {recipe.name}
                 </h1>
                 {recipe.category && (
-                    <span className="inline-block bg-yellow-400 text-gray-950 px-5 py-1.5 rounded-xl text-xs font-black uppercase tracking-wider">
+                  <span className="
+                    inline-block px-4 py-1 rounded-full text-sm font-semibold
+                    bg-indigo-50 text-indigo-600 border border-indigo-100
+                    dark:bg-indigo-500/10 dark:text-indigo-400 dark:border-indigo-500/20
+                  ">
                     {recipe.category.name}
                   </span>
                 )}
               </div>
 
-              <div className="flex items-center gap-4 w-full lg:w-auto">
-                <div className="flex-1 lg:flex-none bg-gray-50 dark:bg-gray-800/50 p-3.5 rounded-2xl border border-gray-100 dark:border-gray-800 flex items-center justify-between gap-6">
-                  <span className="text-xs font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest ml-2">Порції</span>
-                  <PortionSelector
+                <div className="flex items-center gap-3 w-full lg:w-auto">
+                  {/* Portion selector */}
+                  <div className="
+                    flex-1 lg:flex-none p-3 rounded-2xl
+                    bg-slate-50 dark:bg-gray-800
+                    border border-slate-100 dark:border-gray-700
+                    flex items-center justify-between gap-4
+                  ">
+                    <span className="text-sm font-bold text-slate-500 ml-1">Порції:</span>
+                    <PortionSelector
                       count={currentPortions}
                       onIncrease={() => handlePortionChange(1)}
                       onDecrease={() => handlePortionChange(-1)}
-                  />
-                </div>
-                <button
+                    />
+                  </div>
+
+                {/* Delete button */}
+                {isOwner && (
+                  <button
                     onClick={handleDelete}
                     disabled={isDeleting}
-                    className="flex items-center justify-center min-w-[3.5rem] h-[3.5rem] rounded-2xl bg-red-50 dark:bg-red-500/10 text-red-500 border border-red-100 dark:border-red-500/20 hover:bg-red-500 hover:text-white transition-all duration-300 active:scale-90 disabled:opacity-50 cursor-pointer"
-                >
-                  <FontAwesomeIcon icon={faTrash} />
-                </button>
+                    className="flex items-center justify-center min-w-[3.5rem] h-[3.5rem] rounded-2xl bg-red-50 dark:bg-red-500/10
+                    text-red-500 dark:text-red-400
+                    border-red-100 dark:border-red-500/20
+                    hover:bg-red-500 hover:text-white
+                     text-red-500 border border-red-100 dark:border-red-500/20 hover:bg-red-500 hover:text-white transition-all duration-300 active:scale-90 disabled:opacity-50 cursor-pointer"
+                  >
+                    <FontAwesomeIcon icon={faTrash} />
+                  </button>
+                )}
               </div>
             </div>
 
@@ -128,5 +196,6 @@ export default function RecipeDetailsPage() {
           </div>
         </Card>
       </PageContainer>
+    </AnimatedPage>
   );
 }

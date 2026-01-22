@@ -10,6 +10,7 @@ import Card from "../../Components/UI/Card";
 import PageHeader from "../../Components/layout/PageHeader";
 import { Select, ConfigProvider } from 'antd';
 import { HiChevronDown } from "react-icons/hi";
+import AnimatedPage from "../../Components/layout/AnimatedPage.tsx"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCloudUploadAlt, faSpinner} from "@fortawesome/free-solid-svg-icons";
 
@@ -55,6 +56,7 @@ export default function RecipeCreatePage() {
   };
 
   return (
+    <AnimatedPage>
       <PageContainer>
         <div className="max-w-5xl mx-auto py-10 px-4 md:px-6">
           <Card className="shadow-xl shadow-gray-200/50 dark:shadow-none bg-white dark:bg-gray-900 border-gray-100 dark:border-gray-800 rounded-[2.5rem] overflow-hidden">
@@ -175,5 +177,6 @@ export default function RecipeCreatePage() {
           </Card>
         </div>
       </PageContainer>
+    </AnimatedPage>
   );
 }

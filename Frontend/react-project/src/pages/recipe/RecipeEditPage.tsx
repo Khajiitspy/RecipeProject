@@ -11,6 +11,11 @@ import Card from "../../Components/UI/Card";
 import PageHeader from "../../Components/layout/PageHeader";
 import { slugify } from "../../utils/slugify";
 import {APP_ENV} from "../../env";
+import AnimatedPage from "../../Components/layout/AnimatedPage";
+// @ts-ignore
+import type { IRecipeIngredientCreate } from "../../types/recipe/IRecipeCreate";
+import { Select, ConfigProvider } from 'antd';
+import { HiChevronDown } from "react-icons/hi";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowLeft, faCheck, faSpinner} from "@fortawesome/free-solid-svg-icons";
 
@@ -21,8 +26,7 @@ export default function RecipeEditPage() {
   const recipeId = Number(id);
 
   const { data: recipe, isLoading } = useGetRecipeByIdQuery(recipeId);
-  const [updateRecipe, { isLoading: isSaving }] =
-    useUpdateRecipeMutation();
+  const [updateRecipe, { isLoading: isSaving }] = useUpdateRecipeMutation();
   const { data: categories = [] } = useGetCategoriesQuery();
 
   const [name, setName] = useState("");
@@ -35,12 +39,10 @@ export default function RecipeEditPage() {
   const [ingredients, setIngredients] = useState<any[]>([]);
   const [errors, setErrors] = useState<Record<string, string[]>>({});
 
-  /** Prefill data */
   useEffect(() => {
     if (!recipe) return;
 
     setName(recipe.name);
-    setSlug(recipe.slug);
     setInstruction(recipe.instruction);
     setCategoryId(recipe.category?.id);
     setIngredients(
@@ -50,10 +52,9 @@ export default function RecipeEditPage() {
         amount: i.amount,
       })) || []
     );
+
     if (recipe.image) {
-      setImagePreview(
-        `${APP_ENV.API_BASE_URL}/images/400_${recipe.image}`
-      );
+      setImagePreview(`${APP_ENV.API_BASE_URL}/images/400_${recipe.image}`);
     }
   }, [recipe]);
 
@@ -82,9 +83,10 @@ export default function RecipeEditPage() {
     }
   };
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <p className="text-center">Loading...</p>;
 
   return (
+    <AnimatedPage>
       <PageContainer>
 
         <div className="mb-8">
@@ -229,5 +231,6 @@ export default function RecipeEditPage() {
           </Card>
         </div>
       </PageContainer>
+    </AnimatedPage>
   );
 }

@@ -6,6 +6,7 @@ namespace Core.Model.Recipe;
 public class RecipeItemModel
 {
     public long Id { get; set; }
+    public long? UserId { get; set; }
     public string Name { get; set; } = string.Empty;
     public string Slug { get; set; } = string.Empty;
     public string Instruction { get; set; } = string.Empty;

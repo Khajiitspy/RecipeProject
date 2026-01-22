@@ -6,6 +6,7 @@ export interface IRecipeItem {
 	name: string;
 	slug: string;
 	instruction: string;
+	userId?: number;
 	image: string;
   category?: ICategoryItem | null;
   ingredients?: IRecipeIngredientItem[];

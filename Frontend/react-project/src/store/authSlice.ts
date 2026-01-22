@@ -2,6 +2,7 @@ import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import { jwtDecode } from 'jwt-decode';
 
 interface User {
+    id: number;
     name: string;
     email: string;
     image: string;
@@ -9,25 +10,30 @@ interface User {
     roles: string[];
 }
 
-
 interface AuthState {
     user: User | null;
 }
 
-
 export const getUserFromToken = (token: string): User | null => {
     try {
         const decoded: any = jwtDecode(token);
-        let roles: string[] = [];
-        const rawRoles = decoded["roles"] ?? decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+        console.log("Decoded JWT:", decoded); // optional, for debugging
 
-        if (typeof rawRoles === "string") {
-            roles = [rawRoles];
-        } else if (Array.isArray(rawRoles)) {
-            roles = rawRoles;
-        }
+        // roles can be string or array
+        let roles: string[] = [];
+        const rawRoles =
+            decoded["roles"] ??
+            decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+
+        if (typeof rawRoles === "string") roles = [rawRoles];
+        else if (Array.isArray(rawRoles)) roles = rawRoles;
+
+        // id comes as a string in your JWT
+        const idStr = decoded["id"] ?? decoded["sub"] ?? decoded["nameid"] ?? "0";
+        const id = Number(idStr); // safely convert string to number
 
         return {
+            id,
             name: decoded["name"] ?? decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"] ?? "",
             email: decoded["email"] ?? decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"] ?? "",
             image: decoded["image"] ?? "",
@@ -39,8 +45,6 @@ export const getUserFromToken = (token: string): User | null => {
         return null;
     }
 };
-
-
 
 const token = localStorage.getItem('token');
 const initialUser = token ? getUserFromToken(token) : null;

@@ -1,7 +1,8 @@
 export const slugify = (text: string) =>
   text
     .toLowerCase()
+    .normalize("NFKD") // normalize unicode
+    .replace(/[^\p{L}\p{N}\s-]/gu, "") // keep letters (any language) & numbers
     .trim()
-    .replace(/[^\w\s-]/g, "")
     .replace(/\s+/g, "-")
     .replace(/-+/g, "-");

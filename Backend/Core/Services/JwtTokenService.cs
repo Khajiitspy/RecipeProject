@@ -20,7 +20,8 @@ namespace Core.Services
         {
             new Claim("email", user.Email),
             new Claim("name", $"{user.LastName} {user.FirstName}"),
-            new Claim("image", $"{user.Image}")
+            new Claim("image", $"{user.Image}"),
+            new Claim("id", user.Id.ToString())
         };
             foreach (var role in await userManager.GetRolesAsync(user))
             {

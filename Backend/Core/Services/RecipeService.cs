@@ -83,20 +83,70 @@ public class RecipeService(
             TimeSpan.FromMinutes(CacheKeys.ListCacheTtlMinutes)
         );
     }
+
     public async Task<PagedResult<RecipeItemModel>> ListAsync(RecipeSearchRequest request)
     {
-        var isAdmin = await authService.IsAdminAsync();
-        var userId = await authService.GetUserId();
+        bool isAuthenticated = false;
+        bool isAdmin = false;
+        long? userId = null;
 
-        if (!isAdmin && userId != request.UserId)
+        try
         {
-            request.IsDeleted = false;
-
-            request.IsPublished = true;
+            isAdmin = await authService.IsAdminAsync();
+            isAuthenticated = true;
+        }
+        catch
+        {
+            isAuthenticated = false;
         }
 
-        if (userId == request.UserId)
+        if (isAuthenticated)
+        {
+            try
+            {
+                userId = await authService.GetUserId();
+            }
+            catch
+            {
+                isAuthenticated = false;
+                userId = null;
+            }
+        }
+
+        // --------------------------------
+        // 🔒 NORMALIZE REQUEST
+        // --------------------------------
+
+        if (!isAuthenticated)
+        {
+            // Guest: only public, non-deleted
+            request.UserId = null;
             request.IsDeleted = false;
+            request.IsPublished = true;
+        }
+        else
+        {
+            // Logged in
+            if (request.UserId.HasValue && request.UserId == userId)
+            {
+                // My recipes
+                request.IsDeleted = false;
+                request.IsPublished = null; // include both published & drafts
+            }
+            else
+            {
+                // Public browsing
+                request.UserId = null;
+                request.IsDeleted = false;
+                request.IsPublished = true;
+            }
+
+            if (isAdmin)
+            {
+                request.IsDeleted = null;
+                request.IsPublished = null;
+            }
+        }
 
         var query = context.Recipes.AsQueryable();
 
