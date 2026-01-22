@@ -35,7 +35,12 @@ export default function RecipeDetailsPage() {
     setLocalRecipe(recipe);
   }, [recipe]);
 
-  if (isRecipeLoading) return <div className="text-center py-20 font-medium text-slate-500">Завантаження...</div>;
+  if (isRecipeLoading)
+  return (
+    <div className="text-center py-20 font-medium text-gray-500 dark:text-gray-400">
+      Завантаження...
+    </div>
+  );
   if (!recipe) return <div className="text-center py-20 text-red-500">Рецепт не знайдено</div>;
 
   const isOwner = Boolean(currentUser && recipe.userId && recipe.userId === currentUser.id);
@@ -77,7 +82,7 @@ export default function RecipeDetailsPage() {
         <div className="mb-8">
           <button
               onClick={() => navigate(-1)}
-              className="group text-gray-400 hover:text-yellow-500 transition-colors flex items-center gap-3 font-bold uppercase text-xs tracking-widest cursor-pointer"
+              className="group text-gray-400 dark:text-gray-500 hover:text-yellow-500 transition-colors flex items-center gap-3 font-bold uppercase text-xs tracking-widest"
           >
             <div className="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center group-hover:bg-yellow-400 group-hover:text-gray-900 transition-all">
               <FontAwesomeIcon icon={faArrowLeft} />
@@ -86,7 +91,12 @@ export default function RecipeDetailsPage() {
           </button>
         </div>
 
-        <Card className="overflow-hidden p-0 relative">
+      <Card className="
+        overflow-hidden p-0 relative
+        bg-white dark:bg-gray-900
+        border border-gray-100 dark:border-gray-800
+        shadow-xl shadow-gray-200/50 dark:shadow-none
+      ">
           <div className="p-6 md:p-10">
             {/* Header */}
             <div className="flex flex-col lg:flex-row justify-between items-start gap-6 mb-6">
@@ -102,7 +112,9 @@ export default function RecipeDetailsPage() {
                       }}
                       className={`
                         px-3 py-1 rounded-full text-sm font-bold
-                        ${localRecipe?.isPublished ? "bg-green-100 text-green-700" : "bg-slate-100 text-slate-600"}
+                        ${localRecipe?.isPublished
+                          ? "bg-green-100 text-green-700 dark:bg-green-500/20 dark:text-green-400"
+                          : "bg-slate-100 text-slate-600 dark:bg-gray-800 dark:text-gray-400"}
                       `}
                     >
                       {localRecipe?.isPublished ? "Опубліковано 🌍" : "Чернетка 🔒"}
@@ -110,20 +122,28 @@ export default function RecipeDetailsPage() {
                   )}
                 </div>
 
-                <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-3 tracking-tight">
+                <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white">
                   {recipe.name}
                 </h1>
                 {recipe.category && (
-                  <span className="inline-block bg-indigo-50 text-indigo-600 px-4 py-1 rounded-full text-sm font-semibold border border-indigo-100">
+                  <span className="
+                    inline-block px-4 py-1 rounded-full text-sm font-semibold
+                    bg-indigo-50 text-indigo-600 border border-indigo-100
+                    dark:bg-indigo-500/10 dark:text-indigo-400 dark:border-indigo-500/20
+                  ">
                     {recipe.category.name}
                   </span>
                 )}
               </div>
 
-              {isOwner && (
                 <div className="flex items-center gap-3 w-full lg:w-auto">
                   {/* Portion selector */}
-                  <div className="flex-1 lg:flex-none bg-slate-50 p-3 rounded-2xl border border-slate-100 flex items-center justify-between gap-4">
+                  <div className="
+                    flex-1 lg:flex-none p-3 rounded-2xl
+                    bg-slate-50 dark:bg-gray-800
+                    border border-slate-100 dark:border-gray-700
+                    flex items-center justify-between gap-4
+                  ">
                     <span className="text-sm font-bold text-slate-500 ml-1">Порції:</span>
                     <PortionSelector
                       count={currentPortions}
@@ -132,16 +152,21 @@ export default function RecipeDetailsPage() {
                     />
                   </div>
 
-                  {/* Delete button */}
+                {/* Delete button */}
+                {isOwner && (
                   <button
                     onClick={handleDelete}
                     disabled={isDeleting}
-                    className="flex items-center justify-center min-w-[3.5rem] h-[3.5rem] rounded-2xl bg-red-50 dark:bg-red-500/10 text-red-500 border border-red-100 dark:border-red-500/20 hover:bg-red-500 hover:text-white transition-all duration-300 active:scale-90 disabled:opacity-50 cursor-pointer"
-                >
-                  <FontAwesomeIcon icon={faTrash} />
-                </button>
+                    className="flex items-center justify-center min-w-[3.5rem] h-[3.5rem] rounded-2xl bg-red-50 dark:bg-red-500/10
+                    text-red-500 dark:text-red-400
+                    border-red-100 dark:border-red-500/20
+                    hover:bg-red-500 hover:text-white
+                     text-red-500 border border-red-100 dark:border-red-500/20 hover:bg-red-500 hover:text-white transition-all duration-300 active:scale-90 disabled:opacity-50 cursor-pointer"
+                  >
+                    <FontAwesomeIcon icon={faTrash} />
+                  </button>
+                )}
               </div>
-              )}
             </div>
 
 
