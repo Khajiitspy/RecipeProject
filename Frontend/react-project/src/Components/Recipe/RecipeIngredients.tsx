@@ -3,8 +3,8 @@ import type {IRecipeIngredientItem} from "../../types/recipe/IRecipeIngredientIt
 
 export const RecipeIngredients = ({ ingredients }: { ingredients: IRecipeIngredientItem[] }) => (
     <div className="md:col-span-1">
-        <h2 className="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
-            <span className="w-1 h-6 bg-amber-400 rounded-full"></span>
+        <h2 className="text-xl font-bold dark:text-white text-slate-800 mb-6 flex items-center gap-2">
+            <span className="w-1 h-6  bg-amber-400 rounded-full"></span>
             Інгредієнти
         </h2>
         <ul className="space-y-3">
@@ -18,8 +18,8 @@ export const RecipeIngredients = ({ ingredients }: { ingredients: IRecipeIngredi
                         />
                     )}
                     <div className="flex flex-col">
-                        <span className="text-slate-800 font-bold text-sm leading-tight">{i.ingredient?.name}</span>
-                        <span className="text-slate-500 text-xs font-medium">{i.amount} {i.unit?.name}</span>
+                        <span className="text-slate-800 dark:text-white font-bold text-sm leading-tight">{i.ingredient?.name}</span>
+                        <span className="text-slate-500 dark:text-white text-xs font-medium">{i.amount} {i.unit?.name}</span>
                     </div>
                 </li>
             ))}

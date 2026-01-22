@@ -10,11 +10,14 @@ import Card from "../../Components/UI/Card";
 import PageHeader from "../../Components/layout/PageHeader";
 import { Select, ConfigProvider } from 'antd';
 import { HiChevronDown } from "react-icons/hi";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faCloudUploadAlt, faSpinner} from "@fortawesome/free-solid-svg-icons";
 
 export default function RecipeCreatePage() {
   const [createRecipe, { isLoading }] = useCreateRecipeMutation();
   const [name, setName] = useState("");
   const [slug, setSlug] = useState("");
+  // @ts-ignore
   const [slugTouched, setSlugTouched] = useState(false);
   const [instruction, setInstruction] = useState("");
   const [categoryId, setCategoryId] = useState<number>(0);
@@ -53,109 +56,124 @@ export default function RecipeCreatePage() {
 
   return (
       <PageContainer>
-        <div className="max-w-5xl  mx-auto py-6">
-          <Card className="shadow-sm  border-slate-100">
-            <PageHeader
-                title="Створення рецепту"
-                subtitle="Поділіться своїм кулінарним шедевром"
-            />
+        <div className="max-w-5xl mx-auto py-10 px-4 md:px-6">
+          <Card className="shadow-xl shadow-gray-200/50 dark:shadow-none bg-white dark:bg-gray-900 border-gray-100 dark:border-gray-800 rounded-[2.5rem] overflow-hidden">
+            <div className="p-8 md:p-12">
+              <PageHeader
+                  title="Створення рецепту"
+                  subtitle="Поділіться своїм кулінарним шедевром з родиною EatLog"
 
-            <form onSubmit={handleSubmit} className="mt-8 space-y-8">
-              {/* Головна сітка на дві колонки */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-10 gap-y-6">
+              />
 
-                {/* ЛІВА КОЛОНКА: Назва, Категорія, Фото */}
-                <div className="space-y-6">
-                  <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-1.5 ml-1">Назва рецепта</label>
-                    <input
-                        className={`w-full px-4 py-3 rounded-xl border border-slate-200 outline-none
-                  focus:border-amber-400 focus:ring-4 focus:ring-amber-400/10 transition-all
-                  ${errors.Name ? "border-red-500 bg-red-50" : "bg-white"}`}
-                        placeholder="Наприклад: Гарбузовий суп"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        required
-                    />
-                    <div className="mt-2 flex items-center gap-2 px-3 py-1 bg-slate-50 rounded-lg border border-slate-100 w-fit">
-                      <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">URL:</span>
-                      <span className="text-xs font-mono text-amber-600 truncate max-w-[200px]">{slug || "..."}</span>
+              <form onSubmit={handleSubmit} className="mt-10 space-y-10">
+                {/* Головна сітка на дві колонки */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-12 gap-y-8">
+
+                  {/* ЛІВА КОЛОНКА */}
+                  <div className="space-y-8">
+                    <div>
+                      <label className="block text-[11px] font-black text-gray-400 dark:text-gray-500 mb-2 uppercase tracking-widest ml-1">
+                        Назва рецепта
+                      </label>
+                      <input
+                          className={`w-full px-5 py-4 rounded-2xl border outline-none transition-all text-gray-900 dark:text-white
+                    ${errors.Name
+                              ? "border-red-500 bg-red-50 dark:bg-red-950/20"
+                              : "bg-gray-50 dark:bg-gray-800 border-gray-100 dark:border-gray-700 focus:border-yellow-400 dark:focus:border-yellow-400 focus:ring-4 focus:ring-yellow-400/10"}`}
+                          placeholder="Наприклад: Гарбузовий суп"
+                          value={name}
+                          onChange={(e) => setName(e.target.value)}
+                          required
+                      />
+                      <div className="mt-3 flex items-center gap-2 px-3 py-1.5 bg-gray-100 dark:bg-gray-800/50 rounded-xl border border-gray-200 dark:border-gray-700 w-fit">
+                        <span className="text-[10px] uppercase font-black text-gray-400 tracking-wider">URL:</span>
+                        <span className="text-xs font-mono text-yellow-600 dark:text-yellow-400 truncate max-w-[200px]">{slug || "..."}</span>
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-[11px] font-black text-gray-400 dark:text-gray-500 mb-2 uppercase tracking-widest ml-1">Категорія</label>
+                      <ConfigProvider
+                          theme={{
+                            token: {
+                              colorPrimary: '#facc15', // yellow-400
+                              borderRadius: 16,
+                              controlHeight: 56,
+                              colorBgContainer: 'transparent',
+                              colorText: 'inherit',
+                            },
+                          }}
+                      >
+                        <Select
+                            placeholder="Оберіть категорію"
+                            className="w-full "
+                            suffixIcon={<HiChevronDown className="text-gray-400" />}
+                            options={categories.map(c => ({ value: c.id, label: c.name }))}
+                            onChange={(value) => setCategoryId(value)}
+                        />
+                      </ConfigProvider>
+                    </div>
+
+                    <div>
+                      <label className="block text-[11px] font-black text-gray-400 dark:text-gray-500 mb-2 uppercase tracking-widest ml-1">Фото страви</label>
+                      <input
+                          className="w-full px-5 py-3 rounded-2xl bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 text-gray-500 dark:text-gray-400 file:mr-4 file:py-1.5 file:px-4
+                    file:rounded-xl file:border-0 file:text-xs file:font-black
+                    file:bg-yellow-400 file:text-gray-900 hover:file:bg-yellow-500 cursor-pointer transition-all"
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => setImage(e.target.files?.[0] || null)}
+                      />
                     </div>
                   </div>
 
-                  <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-1.5 ml-1">Категорія</label>
-                    <ConfigProvider
-                        theme={{
-                          token: {
-                            colorPrimary: '#fbbf24',
-                            borderRadius: 12,
-                            controlHeight: 48,
-                          },
-                        }}
-                    >
-                      <Select
-                          placeholder="Оберіть категорію"
-                          className="w-full"
-                          suffixIcon={<HiChevronDown className="text-slate-400" />} // іконка з react-icons
-                          options={categories.map(c => ({ value: c.id, label: c.name }))}
-                          onChange={(value) => setCategoryId(value)}
-                      />
-                    </ConfigProvider>
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-1.5 ml-1">Фото страви</label>
-                    <input
-                        className="w-full px-4 py-2 rounded-xl border border-slate-200 file:mr-4 file:py-1 file:px-3
-                file:rounded-full file:border-0 file:text-xs file:font-bold
-                file:bg-amber-100 file:text-amber-700 hover:file:bg-amber-200 cursor-pointer"
-                        type="file"
-                        accept="image/*"
-                        onChange={(e) => setImage(e.target.files?.[0] || null)}
+                  {/* ПРАВА КОЛОНКА */}
+                  <div className="flex flex-col h-full">
+                    <label className="block text-[11px] font-black text-gray-400 dark:text-gray-500 mb-2 uppercase tracking-widest ml-1">Інструкція приготування</label>
+                    <textarea
+                        className={`w-full flex-grow px-5 py-4 rounded-2xl border outline-none transition-all resize-none text-gray-900 dark:text-white
+                  ${errors.Instruction
+                            ? "border-red-500 bg-red-50 dark:bg-red-950/20"
+                            : "bg-gray-50 dark:bg-gray-800 border-gray-100 dark:border-gray-700 focus:border-yellow-400 dark:focus:border-yellow-400 focus:ring-4 focus:ring-yellow-400/10"}`}
+                        placeholder="Крок за кроком опишіть процес..."
+                        value={instruction}
+                        onChange={(e) => setInstruction(e.target.value)}
+                        required
                     />
                   </div>
                 </div>
 
-                {/* ПРАВА КОЛОНКА: Інструкції (високе поле) */}
-                <div className="flex flex-col h-full">
-                  <label className="block text-sm font-semibold text-slate-700 mb-1.5 ml-1">Інструкція приготування</label>
-                  <textarea
-                      className={`w-full flex-grow px-4 py-3 rounded-xl border border-slate-200 outline-none
-                focus:border-amber-400 focus:ring-4 focus:ring-amber-400/10 transition-all resize-none
-                ${errors.Instruction ? "border-red-500" : ""}`}
-                      placeholder="Крок за кроком опишіть процес..."
-                      value={instruction}
-                      onChange={(e) => setInstruction(e.target.value)}
-                      required
-                  />
-                </div>
-              </div>
 
-              {/* НИЖНЯ ЧАСТИНА: Інгредієнти (на всю ширину) */}
-              <div className="pt-4 border-t border-slate-100">
-                <label className="block text-sm font-semibold text-slate-700 mb-4 ml-1">Список інгредієнтів</label>
-                <div className="bg-slate-50/50 p-6 rounded-2xl border border-dashed border-slate-200">
-                  <IngredientInputs ingredients={ingredients} setIngredients={setIngredients} />
+                <div className="pt-10 border-t border-gray-100 dark:border-gray-800">
+                  <label className="block text-[11px] font-black text-gray-400 dark:text-gray-500 mb-4 uppercase tracking-widest ml-1">Список інгредієнтів</label>
+                  <div className="bg-gray-50/50 dark:bg-gray-800/30 p-8 rounded-[2rem] border-2 border-dashed border-gray-200 dark:border-gray-800">
+                    <IngredientInputs ingredients={ingredients} setIngredients={setIngredients} />
+                  </div>
                 </div>
-              </div>
 
-              {/* Кнопка створення */}
-              <div className="flex justify-end pt-4">
-                <button
-                    type="submit"
-                    disabled={isLoading}
-                    className="w-full lg:w-1/3 bg-amber-300 hover:bg-amber-500 active:scale-[0.98]
-                    text-white font-bold py-4 rounded-xl shadow-lg
-                    shadow-red-200 transition-all duration-200 mt-6 flex justify-center items-center gap-2"
-                >
-                  {isLoading ? "Створюємо..." : "Опублікувати рецепт"}
-                </button>
-              </div>
-            </form>
+
+                <div className="flex justify-end pt-6">
+                  <button
+                      type="submit"
+                      disabled={isLoading}
+                      className="w-full lg:w-1/3 bg-yellow-400 hover:bg-yellow-500 active:scale-[0.98]
+                text-gray-950 font-black py-5 rounded-2xl shadow-xl
+                shadow-yellow-400/20 transition-all duration-300 flex justify-center items-center gap-3"
+                  >
+                    {isLoading ? (
+                        <FontAwesomeIcon icon={faSpinner} className="animate-spin" />
+                    ) : (
+                        <>
+                          <FontAwesomeIcon icon={faCloudUploadAlt} />
+                          <span>Опублікувати рецепт</span>
+                        </>
+                    )}
+                  </button>
+                </div>
+              </form>
+            </div>
           </Card>
         </div>
       </PageContainer>
-
   );
 }

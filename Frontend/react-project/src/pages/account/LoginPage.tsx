@@ -58,9 +58,8 @@ const LoginPage = () => {
     });
 
   return (
-      <div className="flex flex-col lg:flex-row min-h-screen bg-white">
-
-          <AuthBanner
+      <div className="flex flex-col dark:bg-gray-950 lg:flex-row min-h-screen bg-white">
+      <AuthBanner
               title="З поверненням до"
               highlightText="EatLog!"
               description="Увійдіть, щоб продовжити свою кулінарну подорож, зберігати улюблені рецепти та відкривати нові смаки кожного дня."
@@ -68,11 +67,11 @@ const LoginPage = () => {
           />
 
           {/* ПРАВА ЧАСТИНА: Форма входу */}
-          <div className="w-full lg:w-1/2 flex flex-col justify-center  px-10 md:px-24 lg:px-32">
+          <div className="w-full lg:w-1/2 flex flex-col justify-center mt-10 px-10 md:px-24 lg:px-32">
               <div className="max-w-md w-full mx-auto">
                   <div className="mb-2 text-center lg:text-left">
-                      <h2 className="text-3xl font-bold text-slate-900">Вхід</h2>
-                      <p className="text-slate-500 mt-2">
+                      <h2 className="text-3xl dark:text-white font-bold text-slate-900">Вхід</h2>
+                      <p className="text-slate-500 dark:text-white mt-2">
                           Ще не маєте акаунту? {" "}
                           <Link to="/account/register" className="text-amber-300 font-semibold hover:underline">
                               Реєстрація
@@ -80,31 +79,37 @@ const LoginPage = () => {
                       </p>
                   </div>
 
-                  {/* Соціальні кнопки */}
-                  <div className="flex gap-4 mb-4">
+
+                  <div className="flex gap-4 mb-6">
                       <button
                           onClick={(event) => {
                               event.preventDefault();
                               loginUseGoogle();
                           }}
                           disabled={isGoogleLoading}
-                          className="flex items-center justify-center gap-2 bg-white
-                         text-gray-700 border border-gray-300 hover:shadow-md
-                         transition px-4 py-2 rounded-xl w-full mt-4 font-medium"
+                          className="flex items-center justify-center gap-3 w-full py-3.5 px-4 mt-4
+                            /* Світла тема */
+                            bg-white text-gray-700 border border-gray-200 shadow-sm
+                            /* Темна тема */
+                            dark:bg-gray-900 dark:text-gray-200 dark:border-gray-800
+                            /* Ефекти */
+                            hover:bg-gray-50 dark:hover:bg-gray-800 hover:shadow-md
+                            active:scale-[0.98] transition-all duration-200 rounded-2xl font-bold"
                       >
                           {isGoogleLoading ? (
-                              <>
-                                  <FontAwesomeIcon icon={faSpinner} className="animate-spin mr-2" />
+                              <div className="flex items-center gap-2">
+                                  <FontAwesomeIcon icon={faSpinner} className="animate-spin text-yellow-500" />
                                   <span>Авторизація...</span>
-                              </>
+                              </div>
                           ) : (
                               <>
-                                  <FontAwesomeIcon icon={faGoogle} className="text-amber-300 mr-2" />
+                                  <FontAwesomeIcon icon={faGoogle} className="text-yellow-500 text-lg" />
                                   <span>Увійти через Google</span>
                               </>
                           )}
                       </button>
                   </div>
+
 
                   <div className="relative flex items-center">
                       <div className="flex-grow border-t border-slate-200"></div>
@@ -116,12 +121,12 @@ const LoginPage = () => {
                   {/* Форма */}
                   <form className="space-y-3" onSubmit={handleSubmit}>
                       <div>
-                          <label className="block text-sm font-bold text-slate-700 mb-2 uppercase tracking-tight">
+                          <label className="block dark:text-white text-sm font-bold text-slate-700 mb-2 uppercase tracking-tight">
                               Email *
                           </label>
                           <input
                               type="email"
-                              className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-300/20  transition"
+                              className="w-full px-5 py-4 rounded-2xl bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-yellow-400/20 focus:border-yellow-400 transition-all"
                               placeholder="email@example.com"
                               value={email}
                               onChange={(e) => setEmail(e.target.value)}
@@ -131,7 +136,7 @@ const LoginPage = () => {
 
                       <div>
                           <div className="flex justify-between mb-2">
-                              <label className="text-sm font-bold text-slate-700 uppercase tracking-tight">
+                              <label className="text-sm dark:text-white font-bold text-slate-700 uppercase tracking-tight">
                                   Password *
                               </label>
                               <a href="forgot-password" className="text-sm text-slate-400 hover:text-amber-300 transition">Forgot password?</a>
@@ -139,7 +144,9 @@ const LoginPage = () => {
                           <div className="relative">
                               <input
                                   type={showPassword ? "text" : "password"}
-                                  className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-300/20 transition"
+                                  className="w-full px-5 py-4 rounded-2xl bg-gray-50 dark:bg-gray-900
+                                   border border-gray-100 dark:border-gray-800 text-gray-900 dark:text-white
+                                  focus:outline-none focus:ring-2 focus:ring-yellow-400/20 focus:border-yellow-400 transition-all"
                                   placeholder="Your password"
                                   value={password}
                                   onChange={(e) => setPassword(e.target.value)}
@@ -160,7 +167,8 @@ const LoginPage = () => {
 
                       <button
                           type="submit" disabled={isLoading}
-                          className="w-full bg-amber-300 hover:bg-amber-500 active:scale-[0.98] text-white font-bold py-4 rounded-xl shadow-lg shadow-red-200 transition-all duration-200 mt-6 flex justify-center items-center gap-2"
+                          className="w-full bg-yellow-400 hover:bg-yellow-500 active:scale-[0.98] text-gray-950 font-black py-4 rounded-2xl shadow-xl
+                          shadow-yellow-400/10 transition-all duration-300 mt-8 flex justify-center items-center gap-2"
                       >
                           {isLoading ? "Вхід..." : "Увійти"}
                       </button>

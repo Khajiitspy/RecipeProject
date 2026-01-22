@@ -12,6 +12,9 @@ import EmailSentSuccessPage from "./pages/account/EmailSentSuccess/EmailSentSucc
 import ResetPasswordPage from "./pages/account/ResetPassword/ResetPasswordPage.tsx";
 import RecipeDetailsPage from "./pages/recipe/RecipeDetailsPage.tsx";
 import RecipeEditPage from "./pages/recipe/RecipeEditPage.tsx";
+import AdminLayout from "./layout/Admin/AdminLayout.tsx";
+import DashboardHome from "./pages/admin/Dashboard/DashboardHome.tsx";
+import UserListPage from "./admin/pages/Users/List/AdminUsersList.tsx";
 import CartPage from "./pages/cart/CartPage.tsx";
 
 function App() {
@@ -37,6 +40,19 @@ function App() {
 
                     <Route path={"/cart"} element={<CartPage/>}/>
                 </Route>
+
+
+
+
+                <Route path={"admin"} element={<AdminLayout />}>
+                    <Route path="home" element={<DashboardHome />}/>
+
+                    <Route path="users">
+                        <Route index  element={<UserListPage />} />
+                    </Route>
+
+                </Route>
+
 
                 <Route path="*" element={<NotFoundPage/>} />
             </Routes>

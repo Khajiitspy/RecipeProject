@@ -20,7 +20,7 @@ export default function RecipeDetailsPage() {
   const { data: cartData } = useGetCartQuery();
   const [addRecipeToCart] = useAddRecipeToCartMutation();
 
-  const cartItem = cartData?.recipes.find((r) => r.recipeId === Number(id));
+  const cartItem = cartData?.recipes?.find((r) => r.recipeId === Number(id));
   const currentPortions = cartItem ? cartItem.portion : 0;
 
   const handlePortionChange = async (diff: number) => {
@@ -54,30 +54,37 @@ export default function RecipeDetailsPage() {
 
   return (
       <PageContainer>
-        <div className="mb-6">
+
+        <div className="mb-8">
           <button
               onClick={() => navigate(-1)}
-              className="text-slate-500 hover:text-slate-800 transition flex items-center gap-2 font-medium cursor-pointer"
+              className="group text-gray-400 hover:text-yellow-500 transition-colors flex items-center gap-3 font-bold uppercase text-xs tracking-widest cursor-pointer"
           >
-            <FontAwesomeIcon icon={faArrowLeft} /> Назад до списку
+            <div className="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center group-hover:bg-yellow-400 group-hover:text-gray-900 transition-all">
+              <FontAwesomeIcon icon={faArrowLeft} />
+            </div>
+            Назад до списку
           </button>
         </div>
 
-        <Card className="overflow-hidden p-0">
-          <div className="p-6 md:p-10">
-            <div className="flex flex-col lg:flex-row justify-between items-start gap-6 mb-8">
+        <Card className="overflow-hidden p-0 border-none bg-white dark:bg-gray-900 rounded-[2.5rem] shadow-xl shadow-gray-200/50 dark:shadow-none transition-colors duration-300">
+          <div className="p-8 md:p-12">
+            {/* ЗАГОЛОВОК ТА ПОРЦІЇ */}
+            <div className="flex flex-col lg:flex-row justify-between items-start gap-8 mb-10">
               <div className="flex-1">
-                <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-3 tracking-tight">{recipe.name}</h1>
+                <h1 className="text-4xl md:text-5xl font-black text-gray-900 dark:text-white mb-4 tracking-tighter leading-tight">
+                  {recipe.name}
+                </h1>
                 {recipe.category && (
-                    <span className="inline-block bg-indigo-50 text-indigo-600 px-4 py-1 rounded-full text-sm font-semibold border border-indigo-100">
-                  {recipe.category.name}
-                </span>
+                    <span className="inline-block bg-yellow-400 text-gray-950 px-5 py-1.5 rounded-xl text-xs font-black uppercase tracking-wider">
+                    {recipe.category.name}
+                  </span>
                 )}
               </div>
 
-              <div className="flex items-center gap-3 w-full lg:w-auto">
-                <div className="flex-1 lg:flex-none bg-slate-50 p-3 rounded-2xl border border-slate-100 flex items-center justify-between gap-4">
-                  <span className="text-sm font-bold text-slate-500 ml-1">Порції:</span>
+              <div className="flex items-center gap-4 w-full lg:w-auto">
+                <div className="flex-1 lg:flex-none bg-gray-50 dark:bg-gray-800/50 p-3.5 rounded-2xl border border-gray-100 dark:border-gray-800 flex items-center justify-between gap-6">
+                  <span className="text-xs font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest ml-2">Порції</span>
                   <PortionSelector
                       count={currentPortions}
                       onIncrease={() => handlePortionChange(1)}
@@ -87,30 +94,36 @@ export default function RecipeDetailsPage() {
                 <button
                     onClick={handleDelete}
                     disabled={isDeleting}
-                    className="flex items-center justify-center min-w-[3rem] h-12 rounded-2xl bg-red-50 text-red-500 border border-red-100 hover:bg-red-500 hover:text-white transition-all duration-200 disabled:opacity-50 cursor-pointer"
+                    className="flex items-center justify-center min-w-[3.5rem] h-[3.5rem] rounded-2xl bg-red-50 dark:bg-red-500/10 text-red-500 border border-red-100 dark:border-red-500/20 hover:bg-red-500 hover:text-white transition-all duration-300 active:scale-90 disabled:opacity-50 cursor-pointer"
                 >
                   <FontAwesomeIcon icon={faTrash} />
                 </button>
               </div>
             </div>
 
+
             {recipe.image && (
-                <div className="mb-10 group overflow-hidden rounded-3xl shadow-md border border-slate-100 max-h-[300px] md:max-h-[450px]">
+                <div className="mb-12 group overflow-hidden rounded-[2.5rem] shadow-2xl shadow-gray-200/50 dark:shadow-none border border-gray-100 dark:border-gray-800 max-h-[400px] md:max-h-[550px]">
                   <img
                       src={`${APP_ENV.API_BASE_URL}/images/800_${recipe.image}`}
                       alt={recipe.name}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                      className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
                   />
                 </div>
             )}
 
-            <div className="grid md:grid-cols-3 gap-10">
-              <RecipeIngredients ingredients={recipe.ingredients!} />
-              <RecipeInstruction
-                  instruction={recipe.instruction}
-                  recipeId={recipe.id}
-                  onCopy={handleCopy}
-              />
+            {/* КОНТЕНТ: Інгредієнти та Інструкції */}
+            <div className="grid md:grid-cols-3 gap-12 lg:gap-16">
+              <div className="md:col-span-1">
+                <RecipeIngredients ingredients={recipe.ingredients!} />
+              </div>
+              <div className="md:col-span-2">
+                <RecipeInstruction
+                    instruction={recipe.instruction}
+                    recipeId={recipe.id}
+                    onCopy={handleCopy}
+                />
+              </div>
             </div>
           </div>
         </Card>
