@@ -12,6 +12,7 @@ import EmailSentSuccessPage from "./pages/account/EmailSentSuccess/EmailSentSucc
 import ResetPasswordPage from "./pages/account/ResetPassword/ResetPasswordPage.tsx";
 import RecipeDetailsPage from "./pages/recipe/RecipeDetailsPage.tsx";
 import RecipeEditPage from "./pages/recipe/RecipeEditPage.tsx";
+import CartPage from "./pages/cart/CartPage.tsx";
 
 function App() {
     return (
@@ -33,6 +34,8 @@ function App() {
                     <Route path="/recipes/:id" element={<RecipeDetailsPage />} />
                     <Route path="/recipes/create" element={<RecipeCreatePage />} />
                     <Route path="/recipes/edit/:id" element={<RecipeEditPage />} />
+
+                    <Route path={"/cart"} element={<CartPage/>}/>
                 </Route>
 
                 <Route path="*" element={<NotFoundPage/>} />

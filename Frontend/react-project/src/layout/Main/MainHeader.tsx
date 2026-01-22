@@ -2,7 +2,14 @@ import {Link, useNavigate} from "react-router";
 import {useAppDispatch, useAppSelector} from "../../store";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import {logout} from "../../store/authSlice.ts";
-import {faBars, faChevronDown, faLock, faRightFromBracket, faUser} from "@fortawesome/free-solid-svg-icons";
+import {
+    faBars,
+    faCartShopping,
+    faChevronDown,
+    faLock,
+    faRightFromBracket,
+    faUser
+} from "@fortawesome/free-solid-svg-icons";
 import {APP_ENV} from "../../env";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
@@ -27,6 +34,10 @@ export const MainHeader = ({ toggleMobileMenu }: HeaderProps) => {
 
     function openProfile(){
         navigate("/account/profile");
+    }
+
+    function openCart(){
+        navigate("/cart");
     }
 
     const handleLoginRedirect = () => {
@@ -93,6 +104,18 @@ export const MainHeader = ({ toggleMobileMenu }: HeaderProps) => {
                                         className="text-black w-5 h-5 mr-3"
                                     />
                                     Профіль
+                                </DropdownMenu.Item>
+
+                                <DropdownMenu.Item
+                                    onClick={openCart}
+                                    className="flex items-center text-black
+                                    hover:bg-gray-200 px-2  py-2 rounded
+                                    cursor-pointer text-sm transition-colors">
+                                    <FontAwesomeIcon
+                                        icon={faCartShopping}
+                                        className="text-black w-5 h-5 mr-3"
+                                    />
+                                    Кошик
                                 </DropdownMenu.Item>
 
                                 <DropdownMenu.Item asChild>
@@ -169,12 +192,24 @@ export const MainHeader = ({ toggleMobileMenu }: HeaderProps) => {
                                     onClick={openProfile}
                                     className="flex items-center text-black
                                     hover:bg-gray-200 px-2  py-2 rounded
-                                    cursor-pointer text-sm transition-colors border-b">
+                                    cursor-pointer text-sm transition-colors">
                                     <FontAwesomeIcon
                                         icon={faUser}
                                         className="text-black w-5 h-5 mr-3"
                                     />
                                     Профіль
+                                </DropdownMenu.Item>
+
+                                <DropdownMenu.Item
+                                    onClick={openCart}
+                                    className="flex items-center text-black
+                                    hover:bg-gray-200 px-2  py-2 rounded
+                                    cursor-pointer text-sm transition-colors border-b">
+                                    <FontAwesomeIcon
+                                        icon={faCartShopping}
+                                        className="text-black w-5 h-5 mr-3"
+                                    />
+                                    Кошик
                                 </DropdownMenu.Item>
 
                                 <DropdownMenu.Item
